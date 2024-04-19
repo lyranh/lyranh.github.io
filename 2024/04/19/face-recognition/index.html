@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="数字图像的点运算数字图像处理（一）数字图像的点运算原图：  一、数字图像的点运算1.灰度直方图1234567891011img&#x3D;imread(&#x27;C:\Users\24682\Desktop\lzy\face\lzy.jpg&#x27;);[m,n]&#x3D;size(img);img1&#x3D;rgb2gray(img);subplot(1,3,1);imshow(img1);subplot(1,3,2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="face_recognition">
+<meta property="og:url" content="http://example.com/2024/04/19/face-recognition/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="数字图像的点运算数字图像处理（一）数字图像的点运算原图：  一、数字图像的点运算1.灰度直方图1234567891011img&#x3D;imread(&#x27;C:\Users\24682\Desktop\lzy\face\lzy.jpg&#x27;);[m,n]&#x3D;size(img);img1&#x3D;rgb2gray(img);subplot(1,3,1);imshow(img1);subplot(1,3,2">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://s2.loli.net/2024/04/19/fDdegqTiM1jQanB.jpg">
+<meta property="og:image" content="https://s2.loli.net/2024/04/19/Srikl4XBa9cj5Cu.png">
+<meta property="og:image" content="https://s2.loli.net/2024/04/19/ZPALMH5TY47qfun.png">
+<meta property="article:published_time" content="2024-04-19T11:21:54.000Z">
+<meta property="article:modified_time" content="2024-04-19T12:09:27.591Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2024/04/19/fDdegqTiM1jQanB.jpg">
+
+<link rel="canonical" href="http://example.com/2024/04/19/face-recognition/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>face_recognition | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2024/04/19/face-recognition/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          face_recognition
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2024-04-19 19:21:54 / Modified: 20:09:27" itemprop="dateCreated datePublished" datetime="2024-04-19T19:21:54+08:00">2024-04-19</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>4.4k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>4 mins.</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="数字图像的点运算"><a href="#数字图像的点运算" class="headerlink" title="数字图像的点运算"></a>数字图像的点运算</h1><h1 id="数字图像处理"><a href="#数字图像处理" class="headerlink" title="数字图像处理"></a>数字图像处理</h1><h2 id="（一）数字图像的点运算"><a href="#（一）数字图像的点运算" class="headerlink" title="（一）数字图像的点运算"></a>（一）数字图像的点运算</h2><p>原图：</p>
+<p><img src="https://s2.loli.net/2024/04/19/fDdegqTiM1jQanB.jpg" alt="b1f3ec0b1f11680d2dad1eca9cbce094.jpg"></p>
+<h2 id="一、数字图像的点运算"><a href="#一、数字图像的点运算" class="headerlink" title="一、数字图像的点运算"></a>一、数字图像的点运算</h2><h3 id="1-灰度直方图"><a href="#1-灰度直方图" class="headerlink" title="1.灰度直方图"></a>1.灰度直方图</h3><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">img=imread(<span class="string">&#x27;C:\Users\24682\Desktop\lzy\face\lzy.jpg&#x27;</span>);</span><br><span class="line">[m,n]=<span class="built_in">size</span>(img);</span><br><span class="line">img1=rgb2gray(img);</span><br><span class="line">subplot(<span class="number">1</span>,<span class="number">3</span>,<span class="number">1</span>);</span><br><span class="line">imshow(img1);</span><br><span class="line">subplot(<span class="number">1</span>,<span class="number">3</span>,<span class="number">2</span>);</span><br><span class="line">imhist(img1,<span class="number">32</span>);</span><br><span class="line">[counts,x]=imhist(img1,<span class="number">32</span>);</span><br><span class="line">counts=counts/m/n;</span><br><span class="line">subplot(<span class="number">1</span>,<span class="number">3</span>,<span class="number">3</span>);</span><br><span class="line">stem(x,counts);</span><br></pre></td></tr></table></figure>
+
+<p>展示的效果如下图：</p>
+<p><img src="https://s2.loli.net/2024/04/19/Srikl4XBa9cj5Cu.png" alt="_6Q_VOU_`S__`VM_7_2___9.png"></p>
+<h3 id="2-灰度线性变换"><a href="#2-灰度线性变换" class="headerlink" title="2.灰度线性变换"></a>2.灰度线性变换</h3><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">img=imread(<span class="string">&#x27;C:\Users\24682\Desktop\lzy\face\lzy.jpg&#x27;</span>); </span><br><span class="line">img=rgb2gray(img); </span><br><span class="line">img1=im2double(img); </span><br><span class="line">img2=(img1.^<span class="number">5</span>); </span><br><span class="line">img3=(img1.^<span class="number">1.5</span>); </span><br><span class="line">img4=(img1.^<span class="number">0.5</span>); </span><br><span class="line">img5=(img1.^<span class="number">0.1</span>); </span><br><span class="line">img6=(img1.^<span class="number">0.04</span>); </span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">3</span>,<span class="number">1</span>),imshow(img); </span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">3</span>,<span class="number">2</span>),imshow(img2); </span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>),imshow(img3); </span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>),imshow(img4); </span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>),imshow(img5); </span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">3</span>,<span class="number">6</span>),imshow(img6);</span><br></pre></td></tr></table></figure>
+
+<p>展示的效果如下图：</p>
+<p><img src="https://s2.loli.net/2024/04/19/ZPALMH5TY47qfun.png" alt="9NQ_4OVWCVPCH57R37I6E_7.png"></p>
+<h3 id="3-分段灰度线性变换"><a href="#3-分段灰度线性变换" class="headerlink" title="3.分段灰度线性变换"></a>3.分段灰度线性变换</h3><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">I = imread(<span class="string">&#x27;C:\Users\24682\Desktop\lzy\face\lzy.jpg&#x27;</span>); </span><br><span class="line">I =rgb2gray(I);</span><br><span class="line">[M,N] = <span class="built_in">size</span>(I); </span><br><span class="line">I = im2double(I);</span><br><span class="line">J = <span class="built_in">zeros</span>(M,N);</span><br><span class="line">X1 = <span class="number">0.3</span>; Y1 = <span class="number">0.15</span>;</span><br><span class="line">X2 = <span class="number">0.7</span>; Y2 = <span class="number">0.85</span>;</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:M</span><br><span class="line">  <span class="keyword">for</span> <span class="built_in">j</span> = <span class="number">1</span>:N</span><br><span class="line">    <span class="keyword">if</span> I(<span class="built_in">i</span>,<span class="built_in">j</span>) &lt; X1</span><br><span class="line">        J(<span class="built_in">i</span>,<span class="built_in">j</span>) = Y1*I(<span class="built_in">i</span>,<span class="built_in">j</span>)/X1;</span><br><span class="line">    <span class="keyword">elseif</span> I(<span class="built_in">i</span>,<span class="built_in">j</span>) &gt; X2</span><br><span class="line">        J(<span class="built_in">i</span>,<span class="built_in">j</span>) = (I(<span class="built_in">i</span>,<span class="built_in">j</span>)-X2)*(<span class="number">1</span>-Y2)/(<span class="number">1</span>-X2)+Y2;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        J(<span class="built_in">i</span>,<span class="built_in">j</span>) = (I(<span class="built_in">i</span>,<span class="built_in">j</span>)-X1)*(Y2-Y1)/(X2-X1)+Y1;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">1</span>), imshow(I); subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>), imshow(J);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">3</span>), imhist(I); subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">4</span>), imhist(J</span><br></pre></td></tr></table></figure>
+
+<p>![OM7H5__E6&#96;_9V~<a href="mailto:&#x51;&#53;&#54;&#x58;&#x36;&#x35;&#x42;&#x40;&#x57;&#x2e;&#x70;&#x6e;&#103;">&#x51;&#53;&#54;&#x58;&#x36;&#x35;&#x42;&#x40;&#x57;&#x2e;&#x70;&#x6e;&#103;</a>](<a target="_blank" rel="noopener" href="https://s2.loli.net/2024/04/19/f9TDJeS8rGsbXCc.png">https://s2.loli.net/2024/04/19/f9TDJeS8rGsbXCc.png</a>)</p>
+<h3 id="4-灰度非线性变换"><a href="#4-灰度非线性变换" class="headerlink" title="4.灰度非线性变换"></a>4.灰度非线性变换</h3><h4 id="（1）对数变换"><a href="#（1）对数变换" class="headerlink" title="（1）对数变换"></a>（1）对数变换</h4><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">img=imread(<span class="string">&#x27;C:\Users\24682\Desktop\lzy\face\lzy.jpg&#x27;</span>);</span><br><span class="line">img=rgb2gray(img);</span><br><span class="line">img1=im2double(img); </span><br><span class="line">img2=<span class="number">2</span>*<span class="built_in">log</span>(img1+<span class="number">1</span>); </span><br><span class="line">subplot(<span class="number">1</span>,<span class="number">2</span>,<span class="number">1</span>),imshow(img);title(‘原始图像<span class="string">&#x27;);</span></span><br><span class="line"><span class="string">subplot(1,2,2),imshow(img2);title(‘对数变换后的图像&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-伽马变换"><a href="#2-伽马变换" class="headerlink" title="(2) 伽马变换"></a>(2) 伽马变换</h4><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">img=imread(<span class="string">&#x27;C:\Users\24682\Desktop\lzy\face\lzy.jpg&#x27;</span>);</span><br><span class="line">img=rgb2gray(img);</span><br><span class="line">img1=im2double(img); </span><br><span class="line">img2=(img1.^<span class="number">5</span>); </span><br><span class="line">img3=(img1.^<span class="number">1.5</span>);</span><br><span class="line">img4=(img1.^<span class="number">0.5</span>); </span><br><span class="line">img5=(img1.^<span class="number">0.1</span>);</span><br><span class="line">img6=(img1.^<span class="number">0.04</span>);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">3</span>,<span class="number">1</span>),imshow(img);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">3</span>,<span class="number">2</span>),imshow(img2);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>),imshow(img3);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>),imshow(img4);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>),imshow(img5);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">3</span>,<span class="number">6</span>),imshow(img6);</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="5-灰度阈值变换"><a href="#5-灰度阈值变换" class="headerlink" title="5.灰度阈值变换"></a>5.灰度阈值变换</h3><p>灰度阙值变换可以将一幅灰度图像转换成黑白的二值图像。用户指定一个起到分界线作用的灰度值，如果图像中某像素的灰度值小于该灰度值，则将该像素的灰度值设置为0，否则设置为255；起到分界线作用的灰度值称为阈值，灰度的阈值变换也常被称为阈值化、或二值化。</p>
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">img=imread(<span class="string">&#x27;C:\Users\24682\Desktop\lzy\face\lzy.jpg&#x27;</span>); </span><br><span class="line">img=rgb2gray(img); </span><br><span class="line">A=graythresh(img); </span><br><span class="line">A1=im2bw(img,A); </span><br><span class="line">A2=im2bw(img,<span class="number">50</span>/<span class="number">255</span>); </span><br><span class="line">subplot(<span class="number">1</span>,<span class="number">3</span>,<span class="number">1</span>),imshow(img); </span><br><span class="line">subplot(<span class="number">1</span>,<span class="number">3</span>,<span class="number">2</span>),imshow(A1); </span><br><span class="line">subplot(<span class="number">1</span>,<span class="number">3</span>,<span class="number">3</span>),imshow(A2);</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="（二）图像的几何运算"><a href="#（二）图像的几何运算" class="headerlink" title="（二）图像的几何运算"></a>（二）图像的几何运算</h2><h3 id="1-图像平移"><a href="#1-图像平移" class="headerlink" title="1.图像平移"></a>1.图像平移</h3><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="params">[J]</span> = <span class="title">move</span><span class="params">(I,a,b)</span></span></span><br><span class="line">[M,N]=<span class="built_in">size</span>(I);</span><br><span class="line">J=I;</span><br><span class="line">  <span class="keyword">for</span> <span class="built_in">i</span>=<span class="number">1</span>:M</span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">j</span>=<span class="number">1</span>:N</span><br><span class="line">      <span class="keyword">if</span>((<span class="built_in">i</span>-a&gt;<span class="number">0</span>)&amp;(<span class="built_in">i</span>-a&lt;M)&amp;(<span class="built_in">j</span>-b&gt;<span class="number">0</span>)&amp;(<span class="built_in">j</span>-b&lt;N))</span><br><span class="line">        J(<span class="built_in">i</span>,<span class="built_in">j</span>)=I(<span class="built_in">i</span>-a,<span class="built_in">j</span>-b);</span><br><span class="line">      <span class="keyword">else</span></span><br><span class="line">        J(<span class="built_in">i</span>,<span class="built_in">j</span>)=<span class="number">0</span>;</span><br><span class="line">      <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">A = imread(<span class="string">&#x27;C:\Users\24682\Desktop\lzy\face\lzy.jpg&#x27;</span>);</span><br><span class="line">I = rgb2gray(A);</span><br><span class="line">a=<span class="number">70</span>;b=<span class="number">80</span>;</span><br><span class="line">J1=imtranslate(I,[a,b]);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">1</span>);</span><br><span class="line">imshow(J1);</span><br><span class="line">J2=imtranslate(I,[-a,b]);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>);</span><br><span class="line">imshow(J2);</span><br><span class="line">J3=imtranslate(I,[a,-b]);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">3</span>);</span><br><span class="line">imshow(J3);</span><br><span class="line">J4=imtranslate(I,[-a,-b]);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">4</span>);</span><br><span class="line">imshow(J4);</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-图像镜像"><a href="#2-图像镜像" class="headerlink" title="2.图像镜像"></a>2.图像镜像</h3><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="params">[J]</span> = <span class="title">mirror</span><span class="params">(I,n)</span></span></span><br><span class="line">[M,N]=<span class="built_in">size</span>(I);</span><br><span class="line">J=I;</span><br><span class="line"><span class="keyword">if</span>(n==<span class="number">1</span>)</span><br><span class="line">  <span class="keyword">for</span> <span class="built_in">i</span>=<span class="number">1</span>:M;</span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">j</span>=<span class="number">1</span>:N;</span><br><span class="line">      J(<span class="built_in">i</span>,<span class="built_in">j</span>)=I(M-<span class="built_in">i</span>+<span class="number">1</span>,<span class="built_in">j</span>);</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">elseif</span>(n==<span class="number">2</span>)</span><br><span class="line">  <span class="keyword">for</span> <span class="built_in">i</span>=<span class="number">1</span>:M;</span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">j</span>=<span class="number">1</span>:N;</span><br><span class="line">      J(<span class="built_in">i</span>,<span class="built_in">j</span>)=I(<span class="built_in">i</span>,N-<span class="built_in">j</span>+<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">elseif</span>(n==<span class="number">3</span>)</span><br><span class="line">  <span class="keyword">for</span> <span class="built_in">i</span>=<span class="number">1</span>:M;</span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">j</span>=<span class="number">1</span>:N;</span><br><span class="line">      J(<span class="built_in">i</span>,<span class="built_in">j</span>)=I(M-<span class="built_in">i</span>+<span class="number">1</span>,N-<span class="built_in">j</span>+<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">  <span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">A = imread(<span class="string">&#x27;C:\Users\24682\Desktop\lzy\face\lzy.jpg&#x27;</span>);</span><br><span class="line">I = rgb2gray(A)</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">1</span>);</span><br><span class="line">imshow(I);</span><br><span class="line">J1=mirror(I,<span class="number">1</span>);</span><br><span class="line">J2=mirror(I,<span class="number">2</span>);</span><br><span class="line">J3=mirror(I,<span class="number">3</span>);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>);</span><br><span class="line">imshow(J1);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">3</span>);</span><br><span class="line">imshow(J2);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">4</span>);</span><br><span class="line">imshow(J3);</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-图像转置"><a href="#3-图像转置" class="headerlink" title="3.图像转置"></a>3.图像转置</h3><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">A = imread(<span class="string">&#x27;C:\Users\24682\Desktop\lzy\face\lzy.jpg&#x27;</span>);</span><br><span class="line">I = rgb2gray(A)</span><br><span class="line">subplot(<span class="number">1</span>,<span class="number">2</span>,<span class="number">1</span>);</span><br><span class="line">imshow(I);</span><br><span class="line">title((‘原图<span class="string">&#x27;));</span></span><br><span class="line"><span class="string">J=I&#x27;</span>;</span><br><span class="line">subplot(<span class="number">1</span>,<span class="number">2</span>,<span class="number">2</span>);</span><br><span class="line">imshow(J);</span><br><span class="line">title(‘图像转置<span class="string">&#x27;)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-图像缩放"><a href="#4-图像缩放" class="headerlink" title="4.图像缩放"></a>4.图像缩放</h3><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">A = imread(<span class="string">&#x27;C:\Users\24682\Desktop\lzy\face\lzy.jpg&#x27;</span>);</span><br><span class="line">I = rgb2gray(A)</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">3</span>,<span class="number">1</span>);</span><br><span class="line">imshow(I);</span><br><span class="line">xlabel(‘原始图形<span class="string">&#x27;)</span></span><br><span class="line"><span class="string">J1=imresize(I,0.3);</span></span><br><span class="line"><span class="string">subplot(2,3,2);</span></span><br><span class="line"><span class="string">imshow(J1);</span></span><br><span class="line"><span class="string">xlabel(‘缩小0.3倍&#x27;</span>)</span><br><span class="line">J2=imresize(I,<span class="number">5</span>);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>);</span><br><span class="line">imshow(J2);</span><br><span class="line">xlabel(‘放大<span class="number">5</span>倍<span class="string">&#x27;)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">J3=imresize(I,<span class="number">0.5</span>,<span class="string">&#x27;nearest&#x27;</span>);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>);</span><br><span class="line">imshow(J3);</span><br><span class="line">xlabel(‘临近插值缩小<span class="number">0.5</span>倍<span class="string">&#x27;)</span></span><br><span class="line"><span class="string">J4=imresize(I,0.3,&#x27;</span>bilinear&#x27;);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>);</span><br><span class="line">imshow(J4);</span><br><span class="line">xlabel(‘双线性插值缩小<span class="number">0.3</span>倍<span class="string">&#x27;)</span></span><br><span class="line"><span class="string">J5=imresize(I,0.3,&#x27;</span>bicubic&#x27;);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">3</span>,<span class="number">6</span>);</span><br><span class="line">imshow(J5);</span><br><span class="line">xlabel(‘双立方插值缩小<span class="number">0.3</span>倍<span class="string">&#x27;)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-图像旋转"><a href="#5-图像旋转" class="headerlink" title="5.图像旋转"></a>5.图像旋转</h3><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">imread(<span class="string">&#x27;C:\Users\24682\Desktop\lzy\face\lzy.jpg&#x27;</span>)</span><br><span class="line">I=rgb2gray(A);</span><br><span class="line">subplot(<span class="number">1</span>,<span class="number">2</span>,<span class="number">1</span>);</span><br><span class="line">imshow(I);</span><br><span class="line">title(‘原图<span class="string">&#x27;);</span></span><br><span class="line"><span class="string">[M,N]=size(I);</span></span><br><span class="line"><span class="string">ang=30;</span></span><br><span class="line"><span class="string">J=I;</span></span><br><span class="line"><span class="string">  for i=1:M</span></span><br><span class="line"><span class="string">    for j=1:N</span></span><br><span class="line"><span class="string">      x=floor(i*cos(ang*pi/180)-j*sin(ang*pi/180));</span></span><br><span class="line"><span class="string">      y=floor(j*cos(ang*pi/180)+i*sin(ang*pi/180));</span></span><br><span class="line"><span class="string">      if((x&lt;M) &amp; (y&lt;N)&amp;(x&gt;0) &amp; (y&gt;0))</span></span><br><span class="line"><span class="string">        J(i,j)=I(x,y);</span></span><br><span class="line"><span class="string">      else</span></span><br><span class="line"><span class="string">        J(i,j)=0;</span></span><br><span class="line"><span class="string">      end</span></span><br><span class="line"><span class="string">   end</span></span><br><span class="line"><span class="string">end</span></span><br><span class="line"><span class="string">subplot(1,2,2);</span></span><br><span class="line"><span class="string">imshow(J);</span></span><br><span class="line"><span class="string">title(‘旋转后图&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/04/19/Golden-moon/" rel="prev" title="Golden moon">
+      <i class="fa fa-chevron-left"></i> Golden moon
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E7%9A%84%E7%82%B9%E8%BF%90%E7%AE%97"><span class="nav-number">1.</span> <span class="nav-text">数字图像的点运算</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E5%A4%84%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">数字图像处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BC%88%E4%B8%80%EF%BC%89%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E7%9A%84%E7%82%B9%E8%BF%90%E7%AE%97"><span class="nav-number">2.1.</span> <span class="nav-text">（一）数字图像的点运算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E6%95%B0%E5%AD%97%E5%9B%BE%E5%83%8F%E7%9A%84%E7%82%B9%E8%BF%90%E7%AE%97"><span class="nav-number">2.2.</span> <span class="nav-text">一、数字图像的点运算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E7%81%B0%E5%BA%A6%E7%9B%B4%E6%96%B9%E5%9B%BE"><span class="nav-number">2.2.1.</span> <span class="nav-text">1.灰度直方图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E7%81%B0%E5%BA%A6%E7%BA%BF%E6%80%A7%E5%8F%98%E6%8D%A2"><span class="nav-number">2.2.2.</span> <span class="nav-text">2.灰度线性变换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%88%86%E6%AE%B5%E7%81%B0%E5%BA%A6%E7%BA%BF%E6%80%A7%E5%8F%98%E6%8D%A2"><span class="nav-number">2.2.3.</span> <span class="nav-text">3.分段灰度线性变换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E7%81%B0%E5%BA%A6%E9%9D%9E%E7%BA%BF%E6%80%A7%E5%8F%98%E6%8D%A2"><span class="nav-number">2.2.4.</span> <span class="nav-text">4.灰度非线性变换</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%881%EF%BC%89%E5%AF%B9%E6%95%B0%E5%8F%98%E6%8D%A2"><span class="nav-number">2.2.4.1.</span> <span class="nav-text">（1）对数变换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E4%BC%BD%E9%A9%AC%E5%8F%98%E6%8D%A2"><span class="nav-number">2.2.4.2.</span> <span class="nav-text">(2) 伽马变换</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E7%81%B0%E5%BA%A6%E9%98%88%E5%80%BC%E5%8F%98%E6%8D%A2"><span class="nav-number">2.2.5.</span> <span class="nav-text">5.灰度阈值变换</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BC%88%E4%BA%8C%EF%BC%89%E5%9B%BE%E5%83%8F%E7%9A%84%E5%87%A0%E4%BD%95%E8%BF%90%E7%AE%97"><span class="nav-number">2.3.</span> <span class="nav-text">（二）图像的几何运算</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%9B%BE%E5%83%8F%E5%B9%B3%E7%A7%BB"><span class="nav-number">2.3.1.</span> <span class="nav-text">1.图像平移</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%9B%BE%E5%83%8F%E9%95%9C%E5%83%8F"><span class="nav-number">2.3.2.</span> <span class="nav-text">2.图像镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E5%9B%BE%E5%83%8F%E8%BD%AC%E7%BD%AE"><span class="nav-number">2.3.3.</span> <span class="nav-text">3.图像转置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E5%9B%BE%E5%83%8F%E7%BC%A9%E6%94%BE"><span class="nav-number">2.3.4.</span> <span class="nav-text">4.图像缩放</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E5%9B%BE%E5%83%8F%E6%97%8B%E8%BD%AC"><span class="nav-number">2.3.5.</span> <span class="nav-text">5.图像旋转</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+    <span title="Symbols count total">NaNm</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">NaN:aN</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
