@@ -216,7 +216,7 @@
 <p><img src="https://s2.loli.net/2024/04/19/ZPALMH5TY47qfun.png" alt="9NQ_4OVWCVPCH57R37I6E_7.png"></p>
 <h3 id="3-分段灰度线性变换"><a href="#3-分段灰度线性变换" class="headerlink" title="3.分段灰度线性变换"></a>3.分段灰度线性变换</h3><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">I = imread(<span class="string">&#x27;C:\Users\24682\Desktop\lzy\face\lzy.jpg&#x27;</span>); </span><br><span class="line">I =rgb2gray(I);</span><br><span class="line">[M,N] = <span class="built_in">size</span>(I); </span><br><span class="line">I = im2double(I);</span><br><span class="line">J = <span class="built_in">zeros</span>(M,N);</span><br><span class="line">X1 = <span class="number">0.3</span>; Y1 = <span class="number">0.15</span>;</span><br><span class="line">X2 = <span class="number">0.7</span>; Y2 = <span class="number">0.85</span>;</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:M</span><br><span class="line">  <span class="keyword">for</span> <span class="built_in">j</span> = <span class="number">1</span>:N</span><br><span class="line">    <span class="keyword">if</span> I(<span class="built_in">i</span>,<span class="built_in">j</span>) &lt; X1</span><br><span class="line">        J(<span class="built_in">i</span>,<span class="built_in">j</span>) = Y1*I(<span class="built_in">i</span>,<span class="built_in">j</span>)/X1;</span><br><span class="line">    <span class="keyword">elseif</span> I(<span class="built_in">i</span>,<span class="built_in">j</span>) &gt; X2</span><br><span class="line">        J(<span class="built_in">i</span>,<span class="built_in">j</span>) = (I(<span class="built_in">i</span>,<span class="built_in">j</span>)-X2)*(<span class="number">1</span>-Y2)/(<span class="number">1</span>-X2)+Y2;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">        J(<span class="built_in">i</span>,<span class="built_in">j</span>) = (I(<span class="built_in">i</span>,<span class="built_in">j</span>)-X1)*(Y2-Y1)/(X2-X1)+Y1;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">1</span>), imshow(I); subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">2</span>), imshow(J);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">3</span>), imhist(I); subplot(<span class="number">2</span>,<span class="number">2</span>,<span class="number">4</span>), imhist(J</span><br></pre></td></tr></table></figure>
 
-<p>![OM7H5__E6&#96;_9V~<a href="mailto:&#x51;&#53;&#x36;&#88;&#x36;&#53;&#x42;&#x40;&#87;&#x2e;&#112;&#110;&#x67;">&#x51;&#53;&#x36;&#88;&#x36;&#53;&#x42;&#x40;&#87;&#x2e;&#112;&#110;&#x67;</a>](<a target="_blank" rel="noopener" href="https://s2.loli.net/2024/04/19/f9TDJeS8rGsbXCc.png">https://s2.loli.net/2024/04/19/f9TDJeS8rGsbXCc.png</a>)</p>
+<p>![OM7H5__E6&#96;_9V~<a href="mailto:&#x51;&#x35;&#x36;&#88;&#x36;&#x35;&#x42;&#x40;&#x57;&#46;&#112;&#x6e;&#103;">&#x51;&#x35;&#x36;&#88;&#x36;&#x35;&#x42;&#x40;&#x57;&#46;&#112;&#x6e;&#103;</a>](<a target="_blank" rel="noopener" href="https://s2.loli.net/2024/04/19/f9TDJeS8rGsbXCc.png">https://s2.loli.net/2024/04/19/f9TDJeS8rGsbXCc.png</a>)</p>
 <h3 id="4-灰度非线性变换"><a href="#4-灰度非线性变换" class="headerlink" title="4.灰度非线性变换"></a>4.灰度非线性变换</h3><h4 id="（1）对数变换"><a href="#（1）对数变换" class="headerlink" title="（1）对数变换"></a>（1）对数变换</h4><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">img=imread(<span class="string">&#x27;C:\Users\24682\Desktop\lzy\face\lzy.jpg&#x27;</span>);</span><br><span class="line">img=rgb2gray(img);</span><br><span class="line">img1=im2double(img); </span><br><span class="line">img2=<span class="number">2</span>*<span class="built_in">log</span>(img1+<span class="number">1</span>); </span><br><span class="line">subplot(<span class="number">1</span>,<span class="number">2</span>,<span class="number">1</span>),imshow(img);title(‘原始图像<span class="string">&#x27;);</span></span><br><span class="line"><span class="string">subplot(1,2,2),imshow(img2);title(‘对数变换后的图像&#x27;</span>);</span><br></pre></td></tr></table></figure>
 
 <h4 id="2-伽马变换"><a href="#2-伽马变换" class="headerlink" title="(2) 伽马变换"></a>(2) 伽马变换</h4><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">img=imread(<span class="string">&#x27;C:\Users\24682\Desktop\lzy\face\lzy.jpg&#x27;</span>);</span><br><span class="line">img=rgb2gray(img);</span><br><span class="line">img1=im2double(img); </span><br><span class="line">img2=(img1.^<span class="number">5</span>); </span><br><span class="line">img3=(img1.^<span class="number">1.5</span>);</span><br><span class="line">img4=(img1.^<span class="number">0.5</span>); </span><br><span class="line">img5=(img1.^<span class="number">0.1</span>);</span><br><span class="line">img6=(img1.^<span class="number">0.04</span>);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">3</span>,<span class="number">1</span>),imshow(img);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">3</span>,<span class="number">2</span>),imshow(img2);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">3</span>,<span class="number">3</span>),imshow(img3);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>),imshow(img4);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">3</span>,<span class="number">5</span>),imshow(img5);</span><br><span class="line">subplot(<span class="number">2</span>,<span class="number">3</span>,<span class="number">6</span>),imshow(img6);</span><br></pre></td></tr></table></figure>
@@ -248,7 +248,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/04/19/face-recognition/" data-id="clvi1v6h000027chkc3rt1kvj" data-title="face_recognition" class="article-share-link">分享</a>
+      <a data-url="http://example.com/2024/04/19/face-recognition/" data-id="clwqmh3iz0002gshkancr76dk" data-title="face_recognition" class="article-share-link">分享</a>
       
       
       
@@ -261,6 +261,22 @@
   
     
   <nav id="article-nav" class="wow fadeInUp">
+    
+      <div class="article-nav-link-wrap article-nav-link-left">
+        
+          
+          
+            <img data-src="/images/banner.jpg" data-sizes="auto" alt="memo_N_Rain" class="lazyload">
+          
+        
+        <a href="/2024/05/29/memo-N-Rain/"></a>
+        <div class="article-nav-caption">前一篇</div>
+        <h3 class="article-nav-title">
+          
+            memo_N_Rain
+          
+        </h3>
+      </div>
     
     
     <div class="article-nav-link-wrap article-nav-link-right">
@@ -308,7 +324,7 @@
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>文章</div>
-    <div class="sidebar-state-number">4</div>
+    <div class="sidebar-state-number">6</div>
   </div>
   <div class="sidebar-state-category">
     <div>分类</div>
@@ -386,10 +402,10 @@
       
         <div>
           <span class="icon-brush"></span>
-          1.8k
+          2.3k
           &nbsp;|&nbsp;
           <span class="icon-coffee"></span>
-          00:09
+          00:11
         </div>
       
       
@@ -427,7 +443,7 @@
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>文章</div>
-    <div class="sidebar-state-number">4</div>
+    <div class="sidebar-state-number">6</div>
   </div>
   <div class="sidebar-state-category">
     <div>分类</div>
