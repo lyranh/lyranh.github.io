@@ -1,0 +1,602 @@
+
+  <!DOCTYPE html>
+  <html lang="zh-CN"  >
+  <head>
+  <meta charset="utf-8">
+  
+
+  
+
+  
+
+  
+  <title>
+    stm32_Stu02 |
+    
+    欢迎来到蕊之殿堂
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="preload" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic%7CUbuntu%20Mono:400,400italic,700,700italic&display=swap&subset=latin,latin-ext" as="style" onload="this.onload&#x3D;null;this.rel&#x3D;&#39;stylesheet&#39;">
+  
+<link rel="stylesheet" href="https://npm.webcache.cn/@fortawesome/fontawesome-free@6.5.1/css/regular.min.css">
+<link rel="stylesheet" href="https://npm.webcache.cn/@fortawesome/fontawesome-free@6.5.1/css/solid.min.css">
+
+  <link rel="preload" href="https://npm.webcache.cn/@fortawesome/fontawesome-free@6.5.1/css/brands.min.css" as="style" onload="this.onload&#x3D;null;this.rel&#x3D;&#39;stylesheet&#39;"><link rel="preload" href="https://npm.webcache.cn/@fortawesome/fontawesome-free@6.5.1/css/v5-font-face.min.css" as="style" onload="this.onload&#x3D;null;this.rel&#x3D;&#39;stylesheet&#39;"><link rel="preload" href="https://npm.webcache.cn/@fortawesome/fontawesome-free@6.5.1/css/v4-font-face.min.css" as="style" onload="this.onload&#x3D;null;this.rel&#x3D;&#39;stylesheet&#39;">
+  
+<link rel="stylesheet" href="/css/loader.css">
+
+  <meta name="description" content="几种输入模式 1.浮空输入 1GPIO_Mode_IN_FLOATING &#x3D; 0x04；  在这种模式下，GPIO引脚没有内部上拉或下拉电阻，因此它的电平状态取决于外部电路。这种模式常用于读取开关状态，如按钮或传感器的输出。 2.上拉输入 1GPIO_Mode_IPU &#x3D; 0x48;  与下拉输入相反，这种模式在GPIO引脚内部连接了一个上拉电阻到电源（VCC），使得引脚在没有外部信号时保持高电平">
+<meta property="og:type" content="article">
+<meta property="og:title" content="stm32_Stu02">
+<meta property="og:url" content="http://example.com/2024/05/30/stm32-Stu02/index.html">
+<meta property="og:site_name" content="欢迎来到蕊之殿堂">
+<meta property="og:description" content="几种输入模式 1.浮空输入 1GPIO_Mode_IN_FLOATING &#x3D; 0x04；  在这种模式下，GPIO引脚没有内部上拉或下拉电阻，因此它的电平状态取决于外部电路。这种模式常用于读取开关状态，如按钮或传感器的输出。 2.上拉输入 1GPIO_Mode_IPU &#x3D; 0x48;  与下拉输入相反，这种模式在GPIO引脚内部连接了一个上拉电阻到电源（VCC），使得引脚在没有外部信号时保持高电平">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-05-30T10:03:56.000Z">
+<meta property="article:modified_time" content="2024-05-30T10:17:24.553Z">
+<meta property="article:author" content="litmus">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="欢迎来到蕊之殿堂" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/images/favicon.ico">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="https://npm.webcache.cn/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+
+  
+  
+  
+  
+  
+<script src="https://npm.webcache.cn/pace-js@1.2.4/pace.min.js"></script>
+
+  
+    
+<link rel="stylesheet" href="https://npm.webcache.cn/wowjs@1.1.3/css/libs/animate.css">
+
+    
+<script src="https://npm.webcache.cn/wowjs@1.1.3/dist/wow.min.js"></script>
+
+    <script>
+      new WOW({
+        offset: 0,
+        mobile: true,
+        live: false
+      }).init();
+    </script>
+  
+  
+    <script src="/sw.js"></script>
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+  <body>
+    
+  <div id='loader'>
+    <div class="loading-left-bg"></div>
+    <div class="loading-right-bg"></div>
+    <div class="spinner-box">
+      <div class="loading-taichi">
+        <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+          <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="#ff6e6b" />
+          <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z" fill="#fd0d00" />
+          <path d="M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95" fill="#fd0d00" />
+        </svg>
+      </div>
+      <div class="loading-word">少女祈祷中...</div>
+    </div>
+  </div>
+  </div>
+  <script>
+    var time = null;
+    const startLoading = () => {
+      time = Date.now();
+      document.getElementById('loader').classList.remove("loading");
+    }
+    const endLoading = () => {
+      if (!time) {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+      } else {
+        if (Date.now() - time > 500) {
+          time = null;
+          document.body.style.overflow = 'auto';
+          document.getElementById('loader').classList.add("loading");
+        } else {
+          setTimeout(endLoading, 500 - (Date.now() - time));
+          time = null;
+        }
+      }
+    }
+    window.addEventListener('load', endLoading);
+    document.getElementById('loader').addEventListener('click', endLoading);
+  </script>
+
+
+    <div id="container">
+      <div id="wrap">
+        <div id="header-nav">
+  <nav id="main-nav">
+    
+      <span class="main-nav-link-wrap">
+        <span class="main-nav-icon"></span>
+        <a class="main-nav-link" href="/">首页</a>
+      </span>
+    
+      <span class="main-nav-link-wrap">
+        <span class="main-nav-icon"></span>
+        <a class="main-nav-link" href="/archives">归档</a>
+      </span>
+    
+      <span class="main-nav-link-wrap">
+        <span class="main-nav-icon"></span>
+        <a class="main-nav-link" href="/about">关于</a>
+      </span>
+    
+      <span class="main-nav-link-wrap">
+        <span class="main-nav-icon"></span>
+        <a class="main-nav-link" href="/friend">友链</a>
+      </span>
+    
+    <a id="main-nav-toggle" class="nav-icon"></a>
+  </nav>
+  <nav id="sub-nav">
+    
+      <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+    
+    
+    
+  </nav>
+</div>
+<header id="header">
+  
+    <img fetchpriority="high" src="/images/banner.jpg" alt="stm32_Stu02">
+  
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <div id="logo-wrap">
+        
+          
+          
+            <a href="/" id="logo">
+              <h1>stm32_Stu02</h1>
+            </a>
+          
+        
+      </div>
+      
+        
+        <h2 id="subtitle-wrap">
+          
+        </h2>
+      
+    </div>
+  </div>
+</header>
+
+        <div id="content" class="outer">
+          
+          <section id="main"><article id="post-stm32-Stu02" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner">
+    <div class="article-meta">
+      <div class="article-date wow slideInLeft">
+  <a href="/2024/05/30/stm32-Stu02/" class="article-date-link">
+    <time datetime="2024-05-30T10:03:56.000Z" itemprop="datePublished">2024-05-30</time>
+  </a>
+</div>
+
+      
+
+    </div>
+    <div class="hr-line"></div>
+    
+
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h2 id="几种输入模式"><a href="#几种输入模式" class="headerlink" title="几种输入模式"></a>几种输入模式</h2><p> 1.浮空输入</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GPIO_Mode_IN_FLOATING = <span class="number">0x04</span>；</span><br></pre></td></tr></table></figure>
+
+<p>在这种模式下，GPIO引脚没有内部上拉或下拉电阻，因此它的电平状态取决于外部电路。这种模式常用于读取开关状态，如按钮或传感器的输出。</p>
+<p>2.上拉输入</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GPIO_Mode_IPU = <span class="number">0x48</span>;</span><br></pre></td></tr></table></figure>
+
+<p>与下拉输入相反，这种模式在GPIO引脚内部连接了一个上拉电阻到电源（VCC），使得引脚在没有外部信号时保持高电平。这同样用于防止悬空状态，并且适用于那些需要默认高电平信号的输入。</p>
+<p>3.开漏输出</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GPIO_Mode_Out_OD = <span class="number">0x14</span>;</span><br></pre></td></tr></table></figure>
+
+<p>在开漏输出模式下，GPIO引脚可以输出低电平，但不能直接输出高电平。高电平相当于高阻态，无驱动能力。要实现高电平，需要外部上拉电阻。这种模式常用于连接到其他设备的输入，这些设备可以提供高电平信号。</p>
+<p>4.推挽输出</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GPIO_Mode_Out_PP = <span class="number">0x10</span>;</span><br></pre></td></tr></table></figure>
+
+<p>推挽输出模式允许GPIO引脚直接输出高电平和低电平，都有驱动能力。这种模式提供了更强的驱动能力，适用于直接驱动负载，如LED或继电器。</p>
+<p>5.复用开漏</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GPIO_Mode_AF_OD = <span class="number">0x1C</span></span><br></pre></td></tr></table></figure>
+
+<p>这种模式将GPIO引脚配置为复用功能（如USART、SPI等）的开漏输出。这意味着引脚可以作为特定外设的信号线，同时保持开漏输出的特性。</p>
+<p>6.复用推挽</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GPIO_Mode_AF_PP = <span class="number">0x18</span>;</span><br></pre></td></tr></table></figure>
+
+<p>类似于复用开漏，但这种模式允许GPIO引脚作为复用功能时，能够输出推挽信号。这使得引脚可以作为高速通信接口的一部分，如I2C或SPI。</p>
+<h2 id="时钟控制函数"><a href="#时钟控制函数" class="headerlink" title="时钟控制函数"></a>时钟控制函数</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">RCC_AHBPeriphClockCmd</span><span class="params">(<span class="type">uint32_t</span> RCC_AHBPeriph, FunctionalState NewState)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">RCC_APB2PeriphClockCmd</span><span class="params">(<span class="type">uint32_t</span> RCC_APB2Periph, FunctionalState NewState)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">RCC_APB1PeriphClockCmd</span><span class="params">(<span class="type">uint32_t</span> RCC_APB1Periph, FunctionalState NewState)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">GPIO_Init</span><span class="params">(GPIO_TypeDef* GPIOx, GPIO_InitTypeDef* GPIO_InitStruct)</span></span>;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="读写函数"><a href="#读写函数" class="headerlink" title="读写函数"></a>读写函数</h2><p>读取输入寄存器某一个端口的输入值的，返回值代表这个端口的高低电平。</p>
+<p>读取按键需要用到这个函数。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">uint8_t</span> <span class="title">GPIO_ReadInputDataBit</span><span class="params">(GPIO_TypeDef* GPIOx, <span class="type">uint16_t</span> GPIO_Pin)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>用来读取整个输入寄存器，返回值16位，每一位代表一个端口值。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">uint16_t</span> <span class="title">GPIO_ReadInputData</span><span class="params">(GPIO_TypeDef* GPIOx)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>用来读取输出寄存器的某一个位，常用于查看输出模式下自己的输出值</p>
+<p>按键按下，LED的状态取反</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">uint8_t</span> <span class="title">GPIO_ReadOutputDataBit</span><span class="params">(GPIO_TypeDef* GPIOx, <span class="type">uint16_t</span> GPIO_Pin)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>用来读取整个输出数据寄存器，常用于查看输出模式下自己的输出值</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">uint16_t</span> <span class="title">GPIO_ReadOutputData</span><span class="params">(GPIO_TypeDef* GPIOx)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="GPIO写入函数"><a href="#GPIO写入函数" class="headerlink" title="GPIO写入函数"></a>GPIO写入函数</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">GPIO_SetBits</span><span class="params">(GPIO_TypeDef* GPIOx, <span class="type">uint16_t</span> GPIO_Pin)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">GPIO_ResetBits</span><span class="params">(GPIO_TypeDef* GPIOx, <span class="type">uint16_t</span> GPIO_Pin)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">GPIO_WriteBit</span><span class="params">(GPIO_TypeDef* GPIOx, <span class="type">uint16_t</span> GPIO_Pin, BitAction BitVal)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">GPIO_Write</span><span class="params">(GPIO_TypeDef* GPIOx, <span class="type">uint16_t</span> PortVal)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="GPIO输出函数"><a href="#GPIO输出函数" class="headerlink" title="GPIO输出函数"></a>GPIO输出函数</h2><p>指定端口高电平</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">GPIO_SetBits</span><span class="params">(GPIO_TypeDef* GPIOx, <span class="type">uint16_t</span> GPIO_Pin)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>指定端口低电平</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">GPIO_ResetBits</span><span class="params">(GPIO_TypeDef* GPIOx, <span class="type">uint16_t</span> GPIO_Pin)</span></span>;</span><br><span class="line"><span class="built_in">GPIO_ResetBits</span> (GPIOA ,GPIO_Pin_0);</span><br></pre></td></tr></table></figure>
+
+<p>来根据第三个参数的值设定端口</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">GPIO_WriteBit</span><span class="params">(GPIO_TypeDef* GPIOx, <span class="type">uint16_t</span> GPIO_Pin, BitAction BitVal)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>比如GPIO_WriteBit(GPIOA ,GPIO_Pin_0,Bit_SET);置高电平</p>
+<p>比如GPIO_WriteBit(GPIOA ,GPIO_Pin_0,Bit_RESET);置低电平</p>
+<h2 id="写入端口"><a href="#写入端口" class="headerlink" title="写入端口"></a>写入端口</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">GPIO_Write</span><span class="params">(GPIO_TypeDef* GPIOx, <span class="type">uint16_t</span> PortVal)</span></span>;</span><br><span class="line"><span class="built_in">GPIO_Write</span>(GPIOA ,~<span class="number">0x0001</span>); <span class="comment">//低电平点亮，加一个按位取反的符号~</span></span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/05/30/stm32-Stu02/" data-id="clwt42s9y000ep8hk7x0h33wn" data-title="stm32_Stu02" class="article-share-link">分享</a>
+      
+      
+      
+      
+      
+      
+
+    </footer>
+  </div>
+  
+    
+  <nav id="article-nav" class="wow fadeInUp">
+    
+      <div class="article-nav-link-wrap article-nav-link-left">
+        
+          
+          
+            <img data-src="/images/banner.jpg" data-sizes="auto" alt="stm32_Stu02" class="lazyload">
+          
+        
+        <a href="/2024/05/30/stm32-Stu03/"></a>
+        <div class="article-nav-caption">前一篇</div>
+        <h3 class="article-nav-title">
+          
+            stm32_Stu02
+          
+        </h3>
+      </div>
+    
+    
+    <div class="article-nav-link-wrap article-nav-link-right">
+      
+        
+        
+          <img data-src="/images/banner.jpg" data-sizes="auto" alt="stm32_Stu01" class="lazyload">
+        
+      
+      <a href="/2024/05/30/stm32-Stu01/"></a>
+      <div class="article-nav-caption">后一篇</div>
+      <h3 class="article-nav-title">
+        
+          stm32_Stu01
+        
+      </h3>
+    </div>
+    
+  </nav>
+
+
+  
+</article>
+
+
+
+
+
+
+</section>
+          
+            <aside id="sidebar">
+  <div class="sidebar-wrap wow fadeInRight wrap-sticky">
+    
+      <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">文章目录</h3>
+  <div class="sidebar-toc-wrapper"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%A0%E7%A7%8D%E8%BE%93%E5%85%A5%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">几种输入模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%B6%E9%92%9F%E6%8E%A7%E5%88%B6%E5%87%BD%E6%95%B0"><span class="toc-number">2.</span> <span class="toc-text">时钟控制函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%BB%E5%86%99%E5%87%BD%E6%95%B0"><span class="toc-number">3.</span> <span class="toc-text">读写函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GPIO%E5%86%99%E5%85%A5%E5%87%BD%E6%95%B0"><span class="toc-number">4.</span> <span class="toc-text">GPIO写入函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GPIO%E8%BE%93%E5%87%BA%E5%87%BD%E6%95%B0"><span class="toc-number">5.</span> <span class="toc-text">GPIO输出函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E5%85%A5%E7%AB%AF%E5%8F%A3"><span class="toc-number">6.</span> <span class="toc-text">写入端口</span></a></li></ol></div>
+</div>
+</div>
+      <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/../images/avatar.jpg" data-sizes="auto" alt="litmus" class="lazyload">
+  <div class="sidebar-author-name">litmus</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>文章</div>
+    <div class="sidebar-state-number">14</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>分类</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>标签</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+</div>
+<div class="sidebar-menu">
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/" aria-label="首页"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">首页</div>
+    </div>
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/archives" aria-label="归档"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">归档</div>
+    </div>
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/about" aria-label="关于"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">关于</div>
+    </div>
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/friend" aria-label="友链"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">友链</div>
+    </div>
+  
+</div>
+</div>
+    
+    
+      <div class="sidebar-btn-wrapper" style="position:static">
+        <div class="sidebar-toc-btn current"></div>
+        <div class="sidebar-common-btn"></div>
+      </div>
+    
+  </div>
+
+  
+</aside>
+
+          
+        </div>
+        <footer id="footer" class="wow fadeInUp">
+  <div style="width: 100%; overflow: hidden">
+    <div class="footer-line"></div>
+  </div>
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      <div>
+        <span class="icon-copyright"></span>
+        2020-2024
+        <span class="footer-info-sep"></span>
+        litmus
+      </div>
+      
+        <div>
+          基于&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>&nbsp;
+          Theme.<a href="https://github.com/D-Sketon/hexo-theme-reimu" target="_blank">Reimu</a>
+        </div>
+      
+      
+        <div>
+          <span class="icon-brush"></span>
+          7.6k
+          &nbsp;|&nbsp;
+          <span class="icon-coffee"></span>
+          00:32
+        </div>
+      
+      
+        <div>
+          <span class="icon-eye"></span>
+          <span id="busuanzi_container_site_pv">总访问量&nbsp;<span id="busuanzi_value_site_pv"></span></span>
+          &nbsp;|&nbsp;
+          <span class="icon-user"></span>
+          <span id="busuanzi_container_site_uv">总访客量&nbsp;<span id="busuanzi_value_site_uv"></span></span>
+        </div>
+      
+    </div>
+  </div>
+</footer>
+
+        <div class="sidebar-top">
+          <img src="/images/taichi.png" height="50" width="50" />
+          <div class="arrow-up"></div>
+        </div>
+        <div id="mask"></div>
+      </div>
+      <nav id="mobile-nav">
+  <div class="sidebar-wrap">
+    
+      <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">文章目录</h3>
+  <div class="sidebar-toc-wrapper"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%A0%E7%A7%8D%E8%BE%93%E5%85%A5%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.</span> <span class="toc-text">几种输入模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%B6%E9%92%9F%E6%8E%A7%E5%88%B6%E5%87%BD%E6%95%B0"><span class="toc-number">2.</span> <span class="toc-text">时钟控制函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%BB%E5%86%99%E5%87%BD%E6%95%B0"><span class="toc-number">3.</span> <span class="toc-text">读写函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GPIO%E5%86%99%E5%85%A5%E5%87%BD%E6%95%B0"><span class="toc-number">4.</span> <span class="toc-text">GPIO写入函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GPIO%E8%BE%93%E5%87%BA%E5%87%BD%E6%95%B0"><span class="toc-number">5.</span> <span class="toc-text">GPIO输出函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E5%85%A5%E7%AB%AF%E5%8F%A3"><span class="toc-number">6.</span> <span class="toc-text">写入端口</span></a></li></ol></div>
+</div>
+</div>
+      <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/../images/avatar.jpg" data-sizes="auto" alt="litmus" class="lazyload">
+  <div class="sidebar-author-name">litmus</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>文章</div>
+    <div class="sidebar-state-number">14</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>分类</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>标签</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+</div>
+<div class="sidebar-menu">
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/" aria-label="首页"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">首页</div>
+    </div>
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/archives" aria-label="归档"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">归档</div>
+    </div>
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/about" aria-label="关于"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">关于</div>
+    </div>
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/friend" aria-label="友链"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">友链</div>
+    </div>
+  
+</div>
+</div>
+    
+  </div>
+  
+    <div class="sidebar-btn-wrapper">
+      <div class="sidebar-toc-btn current"></div>
+      <div class="sidebar-common-btn"></div>
+    </div>
+  
+</nav>
+
+    </div>
+    <div class="site-search">
+      <div class="reimu-popup popup">
+        <div class="reimu-search">
+          <span class="reimu-search-input-icon"></span>
+          <div class="reimu-search-input" id="reimu-search-input"></div>
+        </div>
+        <div class="reimu-results">
+          <div id="reimu-stats"></div>
+          <div id="reimu-hits"></div>
+          <div id="reimu-pagination" class="reimu-pagination"></div>
+        </div>
+        <span class="popup-btn-close"></span>
+      </div>
+    </div>
+    
+<script src="https://npm.webcache.cn/jquery@3.7.1/dist/jquery.min.js"></script>
+
+
+<script src="https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js"></script>
+
+
+<script src="https://npm.webcache.cn/clipboard@2.0.11/dist/clipboard.min.js"></script>
+
+
+
+  
+<script src="https://npm.webcache.cn/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" defer></script>
+
+
+
+  
+<script src="https://npm.webcache.cn/busuanzi@2.3.0/bsz.pure.mini.js" async></script>
+
+
+
+
+
+
+<script src="/js/pjax_script.js" data-pjax></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<script src="https://npm.webcache.cn/mouse-firework@0.0.4/dist/index.umd.js"></script>
+
+  <script>
+    firework(JSON.parse('{"excludeElements":["a"],"particles":[{"shape":"circle","move":["emit"],"easing":"easeOutExpo","colors":["#ff5252","#ff7c7c","#ffafaf","#ffd0d0"],"number":20,"duration":[1200,1800],"shapeOptions":{"radius":[16,32],"alpha":[0.3,0.5]}},{"shape":"circle","move":["diffuse"],"easing":"easeOutExpo","colors":["#ff0000"],"number":1,"duration":[1200,1800],"shapeOptions":{"radius":20,"alpha":[0.2,0.5],"lineWidth":6}}]}'))
+  </script>
+
+
+
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+  <script>
+    console.log(String.raw`%c 
+ ______     ______     __     __    __     __  __    
+/\  == \   /\  ___\   /\ \   /\ "-./  \   /\ \/\ \   
+\ \  __<   \ \  __\   \ \ \  \ \ \-./\ \  \ \ \_\ \  
+ \ \_\ \_\  \ \_____\  \ \_\  \ \_\ \ \_\  \ \_____\ 
+  \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
+                                                  
+`,'color: #ff5252;')
+    console.log('%c Theme.Reimu v' + '0.1.1' + ' %c https://github.com/D-Sketon/hexo-theme-reimu ', 'color: white; background: #ff5252; padding:5px 0;', 'padding:4px;border:1px solid #ff5252;')
+  </script>
+  
+
+  <!-- hexo injector body_end start -->
+<script src="/js/insert_highlight.js" data-pjax></script>
+<!-- hexo injector body_end end --></body>
+  </html>
+

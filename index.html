@@ -183,6 +183,158 @@
   
   <div class="post-wrap-left wow fadeInUp">
     
+      <a class="post-link" href="/2024/05/30/stm32-Stu03/" aria-label="stm32_Stu02"></a>
+    
+    
+    <div class="post-cover-left">
+      
+        
+        
+          <img data-src="/images/banner.jpg" data-sizes="auto" alt="stm32_Stu02" class="lazyload">
+        
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-05-30</span>
+        <span><span class="icon-pencil"></span>113 字</span>
+        <span><span class="icon-clock"></span>1 分钟</span>
+      </div>
+      <h2 class="post-title">stm32_Stu02</h2>
+      <article class="post-article">
+        
+          所用到的一些c语言知识C语言数据类型
+C语言宏定义关键字：#define
+1#define M_PI  3.1415926
+
+C语言typedef将一个比较长的变量换个名字
+12typedef unsigned char uint8_t;uint8_t a;//等价于unsigned char a;
+
+C语言结构体12345GPIO_InitTypeDef GPIO_InitStructure;//定义结构体	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1 | G
+        
+      </article>
+    </div>
+  </div>
+
+
+  
+  
+  <div class="post-wrap-right wow fadeInUp">
+    
+    <a class="post-link" href="/2024/05/30/stm32-Stu02/"></a>
+    
+    <div class="post-cover-right">
+      
+        
+        
+          <img data-src="/images/banner.jpg" data-sizes="auto" alt="stm32_Stu02" class="lazyload">
+        
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-05-30</span>
+        <span><span class="icon-pencil"></span>759 字</span>
+        <span><span class="icon-clock"></span>2 分钟</span>
+      </div>
+      <h2 class="post-title">stm32_Stu02</h2>
+      <article class="post-article">
+        
+          几种输入模式 1.浮空输入
+1GPIO_Mode_IN_FLOATING = 0x04；
+
+在这种模式下，GPIO引脚没有内部上拉或下拉电阻，因此它的电平状态取决于外部电路。这种模式常用于读取开关状态，如按钮或传感器的输出。
+2.上拉输入
+1GPIO_Mode_IPU = 0x48;
+
+与下拉输入相反，这种模式在GPIO引脚内部连接了一个上拉电阻到电源（VCC），使得引脚在没有外部信号时保持高电平。这同样用于防止悬空状态，并且适用于那些需要默认高电平信号的输入。
+3.开漏输出
+1GPIO_Mode_Out_OD = 0x14;
+
+在开漏输出模式下，GPIO引脚可以输出低电平，但不能直接输出高电
+        
+      </article>
+    </div>
+  </div>
+
+
+  
+  
+  <div class="post-wrap-left wow fadeInUp">
+    
+      <a class="post-link" href="/2024/05/30/stm32-Stu01/" aria-label="stm32_Stu01"></a>
+    
+    
+    <div class="post-cover-left">
+      
+        
+        
+          <img data-src="/images/banner.jpg" data-sizes="auto" alt="stm32_Stu01" class="lazyload">
+        
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-05-30</span>
+        <span><span class="icon-pencil"></span>1.8k 字</span>
+        <span><span class="icon-clock"></span>6 分钟</span>
+      </div>
+      <h2 class="post-title">stm32_Stu01</h2>
+      <article class="post-article">
+        
+          基础概念再梳理
+1.处理器
+处理器，通常指的是中央处理器（Central Processing Unit，简称CPU），是计算机硬件系统的核心部分。它的主要功能是执行程序中的指令，处理数据，以及控制计算机的其他硬件组件。处理器负责执行操作系统和应用程序发出的指令，是计算机进行计算和数据处理的中心。
+2.板级支持包
+板级支持包（Board Support Package，简称BSP）是嵌入式系统中的一个重要组件，它位于硬件和操作系统之间，为操作系统提供必要的硬件支持。BSP的主要作用是初始化硬件、提供设备驱动程序、系统中断服务程序，以及定制操作系统的功能，从而为软件系统提供一个与硬件无关的运行环
+        
+      </article>
+    </div>
+  </div>
+
+
+  
+  
+  <div class="post-wrap-right wow fadeInUp">
+    
+    <a class="post-link" href="/2024/05/30/%E4%BD%BF%E7%94%A8sourcetree%E5%8D%8F%E5%90%8C%E5%88%9B%E4%BD%9C/"></a>
+    
+    <div class="post-cover-right">
+      
+        
+        
+          <img data-src="/images/banner.jpg" data-sizes="auto" alt="使用sourcetree协同创作" class="lazyload">
+        
+      
+    </div>
+    <div class="post-info">
+      <div class="post-meta">
+        <span><span class="icon-calendar"></span>2024-05-30</span>
+        <span><span class="icon-pencil"></span>51 字</span>
+        <span><span class="icon-clock"></span>1 分钟</span>
+      </div>
+      <h2 class="post-title">使用sourcetree协同创作</h2>
+      <article class="post-article">
+        
+          先clone
+推送时候多次失败的解决利器：
+1git config --global http.proxy &amp;quot;127.0.0.1.1080&amp;quot;
+
+1git config --global --unset http.proxy
+
+从这里邀请别人，就可以一起利用SourceTree协作了
+
+
+        
+      </article>
+    </div>
+  </div>
+
+
+  
+  
+  <div class="post-wrap-left wow fadeInUp">
+    
       <a class="post-link" href="/2024/05/30/csharp-Day2/" aria-label="csharp_Day2"></a>
     
     
@@ -432,141 +584,12 @@ Markdown123456# 一级标题## 二级标题### 三级标题#### 四级标题####
 
 
   
-  
-  <div class="post-wrap-left wow fadeInUp">
+
+
+  <nav id="page-nav" class="wow fadeInUp">
     
-      <a class="post-link" href="/2024/04/19/face-recognition/" aria-label="face_recognition"></a>
-    
-    
-    <div class="post-cover-left">
-      
-        
-        
-          <img data-src="/images/banner.jpg" data-sizes="auto" alt="face_recognition" class="lazyload">
-        
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2024-04-19</span>
-        <span><span class="icon-pencil"></span>1.2k 字</span>
-        <span><span class="icon-clock"></span>6 分钟</span>
-      </div>
-      <h2 class="post-title">face_recognition</h2>
-      <article class="post-article">
-        
-          数字图像的点运算数字图像处理（一）数字图像的点运算原图：
-
-一、数字图像的点运算1.灰度直方图1234567891011img=imread(&amp;#x27;C:\Users\24682\Desktop\lzy\face\lzy.jpg&amp;#x27;);[m,n]=size(img);img1=rgb2gray(img);subplot(1,3,1);imshow(img1);subplot(1,3,2);imhist(img1,32);[counts,x]=imhist(img1,32);counts=counts/m/n;subplot(1,3,3);stem(x,counts);
-
-展示的效果
-        
-      </article>
-    </div>
-  </div>
-
-
-  
-  
-  <div class="post-wrap-right wow fadeInUp">
-    
-    <a class="post-link" href="/2024/04/19/Golden-moon/"></a>
-    
-    <div class="post-cover-right">
-      
-        
-        
-          <img data-src="/images/banner.jpg" data-sizes="auto" alt="Golden moon" class="lazyload">
-        
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2024-04-19</span>
-        <span><span class="icon-pencil"></span>559 字</span>
-        <span><span class="icon-clock"></span>1 分钟</span>
-      </div>
-      <h2 class="post-title">Golden moon</h2>
-      <article class="post-article">
-        
-          金色明月———–明月科创实验班宣传片矛盾一：​        小哥是明月科创实验班的一名大一新生。初入明月，顿感迷茫，不知道自己要做什么。并且对明月的教学模式感到疑惑。
-
-矛盾二：​       小哥为了缓解压力，总是去金色印象洗脚解闷，在这里他偶遇了洗脚小妹，二人一见钟情，小妹讲述了自己辍学来洗脚店做服务员的故事。小妹迷茫，她感觉她在学校学不到有用的知识，就算努力考上大学，最后可能还不如学一门手艺。二人都处于迷茫的时段，但此时，小哥感到更加迷茫。
-转折一：​       有一次洗脚哥偶然间带了学习资料去洗脚店，小妹注意到这一点，并且提出自己对此很感兴趣，新工科的学习方式打破了她对传统教育方式
-        
-      </article>
-    </div>
-  </div>
-
-
-  
-  
-  <div class="post-wrap-left wow fadeInUp">
-    
-      <a class="post-link" href="/2024/04/12/my-first-blog/" aria-label="my-first-blog"></a>
-    
-    
-    <div class="post-cover-left">
-      
-        
-        
-          <img data-src="/images/banner.jpg" data-sizes="auto" alt="my-first-blog" class="lazyload">
-        
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2024-04-12</span>
-        <span><span class="icon-pencil"></span>9 字</span>
-        <span><span class="icon-clock"></span>1 分钟</span>
-      </div>
-      <h2 class="post-title">my-first-blog</h2>
-      <article class="post-article">
-        
-          这是我的第一个博客
-
-        
-      </article>
-    </div>
-  </div>
-
-
-  
-  
-  <div class="post-wrap-right wow fadeInUp">
-    
-    <a class="post-link" href="/2024/04/11/hello-world/"></a>
-    
-    <div class="post-cover-right">
-      
-        
-        
-          <img data-src="/images/banner.jpg" data-sizes="auto" alt="Hello World" class="lazyload">
-        
-      
-    </div>
-    <div class="post-info">
-      <div class="post-meta">
-        <span><span class="icon-calendar"></span>2024-04-11</span>
-        <span><span class="icon-pencil"></span>75 字</span>
-        <span><span class="icon-clock"></span>1 分钟</span>
-      </div>
-      <h2 class="post-title">Hello World</h2>
-      <article class="post-article">
-        
-          Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick StartCreate a new post1$ hexo new &amp;quot;My New Post&amp;quot;
-
-More info: Writing
-Run server1$ hexo ser
-        
-      </article>
-    </div>
-  </div>
-
-
-  
-
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">下一页 &raquo;</a>
+  </nav>
 
 
 </section>
@@ -582,7 +605,7 @@ Run server1$ hexo ser
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>文章</div>
-    <div class="sidebar-state-number">10</div>
+    <div class="sidebar-state-number">14</div>
   </div>
   <div class="sidebar-state-category">
     <div>分类</div>
@@ -655,10 +678,10 @@ Run server1$ hexo ser
       
         <div>
           <span class="icon-brush"></span>
-          4.8k
+          7.6k
           &nbsp;|&nbsp;
           <span class="icon-coffee"></span>
-          00:22
+          00:32
         </div>
       
       
@@ -691,7 +714,7 @@ Run server1$ hexo ser
 <div class="sidebar-state">
   <div class="sidebar-state-article">
     <div>文章</div>
-    <div class="sidebar-state-number">10</div>
+    <div class="sidebar-state-number">14</div>
   </div>
   <div class="sidebar-state-category">
     <div>分类</div>
