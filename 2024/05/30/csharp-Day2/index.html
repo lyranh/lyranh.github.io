@@ -25,15 +25,21 @@
   
 <link rel="stylesheet" href="/css/loader.css">
 
-  <meta property="og:type" content="article">
+  <meta name="description" content="常用的类，对象，类成员将现世事物进行抽象。 辩证唯物主义马克思主义辩证法强调物质的重要性及物质内部矛盾的存在，其包含但不限于阶级、劳动和社会经济学及相关理论的结合。马克思主义辩证法与唯心主义的黑格尔辩证法有一定不同，后者强调观察物质现象中的矛盾，并通过分析这些矛盾，在保留其本质的基础上找出 一套解决方案。 类与对象的关系类–现世事物 对象–现世个体 实例化 类—-&gt;对象  类创建对象  逻辑">
+<meta property="og:type" content="article">
 <meta property="og:title" content="csharp_Day2">
 <meta property="og:url" content="http://example.com/2024/05/30/csharp-Day2/index.html">
 <meta property="og:site_name" content="欢迎来到蕊之殿堂">
+<meta property="og:description" content="常用的类，对象，类成员将现世事物进行抽象。 辩证唯物主义马克思主义辩证法强调物质的重要性及物质内部矛盾的存在，其包含但不限于阶级、劳动和社会经济学及相关理论的结合。马克思主义辩证法与唯心主义的黑格尔辩证法有一定不同，后者强调观察物质现象中的矛盾，并通过分析这些矛盾，在保留其本质的基础上找出 一套解决方案。 类与对象的关系类–现世事物 对象–现世个体 实例化 类—-&gt;对象  类创建对象  逻辑">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2024/05/30/RCKlOvhJditjx4o.png">
+<meta property="og:image" content="https://s2.loli.net/2024/05/30/ZHi7LFoq1m5Dpby.png">
+<meta property="og:image" content="https://s2.loli.net/2024/05/30/rfhFwJ7dlen5ILM.png">
 <meta property="article:published_time" content="2024-05-30T02:46:06.000Z">
-<meta property="article:modified_time" content="2024-05-30T02:46:06.181Z">
+<meta property="article:modified_time" content="2024-05-30T08:18:54.830Z">
 <meta property="article:author" content="litmus">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2024/05/30/RCKlOvhJditjx4o.png">
   
     <link rel="alternate" href="/atom.xml" title="欢迎来到蕊之殿堂" type="application/atom+xml">
   
@@ -198,11 +204,48 @@
 
     <div class="e-content article-entry" itemprop="articleBody">
       
-        
+        <h2 id="常用的类，对象，类成员"><a href="#常用的类，对象，类成员" class="headerlink" title="常用的类，对象，类成员"></a>常用的类，对象，类成员</h2><p>将现世事物进行抽象。</p>
+<h3 id="辩证唯物主义"><a href="#辩证唯物主义" class="headerlink" title="辩证唯物主义"></a>辩证唯物主义</h3><p>马克思主义辩证法强调物质的重要性及物质内部矛盾的存在，其包含但不限于阶级、劳动和社会经济学及相关理论的结合。马克思主义辩证法与唯心主义的黑格尔辩证法有一定不同，后者强调观察物质现象中的矛盾，并通过分析这些矛盾，在保留其本质的基础上找出</p>
+<p>一套解决方案。</p>
+<h2 id="类与对象的关系"><a href="#类与对象的关系" class="headerlink" title="类与对象的关系"></a>类与对象的关系</h2><p>类–现世事物</p>
+<p>对象–现世个体</p>
+<p><strong>实例化</strong></p>
+<p>类—-&gt;对象  类创建对象 </p>
+<p>逻辑关系：类与对象</p>
+<p>内容关系：类与实例</p>
+<h3 id="一些配置"><a href="#一些配置" class="headerlink" title="一些配置"></a>一些配置</h3><p><strong>1.下载并应用2022 Microsoft Help Viewer</strong></p>
+<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/visualstudio/help-viewer/installation?view=vs-2022">https://learn.microsoft.com/zh-cn/visualstudio/help-viewer/installation?view=vs-2022</a></p>
+<p>然后勾选</p>
+<p><img src="https://s2.loli.net/2024/05/30/RCKlOvhJditjx4o.png" alt="78YTAC6@~M8ZT8UVIYRLENS.png"></p>
+<p><strong>2.右键reference—Manage Nuget</strong></p>
+<p>那里可以下载一些需用的dll</p>
+<p>当出现警告显示版本不兼容之类的，可以在项目右键-编辑项目文件的csproj里进行修改</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Project</span> <span class="attr">Sdk</span>=<span class="string">&quot;Microsoft.NET.Sdk.WindowsDesktop&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">PropertyGroup</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">OutputType</span>&gt;</span>WinExe<span class="tag">&lt;/<span class="name">OutputType</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">TargetFramework</span>&gt;</span>net4.8-windows<span class="tag">&lt;/<span class="name">TargetFramework</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">UseWindowsForms</span>&gt;</span>true<span class="tag">&lt;/<span class="name">UseWindowsForms</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">PropertyGroup</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">Project</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在这里我修改了net的版本号和sdk.WindowsDesktop，错误就好了</p>
+<p>后续可以在vs警告引导下安装net相应版本。</p>
+<h3 id="For-Example"><a href="#For-Example" class="headerlink" title="For Example"></a>For Example</h3><p>表单会以窗口形式呈现</p>
+<p><img src="https://s2.loli.net/2024/05/30/ZHi7LFoq1m5Dpby.png" alt="image.png"></p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System;</span><br><span class="line"><span class="keyword">using</span> System.Collections.Generic;</span><br><span class="line"><span class="keyword">using</span> System.Linq;</span><br><span class="line"><span class="keyword">using</span> System.Text;</span><br><span class="line"><span class="keyword">using</span> System.Threading.Tasks;</span><br><span class="line"><span class="keyword">using</span> System.Windows.Forms;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">namespace</span> <span class="title">HelloWorld</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">class</span> <span class="title">Program</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//使用new操作符就可以为类创建实例</span></span><br><span class="line">            (<span class="keyword">new</span> Form()).ShowDialog();<span class="comment">//new+类名相当于把类实例化了</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过<strong>引用变量</strong>引用一个实例就可以多次访问这个实例，如果单纯的将他们分别展示则不能达到效果。</p>
+<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"><span class="built_in">string</span>[] args</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    Form myform;<span class="comment">//myform就是一个引用变量</span></span><br><span class="line">    myform = <span class="keyword">new</span> Form();</span><br><span class="line">    myform.Text=<span class="string">&quot;litmus&#x27;s Form&quot;</span>;</span><br><span class="line">    myform.ShowDialog();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="https://s2.loli.net/2024/05/30/rfhFwJ7dlen5ILM.png" alt="image.png"></p>
+<h2 id="类的三大成员：属性，方法，事件"><a href="#类的三大成员：属性，方法，事件" class="headerlink" title="类的三大成员：属性，方法，事件"></a>类的三大成员：属性，方法，事件</h2><h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><p>存储数据,组合起来标识类或者对象的状态。（感觉有点像那什么结构体）</p>
+<p><strong>方法</strong></p>
+<p>Function，能表示类或对象能做什么。（类似于函数？）</p>
+<p><strong>事件</strong></p>
+<p>触发（跟你unity很像啊），主要起到通知作用。</p>
+<p>光标移动到某个实例上按F1可查询该类的属性，方法，事件</p>
+<p>Graphic user interface–GUI 图像用户界面</p>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://example.com/2024/05/30/csharp-Day2/" data-id="clwsnmkyf000608hkddf77yhe" data-title="csharp_Day2" class="article-share-link">分享</a>
+      <a data-url="http://example.com/2024/05/30/csharp-Day2/" data-id="clwsziiug0005k0hkc5vze0e6" data-title="csharp_Day2" class="article-share-link">分享</a>
       
       
       
@@ -251,7 +294,7 @@
     
       <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
   <h3 class="toc-title">文章目录</h3>
-  <div class="sidebar-toc-wrapper"></div>
+  <div class="sidebar-toc-wrapper"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84%E7%B1%BB%EF%BC%8C%E5%AF%B9%E8%B1%A1%EF%BC%8C%E7%B1%BB%E6%88%90%E5%91%98"><span class="toc-number">1.</span> <span class="toc-text">常用的类，对象，类成员</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%A9%E8%AF%81%E5%94%AF%E7%89%A9%E4%B8%BB%E4%B9%89"><span class="toc-number">1.1.</span> <span class="toc-text">辩证唯物主义</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number">2.</span> <span class="toc-text">类与对象的关系</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E9%85%8D%E7%BD%AE"><span class="toc-number">2.1.</span> <span class="toc-text">一些配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#For-Example"><span class="toc-number">2.2.</span> <span class="toc-text">For Example</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E7%9A%84%E4%B8%89%E5%A4%A7%E6%88%90%E5%91%98%EF%BC%9A%E5%B1%9E%E6%80%A7%EF%BC%8C%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BA%8B%E4%BB%B6"><span class="toc-number">3.</span> <span class="toc-text">类的三大成员：属性，方法，事件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%9E%E6%80%A7"><span class="toc-number">3.1.</span> <span class="toc-text">属性</span></a></li></ol></li></ol></div>
 </div>
 </div>
       <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
@@ -340,10 +383,10 @@
       
         <div>
           <span class="icon-brush"></span>
-          4.2k
+          4.8k
           &nbsp;|&nbsp;
           <span class="icon-coffee"></span>
-          00:21
+          00:22
         </div>
       
       
@@ -370,7 +413,7 @@
     
       <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
   <h3 class="toc-title">文章目录</h3>
-  <div class="sidebar-toc-wrapper"></div>
+  <div class="sidebar-toc-wrapper"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84%E7%B1%BB%EF%BC%8C%E5%AF%B9%E8%B1%A1%EF%BC%8C%E7%B1%BB%E6%88%90%E5%91%98"><span class="toc-number">1.</span> <span class="toc-text">常用的类，对象，类成员</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BE%A9%E8%AF%81%E5%94%AF%E7%89%A9%E4%B8%BB%E4%B9%89"><span class="toc-number">1.1.</span> <span class="toc-text">辩证唯物主义</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E4%B8%8E%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number">2.</span> <span class="toc-text">类与对象的关系</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E9%85%8D%E7%BD%AE"><span class="toc-number">2.1.</span> <span class="toc-text">一些配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#For-Example"><span class="toc-number">2.2.</span> <span class="toc-text">For Example</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E7%9A%84%E4%B8%89%E5%A4%A7%E6%88%90%E5%91%98%EF%BC%9A%E5%B1%9E%E6%80%A7%EF%BC%8C%E6%96%B9%E6%B3%95%EF%BC%8C%E4%BA%8B%E4%BB%B6"><span class="toc-number">3.</span> <span class="toc-text">类的三大成员：属性，方法，事件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B1%9E%E6%80%A7"><span class="toc-number">3.1.</span> <span class="toc-text">属性</span></a></li></ol></li></ol></div>
 </div>
 </div>
       <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
