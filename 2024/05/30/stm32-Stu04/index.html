@@ -1,0 +1,665 @@
+
+  <!DOCTYPE html>
+  <html lang="zh-CN"  >
+  <head>
+  <meta charset="utf-8">
+  
+
+  
+
+  
+
+  
+  <title>
+    stm32_Stu04 |
+    
+    欢迎来到蕊之殿堂
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="preload" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic%7CUbuntu%20Mono:400,400italic,700,700italic&display=swap&subset=latin,latin-ext" as="style" onload="this.onload&#x3D;null;this.rel&#x3D;&#39;stylesheet&#39;">
+  
+<link rel="stylesheet" href="https://npm.webcache.cn/@fortawesome/fontawesome-free@6.5.1/css/regular.min.css">
+<link rel="stylesheet" href="https://npm.webcache.cn/@fortawesome/fontawesome-free@6.5.1/css/solid.min.css">
+
+  <link rel="preload" href="https://npm.webcache.cn/@fortawesome/fontawesome-free@6.5.1/css/brands.min.css" as="style" onload="this.onload&#x3D;null;this.rel&#x3D;&#39;stylesheet&#39;"><link rel="preload" href="https://npm.webcache.cn/@fortawesome/fontawesome-free@6.5.1/css/v5-font-face.min.css" as="style" onload="this.onload&#x3D;null;this.rel&#x3D;&#39;stylesheet&#39;"><link rel="preload" href="https://npm.webcache.cn/@fortawesome/fontawesome-free@6.5.1/css/v4-font-face.min.css" as="style" onload="this.onload&#x3D;null;this.rel&#x3D;&#39;stylesheet&#39;">
+  
+<link rel="stylesheet" href="/css/loader.css">
+
+  <meta name="description" content="定时中断EXITEXTI（External Interrupt）是一种外部中断功能，它允许微控制器（MCU）响应外部事件或信号。外部中断是一种重要的硬件特性，它使得微控制器能够在特定事件发生时立即采取行动，而无需持续轮询或检查外部引脚的状态，从而提高了系统的效率和响应速度。外部中断通常由微控制器的某个输入引脚触发。当这个引脚的电平变化（例如，从低电平变为高电平，或从高电平变为低电平）或达到某个特">
+<meta property="og:type" content="article">
+<meta property="og:title" content="stm32_Stu04">
+<meta property="og:url" content="http://example.com/2024/05/30/stm32-Stu04/index.html">
+<meta property="og:site_name" content="欢迎来到蕊之殿堂">
+<meta property="og:description" content="定时中断EXITEXTI（External Interrupt）是一种外部中断功能，它允许微控制器（MCU）响应外部事件或信号。外部中断是一种重要的硬件特性，它使得微控制器能够在特定事件发生时立即采取行动，而无需持续轮询或检查外部引脚的状态，从而提高了系统的效率和响应速度。外部中断通常由微控制器的某个输入引脚触发。当这个引脚的电平变化（例如，从低电平变为高电平，或从高电平变为低电平）或达到某个特">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2024/05/30/G4cQkObvYUFeT3E.png">
+<meta property="og:image" content="https://s2.loli.net/2024/05/30/XtT1dz4Qo8Du3HU.png">
+<meta property="og:image" content="https://s2.loli.net/2024/05/30/hyD2uodH3G5UYeL.png">
+<meta property="og:image" content="https://s2.loli.net/2024/05/30/8vLa2CwZj5GEbhR.png">
+<meta property="og:image" content="https://s2.loli.net/2024/05/31/vtbPUeDnOANQyYm.png">
+<meta property="og:image" content="https://s2.loli.net/2024/05/31/yzKX78keuvTniZI.png">
+<meta property="article:published_time" content="2024-05-30T15:36:34.000Z">
+<meta property="article:modified_time" content="2024-05-30T16:27:15.960Z">
+<meta property="article:author" content="litmus">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2024/05/30/G4cQkObvYUFeT3E.png">
+  
+    <link rel="alternate" href="/atom.xml" title="欢迎来到蕊之殿堂" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/images/favicon.ico">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="https://npm.webcache.cn/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+
+  
+  
+  
+  
+  
+<script src="https://npm.webcache.cn/pace-js@1.2.4/pace.min.js"></script>
+
+  
+    
+<link rel="stylesheet" href="https://npm.webcache.cn/wowjs@1.1.3/css/libs/animate.css">
+
+    
+<script src="https://npm.webcache.cn/wowjs@1.1.3/dist/wow.min.js"></script>
+
+    <script>
+      new WOW({
+        offset: 0,
+        mobile: true,
+        live: false
+      }).init();
+    </script>
+  
+  
+    <script src="/sw.js"></script>
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+  <body>
+    
+  <div id='loader'>
+    <div class="loading-left-bg"></div>
+    <div class="loading-right-bg"></div>
+    <div class="spinner-box">
+      <div class="loading-taichi">
+        <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+          <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="#ff6e6b" />
+          <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z" fill="#fd0d00" />
+          <path d="M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95" fill="#fd0d00" />
+        </svg>
+      </div>
+      <div class="loading-word">少女祈祷中...</div>
+    </div>
+  </div>
+  </div>
+  <script>
+    var time = null;
+    const startLoading = () => {
+      time = Date.now();
+      document.getElementById('loader').classList.remove("loading");
+    }
+    const endLoading = () => {
+      if (!time) {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+      } else {
+        if (Date.now() - time > 500) {
+          time = null;
+          document.body.style.overflow = 'auto';
+          document.getElementById('loader').classList.add("loading");
+        } else {
+          setTimeout(endLoading, 500 - (Date.now() - time));
+          time = null;
+        }
+      }
+    }
+    window.addEventListener('load', endLoading);
+    document.getElementById('loader').addEventListener('click', endLoading);
+  </script>
+
+
+    <div id="container">
+      <div id="wrap">
+        <div id="header-nav">
+  <nav id="main-nav">
+    
+      <span class="main-nav-link-wrap">
+        <span class="main-nav-icon"></span>
+        <a class="main-nav-link" href="/">首页</a>
+      </span>
+    
+      <span class="main-nav-link-wrap">
+        <span class="main-nav-icon"></span>
+        <a class="main-nav-link" href="/archives">归档</a>
+      </span>
+    
+      <span class="main-nav-link-wrap">
+        <span class="main-nav-icon"></span>
+        <a class="main-nav-link" href="/about">关于</a>
+      </span>
+    
+      <span class="main-nav-link-wrap">
+        <span class="main-nav-icon"></span>
+        <a class="main-nav-link" href="/friend">友链</a>
+      </span>
+    
+    <a id="main-nav-toggle" class="nav-icon"></a>
+  </nav>
+  <nav id="sub-nav">
+    
+      <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+    
+    
+    
+  </nav>
+</div>
+<header id="header">
+  
+    <img fetchpriority="high" src="/images/banner.jpg" alt="stm32_Stu04">
+  
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <div id="logo-wrap">
+        
+          
+          
+            <a href="/" id="logo">
+              <h1>stm32_Stu04</h1>
+            </a>
+          
+        
+      </div>
+      
+        
+        <h2 id="subtitle-wrap">
+          
+        </h2>
+      
+    </div>
+  </div>
+</header>
+
+        <div id="content" class="outer">
+          
+          <section id="main"><article id="post-stm32-Stu04" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner">
+    <div class="article-meta">
+      <div class="article-date wow slideInLeft">
+  <a href="/2024/05/30/stm32-Stu04/" class="article-date-link">
+    <time datetime="2024-05-30T15:36:34.000Z" itemprop="datePublished">2024-05-30</time>
+  </a>
+</div>
+
+      
+
+    </div>
+    <div class="hr-line"></div>
+    
+
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="定时中断"><a href="#定时中断" class="headerlink" title="定时中断"></a>定时中断</h1><h2 id="EXIT"><a href="#EXIT" class="headerlink" title="EXIT"></a>EXIT</h2><p>EXTI（External Interrupt）是一种外部中断功能，它允许微控制器（MCU）响应外部事件或信号。外部中断是一种重要的硬件特性，它使得微控制器能够在特定事件发生时立即采取行动，而无需持续轮询或检查外部引脚的状态，从而提高了系统的效率和响应速度。外部中断通常由微控制器的某个输入引脚触发。当这个引脚的电平变化（例如，从低电平变为高电平，或从高电平变为低电平）或达到某个特定的电平持续时间时，EXTI会生成一个中断请求。微控制器的中断控制器接收到这个请求后，如果相应的中断使能位已经被设置，就会触发一个中断服务例程（ISR），执行预定义的中断处理代码。</p>
+<p>在配置EXTI时，开发者需要指定以下参数：</p>
+<p>中断引脚：选择哪个GPIO（通用输入输出）引脚作为外部中断的输入。</p>
+<p><strong>触发模式</strong></p>
+<p>上边沿：指的是数字信号从低电平（0）跳变到高电平（1）的瞬间。</p>
+<p>下降沿：数字信号从高电平（1）跳变到低电平（0）的瞬间。</p>
+<p>双边沿：双边沿意味着无论信号是从低到高还是从高到低，任何一种跳变都会触发中断或事件处理。</p>
+<p> 中断优先级：根据需要处理中断的紧迫性，设置中断的优先级。中断使能：启用或禁用外部中断功能。</p>
+<h2 id="TIM定时器"><a href="#TIM定时器" class="headerlink" title="TIM定时器"></a>TIM定时器</h2><p>输入捕获</p>
+<p>输出比较</p>
+<p>编码器接口</p>
+<p>主从触发模式</p>
+<p><img src="https://s2.loli.net/2024/05/30/G4cQkObvYUFeT3E.png" alt="image.png"></p>
+<h3 id="基本定时器"><a href="#基本定时器" class="headerlink" title="基本定时器"></a>基本定时器</h3><p>预分频器：对输入的基准频率提前进行一个分频的操作。</p>
+<p>计数器：对预分频的计数时钟进行计数，计数时钟每来一个上升沿，计数器＋1（0~65535）</p>
+<p>自动重装寄存器：存的是写入的计数目标，当计数值等于自动重装值，那就是计时时间到，产生中断信号清零计数器。</p>
+<p>更新中断：通往NVIC</p>
+<p>更新事件：不会触发中断，但会触发内部其他电路工作。</p>
+<p><img src="https://s2.loli.net/2024/05/30/XtT1dz4Qo8Du3HU.png" alt="image.png"></p>
+<h3 id="通用定时器"><a href="#通用定时器" class="headerlink" title="通用定时器"></a>通用定时器</h3><p>向上计数模式</p>
+<p>向下计数模式</p>
+<p>中央对齐模式</p>
+<p><img src="https://s2.loli.net/2024/05/30/hyD2uodH3G5UYeL.png" alt="image.png"></p>
+<h2 id="定时中断基本结构"><a href="#定时中断基本结构" class="headerlink" title="定时中断基本结构"></a>定时中断基本结构</h2><p><img src="https://s2.loli.net/2024/05/30/8vLa2CwZj5GEbhR.png" alt="image.png"></p>
+<p>第一步，开启RCC时钟</p>
+<p>第二步，选择时基单元的时钟源（对于定时中断选择内部时钟模式）</p>
+<p>第三步，配置时基单元</p>
+<p>第四步，配置输出中断控制，允许更新中断输出到NVIC</p>
+<p>第五步，配置NVIC，在NVIC中打开定时器中断的通道，并分配一个优先级</p>
+<p>第六步，使能计数器</p>
+<h2 id="配置所用到的库函数"><a href="#配置所用到的库函数" class="headerlink" title="配置所用到的库函数"></a>配置所用到的库函数</h2><p>(1)<strong>恢复缺省</strong>配置</p>
+<p>Tim.h第1054</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">TIM_DeInit</span>(TIM_TypeDef* TIMx);</span><br></pre></td></tr></table></figure>
+
+<p>（2）时基<strong>单元初始</strong>化</p>
+<p>Tim.h第1055</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">TIM_TimeBaseInit</span>(TIM_TypeDef* TIMx, TIM_TimeBaseInitTypeDef* TIM_TimeBaseInitStruct);</span><br></pre></td></tr></table></figure>
+
+<p>（3）把结构体<strong>变量赋默认值</strong></p>
+<p>Tim.h第1063</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">TIM_TimeBaseStructInit</span>(TIM_TimeBaseInitTypeDef* TIM_TimeBaseInitStruct);</span><br></pre></td></tr></table></figure>
+
+<p>（4）<strong>使能计数器</strong>（对应运行控制）</p>
+<p>（计数器的种类，使能&#x2F;失能）</p>
+<p>Tim.h第1067</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">TIM_Cmd</span>(TIM_TypeDef* TIMx, FunctionalState NewState);</span><br></pre></td></tr></table></figure>
+
+<p>（5）<strong>使能中断</strong>输出信号</p>
+<p>Tim.h第1069</p>
+<p>（选择定时器，选择中断输出，使能&#x2F;失能）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">TIM_ITConfig</span>(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> TIM_IT, FunctionalState NewState);</span><br></pre></td></tr></table></figure>
+
+<p>（6）时基单元的<strong>时钟选择</strong>部分</p>
+<p>选择内部时钟模式</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">TIM_InternalClockConfig</span>(TIM_TypeDef* TIMx);</span><br></pre></td></tr></table></figure>
+
+<p>ITRx-外部时钟模式1</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">TIM_TIxExternalClockConfig</span>(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> TIM_TIxExternalCLKSource,<span class="type">uint16_t</span> TIM_ICPolarity, <span class="type">uint16_t</span> ICFilter);</span><br></pre></td></tr></table></figure>
+
+<p>（选择定时器类型，选择TIx某个引脚，输入的极性，输入的滤波器）</p>
+<p>TIx捕获通道-外部时钟模式</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">TIM_TIxExternalClockConfig</span>(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> TIM_TIxExternalCLKSource,<span class="type">uint16_t</span> TIM_ICPolarity, <span class="type">uint16_t</span> ICFilter);</span><br></pre></td></tr></table></figure>
+
+<p>ETR外部时钟-外部时钟模式1</p>
+<p>（选择定时器类型，外部触发预分频器，输入的极性，输入的滤波器）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">TIM_ETRClockMode1Config</span>(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> TIM_ExtTRGPrescaler, <span class="type">uint16_t</span> TIM_ExtTRGPolarity,<span class="type">uint16_t</span> ExtTRGFilter);</span><br></pre></td></tr></table></figure>
+
+<p>ETR外部时钟-外部时钟模式2</p>
+<p>（选择定时器类型，外部触发预分频器，输入的极性，输入的滤波器）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">TIM_ETRClockMode2Config</span>(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> TIM_ExtTRGPrescaler, </span><br><span class="line"><span class="type">uint16_t</span> TIM_ExtTRGPolarity, <span class="type">uint16_t</span> ExtTRGFilter);</span><br></pre></td></tr></table></figure>
+
+<p>单独配置ETR引脚的预分频器，极性，滤波器</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">TIM_ETRConfig</span>(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> TIM_ExtTRGPrescaler, <span class="type">uint16_t</span> TIM_ExtTRGPolarity,<span class="type">uint16_t</span> ExtTRGFilter);</span><br></pre></td></tr></table></figure>
+
+<p>(7)单独修改预分频值</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">TIM_PrescalerConfig</span>(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> Prescaler, <span class="type">uint16_t</span> TIM_PSCReloadMode);</span><br><span class="line"><span class="comment">//（选择定时器类型，要写入的预分频值，写入的模式）</span></span><br></pre></td></tr></table></figure>
+
+<p>(8)改变计数器的计数模式</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">TIM_CounterModeConfig</span>(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> TIM_CounterMode);</span><br></pre></td></tr></table></figure>
+
+<p>（9）自动重装器预装功能配置</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">TIM_ARRPreloadConfig</span>(TIM_TypeDef* TIMx, FunctionalState NewState);</span><br></pre></td></tr></table></figure>
+
+<p>（10）手动给计数器一个计数值</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">TIM_SetCounter</span>(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> Counter);</span><br></pre></td></tr></table></figure>
+
+<p>（11）手动给自动重装器一个计数值</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">TIM_SetAutoreload</span>(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> Autoreload);</span><br></pre></td></tr></table></figure>
+
+<p>（12）获取当前计数器的值</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">TIM_GetCounter</span>(TIM_TypeDef* TIMx);</span><br></pre></td></tr></table></figure>
+
+<p>（13）获取当前预分频值的值</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">TIM_GetPrescaler</span>(TIM_TypeDef* TIMx);</span><br></pre></td></tr></table></figure>
+
+<p>（14）获取标志位和清除标志位</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">FlagStatus <span class="title">TIM_GetFlagStatus</span><span class="params">(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> TIM_FLAG)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">TIM_ClearFlag</span><span class="params">(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> TIM_FLAG)</span></span>;</span><br><span class="line"><span class="function">ITStatus <span class="title">TIM_GetITStatus</span><span class="params">(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> TIM_IT)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">TIM_ClearITPendingBit</span><span class="params">(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> TIM_IT)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p><strong>结构体的参数</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">TIM_TimeBaseInitStructure.TIM_Period=<span class="number">1000</span><span class="number">-1</span>;<span class="comment">//ARR自动重装器的值</span></span><br><span class="line">TIM_TimeBaseInitStructure.TIM_Prescaler=<span class="number">7200</span><span class="number">-1</span>;<span class="comment">//PSC预分频器的值</span></span><br><span class="line">TIM_TimeBaseInitStructure.TIM_RepetitionCounter=<span class="number">0</span>;<span class="comment">//RCC重复计数器的值（高级定时器才有）</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://s2.loli.net/2024/05/31/vtbPUeDnOANQyYm.png" alt="image.png"></p>
+<p>若想定时1s，（定时频率为1HZ“）</p>
+<p>对72M进行7200分频，得到10K的计数频率，计10000个数，就是1s</p>
+<h2 id="预分频器时序"><a href="#预分频器时序" class="headerlink" title="预分频器时序"></a>预分频器时序</h2><p><img src="https://s2.loli.net/2024/05/31/yzKX78keuvTniZI.png" alt="image.png"><br>CK_PSC:预分频器的输入时钟（选内部时钟一般是72HZ）<br>CNT_EN：CEN（计数器使能）是控制寄存器1（CR1）中的一个位，位于位0。这个位用于启动或停止定时器的计数器。当CEN位被设置为1时，定时器的计数器开始计数；当它被清零（设置为0）时，计数器停止计数。<br>CK_NET:计数器时钟</p>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>定时中断Timer.c</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;stm32f10x.h&quot;</span>                  <span class="comment">// Device header</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Timer_Init</span><span class="params">(<span class="type">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//开启时钟</span></span><br><span class="line">	<span class="built_in">RCC_APB1PeriphClockCmd</span>(RCC_APB1Periph_TIM2,ENABLE);</span><br><span class="line">	<span class="comment">//配置时钟源</span></span><br><span class="line">	<span class="built_in">TIM_InternalClockConfig</span>(TIM2);<span class="comment">//选择TIM2</span></span><br><span class="line">	<span class="comment">//时基单元初始化</span></span><br><span class="line">	TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStructure;</span><br><span class="line">	TIM_TimeBaseInitStructure.TIM_ClockDivision=TIM_CKD_DIV1;<span class="comment">//时钟分频</span></span><br><span class="line">	TIM_TimeBaseInitStructure.TIM_CounterMode=TIM_CounterMode_Up;<span class="comment">//计时器模式</span></span><br><span class="line">	TIM_TimeBaseInitStructure.TIM_Period=<span class="number">1000</span><span class="number">-1</span>;<span class="comment">//ARR</span></span><br><span class="line">	TIM_TimeBaseInitStructure.TIM_Prescaler=<span class="number">7200</span><span class="number">-1</span>;<span class="comment">//PSC</span></span><br><span class="line">	TIM_TimeBaseInitStructure.TIM_RepetitionCounter=<span class="number">0</span>;<span class="comment">//重复计数器</span></span><br><span class="line">	</span><br><span class="line">	<span class="built_in">TIM_TimeBaseInit</span>(TIM2, &amp;TIM_TimeBaseInitStructure);</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">TIM_ITConfig</span>(TIM2, TIM_IT_Update, ENABLE);<span class="comment">//开启TIM2更新中断</span></span><br><span class="line">	</span><br><span class="line">	<span class="built_in">NVIC_PriorityGroupConfig</span>(NVIC_PriorityGroup_2);<span class="comment">//配置NVIC</span></span><br><span class="line">	</span><br><span class="line">	NVIC_InitTypeDef NVIC_InitStructure;</span><br><span class="line">	NVIC_InitStructure.NVIC_IRQChannel=TIM2_IRQn;</span><br><span class="line">	NVIC_InitStructure.NVIC_IRQChannelCmd=ENABLE;</span><br><span class="line">	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority=<span class="number">2</span>;</span><br><span class="line">	NVIC_InitStructure.NVIC_IRQChannelSubPriority=<span class="number">1</span>;</span><br><span class="line">	<span class="built_in">NVIC_Init</span>(&amp;NVIC_InitStructure);</span><br><span class="line">	<span class="comment">//TIM使能</span></span><br><span class="line">	<span class="built_in">TIM_Cmd</span>(TIM2, ENABLE);</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>定时器外部时钟</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;stm32f10x.h&quot;</span>                  <span class="comment">// Device header</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">Timer_Init</span><span class="params">(<span class="type">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">/*开启时钟*/</span></span><br><span class="line">	<span class="built_in">RCC_APB1PeriphClockCmd</span>(RCC_APB1Periph_TIM2, ENABLE);<span class="comment">//开启TIM2的时钟</span></span><br><span class="line">	<span class="built_in">RCC_APB2PeriphClockCmd</span>(RCC_APB2Periph_GPIOA, ENABLE);<span class="comment">//开启GPIOA的时钟</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">/*GPIO初始化*/</span></span><br><span class="line">	GPIO_InitTypeDef GPIO_InitStructure;</span><br><span class="line">	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;</span><br><span class="line">	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0;</span><br><span class="line">	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;</span><br><span class="line">	<span class="built_in">GPIO_Init</span>(GPIOA, &amp;GPIO_InitStructure);	<span class="comment">//将PA0引脚初始化为上拉输入</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">/*外部时钟配置*/</span></span><br><span class="line">	<span class="built_in">TIM_ETRClockMode2Config</span>(TIM2, TIM_ExtTRGPSC_OFF,          				TIM_ExtTRGPolarity_NonInverted, <span class="number">0x0F</span>)</span><br><span class="line"></span><br><span class="line">	<span class="comment">/*时基单元初始化*/</span></span><br><span class="line">	TIM_TimeBaseInitTypeDef TIM_TimeBaseInitStructure;<span class="comment">//定义结构体变量</span></span><br><span class="line">	TIM_TimeBaseInitStructure.TIM_ClockDivision = TIM_CKD_DIV1;		<span class="comment">//时钟分频，选择不分频，此参数用于配置滤波器时钟，不影响时基单元功能</span></span><br><span class="line">	TIM_TimeBaseInitStructure.TIM_CounterMode = TIM_CounterMode_Up;	<span class="comment">//计数器模式，选择向上计数</span></span><br><span class="line">	TIM_TimeBaseInitStructure.TIM_Period = <span class="number">10</span> - <span class="number">1</span>;<span class="comment">//ARR</span></span><br><span class="line">	TIM_TimeBaseInitStructure.TIM_Prescaler = <span class="number">1</span> - <span class="number">1</span>;<span class="comment">//PSC</span></span><br><span class="line">	TIM_TimeBaseInitStructure.TIM_RepetitionCounter = <span class="number">0</span>;<span class="comment">//重复计数器</span></span><br><span class="line">	<span class="built_in">TIM_TimeBaseInit</span>(TIM2, &amp;TIM_TimeBaseInitStructure);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/*中断输出配置*/</span></span><br><span class="line">	<span class="built_in">TIM_ClearFlag</span>(TIM2, TIM_FLAG_Update);<span class="comment">//清除定时器更新标志位</span></span><br><span class="line">			</span><br><span class="line">	<span class="built_in">TIM_ITConfig</span>(TIM2, TIM_IT_Update, ENABLE);<span class="comment">//开启TIM2的更新中断</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">/*NVIC中断分组*/</span></span><br><span class="line">	<span class="built_in">NVIC_PriorityGroupConfig</span>(NVIC_PriorityGroup_2);	<span class="comment">//配置NVIC为分组2</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">/*NVIC配置*/</span></span><br><span class="line">	NVIC_InitTypeDef NVIC_InitStructure;		</span><br><span class="line">	NVIC_InitStructure.NVIC_IRQChannel = TIM2_IRQn;<span class="comment">//选择配置NVIC的TIM2线</span></span><br><span class="line">	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;	<span class="comment">//指定NVIC线路使能</span></span><br><span class="line">	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = <span class="number">2</span>;<span class="comment">//指定NVIC线路的抢占优先级为2</span></span><br><span class="line">	NVIC_InitStructure.NVIC_IRQChannelSubPriority = <span class="number">1</span>;<span class="comment">//指定NVIC线路的响应优先级为1</span></span><br><span class="line">	<span class="built_in">NVIC_Init</span>(&amp;NVIC_InitStructure);	<span class="comment">//将结构体变量交给NVIC_Init，配置NVIC外设</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">/*TIM使能*/</span></span><br><span class="line">	<span class="built_in">TIM_Cmd</span>(TIM2, ENABLE);<span class="comment">//使能TIM2，定时器开始运行</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">uint16_t</span> <span class="title">Timer_GetCounter</span><span class="params">(<span class="type">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">TIM_GetCounter</span>(TIM2);<span class="comment">//返回定时器TIM2的CNT</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/05/30/stm32-Stu04/" data-id="clwthdvni000eykhk41o42nqr" data-title="stm32_Stu04" class="article-share-link">分享</a>
+      
+      
+      
+      
+      
+      
+
+    </footer>
+  </div>
+  
+    
+  <nav id="article-nav" class="wow fadeInUp">
+    
+      <div class="article-nav-link-wrap article-nav-link-left">
+        
+          
+          
+            <img data-src="/images/banner.jpg" data-sizes="auto" alt="stm32_Stu05" class="lazyload">
+          
+        
+        <a href="/2024/05/31/stm32-Stu05/"></a>
+        <div class="article-nav-caption">前一篇</div>
+        <h3 class="article-nav-title">
+          
+            stm32_Stu05
+          
+        </h3>
+      </div>
+    
+    
+    <div class="article-nav-link-wrap article-nav-link-right">
+      
+        
+        
+          <img data-src="/images/banner.jpg" data-sizes="auto" alt="stm32_Stu03" class="lazyload">
+        
+      
+      <a href="/2024/05/30/stm32-Stu03/"></a>
+      <div class="article-nav-caption">后一篇</div>
+      <h3 class="article-nav-title">
+        
+          stm32_Stu03
+        
+      </h3>
+    </div>
+    
+  </nav>
+
+
+  
+</article>
+
+
+
+
+
+
+</section>
+          
+            <aside id="sidebar">
+  <div class="sidebar-wrap wow fadeInRight wrap-sticky">
+    
+      <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">文章目录</h3>
+  <div class="sidebar-toc-wrapper"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9A%E6%97%B6%E4%B8%AD%E6%96%AD"><span class="toc-number">1.</span> <span class="toc-text">定时中断</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#EXIT"><span class="toc-number">1.1.</span> <span class="toc-text">EXIT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TIM%E5%AE%9A%E6%97%B6%E5%99%A8"><span class="toc-number">1.2.</span> <span class="toc-text">TIM定时器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%AE%9A%E6%97%B6%E5%99%A8"><span class="toc-number">1.2.1.</span> <span class="toc-text">基本定时器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E7%94%A8%E5%AE%9A%E6%97%B6%E5%99%A8"><span class="toc-number">1.2.2.</span> <span class="toc-text">通用定时器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E6%97%B6%E4%B8%AD%E6%96%AD%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84"><span class="toc-number">1.3.</span> <span class="toc-text">定时中断基本结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%89%80%E7%94%A8%E5%88%B0%E7%9A%84%E5%BA%93%E5%87%BD%E6%95%B0"><span class="toc-number">1.4.</span> <span class="toc-text">配置所用到的库函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%84%E5%88%86%E9%A2%91%E5%99%A8%E6%97%B6%E5%BA%8F"><span class="toc-number">1.5.</span> <span class="toc-text">预分频器时序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81"><span class="toc-number">1.6.</span> <span class="toc-text">代码</span></a></li></ol></li></ol></div>
+</div>
+</div>
+      <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/../images/avatar.jpg" data-sizes="auto" alt="litmus" class="lazyload">
+  <div class="sidebar-author-name">litmus</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>文章</div>
+    <div class="sidebar-state-number">16</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>分类</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>标签</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+</div>
+<div class="sidebar-menu">
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/" aria-label="首页"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">首页</div>
+    </div>
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/archives" aria-label="归档"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">归档</div>
+    </div>
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/about" aria-label="关于"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">关于</div>
+    </div>
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/friend" aria-label="友链"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">友链</div>
+    </div>
+  
+</div>
+</div>
+    
+    
+      <div class="sidebar-btn-wrapper" style="position:static">
+        <div class="sidebar-toc-btn current"></div>
+        <div class="sidebar-common-btn"></div>
+      </div>
+    
+  </div>
+
+  
+</aside>
+
+          
+        </div>
+        <footer id="footer" class="wow fadeInUp">
+  <div style="width: 100%; overflow: hidden">
+    <div class="footer-line"></div>
+  </div>
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      <div>
+        <span class="icon-copyright"></span>
+        2020-2024
+        <span class="footer-info-sep"></span>
+        litmus
+      </div>
+      
+        <div>
+          基于&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>&nbsp;
+          Theme.<a href="https://github.com/D-Sketon/hexo-theme-reimu" target="_blank">Reimu</a>
+        </div>
+      
+      
+        <div>
+          <span class="icon-brush"></span>
+          10.3k
+          &nbsp;|&nbsp;
+          <span class="icon-coffee"></span>
+          00:42
+        </div>
+      
+      
+        <div>
+          <span class="icon-eye"></span>
+          <span id="busuanzi_container_site_pv">总访问量&nbsp;<span id="busuanzi_value_site_pv"></span></span>
+          &nbsp;|&nbsp;
+          <span class="icon-user"></span>
+          <span id="busuanzi_container_site_uv">总访客量&nbsp;<span id="busuanzi_value_site_uv"></span></span>
+        </div>
+      
+    </div>
+  </div>
+</footer>
+
+        <div class="sidebar-top">
+          <img src="/images/taichi.png" height="50" width="50" />
+          <div class="arrow-up"></div>
+        </div>
+        <div id="mask"></div>
+      </div>
+      <nav id="mobile-nav">
+  <div class="sidebar-wrap">
+    
+      <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">文章目录</h3>
+  <div class="sidebar-toc-wrapper"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9A%E6%97%B6%E4%B8%AD%E6%96%AD"><span class="toc-number">1.</span> <span class="toc-text">定时中断</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#EXIT"><span class="toc-number">1.1.</span> <span class="toc-text">EXIT</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TIM%E5%AE%9A%E6%97%B6%E5%99%A8"><span class="toc-number">1.2.</span> <span class="toc-text">TIM定时器</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%AE%9A%E6%97%B6%E5%99%A8"><span class="toc-number">1.2.1.</span> <span class="toc-text">基本定时器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E7%94%A8%E5%AE%9A%E6%97%B6%E5%99%A8"><span class="toc-number">1.2.2.</span> <span class="toc-text">通用定时器</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9A%E6%97%B6%E4%B8%AD%E6%96%AD%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84"><span class="toc-number">1.3.</span> <span class="toc-text">定时中断基本结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E6%89%80%E7%94%A8%E5%88%B0%E7%9A%84%E5%BA%93%E5%87%BD%E6%95%B0"><span class="toc-number">1.4.</span> <span class="toc-text">配置所用到的库函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%84%E5%88%86%E9%A2%91%E5%99%A8%E6%97%B6%E5%BA%8F"><span class="toc-number">1.5.</span> <span class="toc-text">预分频器时序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81"><span class="toc-number">1.6.</span> <span class="toc-text">代码</span></a></li></ol></li></ol></div>
+</div>
+</div>
+      <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/../images/avatar.jpg" data-sizes="auto" alt="litmus" class="lazyload">
+  <div class="sidebar-author-name">litmus</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>文章</div>
+    <div class="sidebar-state-number">16</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>分类</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>标签</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+</div>
+<div class="sidebar-menu">
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/" aria-label="首页"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">首页</div>
+    </div>
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/archives" aria-label="归档"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">归档</div>
+    </div>
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/about" aria-label="关于"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">关于</div>
+    </div>
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/friend" aria-label="友链"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">友链</div>
+    </div>
+  
+</div>
+</div>
+    
+  </div>
+  
+    <div class="sidebar-btn-wrapper">
+      <div class="sidebar-toc-btn current"></div>
+      <div class="sidebar-common-btn"></div>
+    </div>
+  
+</nav>
+
+    </div>
+    <div class="site-search">
+      <div class="reimu-popup popup">
+        <div class="reimu-search">
+          <span class="reimu-search-input-icon"></span>
+          <div class="reimu-search-input" id="reimu-search-input"></div>
+        </div>
+        <div class="reimu-results">
+          <div id="reimu-stats"></div>
+          <div id="reimu-hits"></div>
+          <div id="reimu-pagination" class="reimu-pagination"></div>
+        </div>
+        <span class="popup-btn-close"></span>
+      </div>
+    </div>
+    
+<script src="https://npm.webcache.cn/jquery@3.7.1/dist/jquery.min.js"></script>
+
+
+<script src="https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js"></script>
+
+
+<script src="https://npm.webcache.cn/clipboard@2.0.11/dist/clipboard.min.js"></script>
+
+
+
+  
+<script src="https://npm.webcache.cn/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" defer></script>
+
+
+
+  
+<script src="https://npm.webcache.cn/busuanzi@2.3.0/bsz.pure.mini.js" async></script>
+
+
+
+
+
+
+<script src="/js/pjax_script.js" data-pjax></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<script src="https://npm.webcache.cn/mouse-firework@0.0.4/dist/index.umd.js"></script>
+
+  <script>
+    firework(JSON.parse('{"excludeElements":["a"],"particles":[{"shape":"circle","move":["emit"],"easing":"easeOutExpo","colors":["#ff5252","#ff7c7c","#ffafaf","#ffd0d0"],"number":20,"duration":[1200,1800],"shapeOptions":{"radius":[16,32],"alpha":[0.3,0.5]}},{"shape":"circle","move":["diffuse"],"easing":"easeOutExpo","colors":["#ff0000"],"number":1,"duration":[1200,1800],"shapeOptions":{"radius":20,"alpha":[0.2,0.5],"lineWidth":6}}]}'))
+  </script>
+
+
+
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+  <script>
+    console.log(String.raw`%c 
+ ______     ______     __     __    __     __  __    
+/\  == \   /\  ___\   /\ \   /\ "-./  \   /\ \/\ \   
+\ \  __<   \ \  __\   \ \ \  \ \ \-./\ \  \ \ \_\ \  
+ \ \_\ \_\  \ \_____\  \ \_\  \ \_\ \ \_\  \ \_____\ 
+  \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
+                                                  
+`,'color: #ff5252;')
+    console.log('%c Theme.Reimu v' + '0.1.1' + ' %c https://github.com/D-Sketon/hexo-theme-reimu ', 'color: white; background: #ff5252; padding:5px 0;', 'padding:4px;border:1px solid #ff5252;')
+  </script>
+  
+
+  <!-- hexo injector body_end start -->
+<script src="/js/insert_highlight.js" data-pjax></script>
+<!-- hexo injector body_end end --></body>
+  </html>
+

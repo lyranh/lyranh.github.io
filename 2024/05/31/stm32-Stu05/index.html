@@ -1,0 +1,600 @@
+
+  <!DOCTYPE html>
+  <html lang="zh-CN"  >
+  <head>
+  <meta charset="utf-8">
+  
+
+  
+
+  
+
+  
+  <title>
+    stm32_Stu05 |
+    
+    欢迎来到蕊之殿堂
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="preload" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic%7CUbuntu%20Mono:400,400italic,700,700italic&display=swap&subset=latin,latin-ext" as="style" onload="this.onload&#x3D;null;this.rel&#x3D;&#39;stylesheet&#39;">
+  
+<link rel="stylesheet" href="https://npm.webcache.cn/@fortawesome/fontawesome-free@6.5.1/css/regular.min.css">
+<link rel="stylesheet" href="https://npm.webcache.cn/@fortawesome/fontawesome-free@6.5.1/css/solid.min.css">
+
+  <link rel="preload" href="https://npm.webcache.cn/@fortawesome/fontawesome-free@6.5.1/css/brands.min.css" as="style" onload="this.onload&#x3D;null;this.rel&#x3D;&#39;stylesheet&#39;"><link rel="preload" href="https://npm.webcache.cn/@fortawesome/fontawesome-free@6.5.1/css/v5-font-face.min.css" as="style" onload="this.onload&#x3D;null;this.rel&#x3D;&#39;stylesheet&#39;"><link rel="preload" href="https://npm.webcache.cn/@fortawesome/fontawesome-free@6.5.1/css/v4-font-face.min.css" as="style" onload="this.onload&#x3D;null;this.rel&#x3D;&#39;stylesheet&#39;">
+  
+<link rel="stylesheet" href="/css/loader.css">
+
+  <meta name="description" content="PWMOC(Output Compare)输出比较​	输出比较可以通过比较CNT与CCR寄存器值的关系，来对输出电平进行置1、置0或翻转的操作，用于输出一定频率和占空比的PWM波形每个高级定时器和通用定时器都拥有4个输出比较通道高级定时器的前3个通道额外拥有死区生成和互补输出的功能。 PWM(Pulse Width Modulation)脉冲宽度调制​	在具有惯性的系统中，可以通过对一系列脉冲的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="stm32_Stu05">
+<meta property="og:url" content="http://example.com/2024/05/31/stm32-Stu05/index.html">
+<meta property="og:site_name" content="欢迎来到蕊之殿堂">
+<meta property="og:description" content="PWMOC(Output Compare)输出比较​	输出比较可以通过比较CNT与CCR寄存器值的关系，来对输出电平进行置1、置0或翻转的操作，用于输出一定频率和占空比的PWM波形每个高级定时器和通用定时器都拥有4个输出比较通道高级定时器的前3个通道额外拥有死区生成和互补输出的功能。 PWM(Pulse Width Modulation)脉冲宽度调制​	在具有惯性的系统中，可以通过对一系列脉冲的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2024/05/31/27Da1GAzPwBxt59.png">
+<meta property="og:image" content="https://s2.loli.net/2024/05/31/1YQK9senmgyzGBv.png">
+<meta property="og:image" content="https://s2.loli.net/2024/05/31/l7pZYieEqzvnDV8.png">
+<meta property="og:image" content="https://s2.loli.net/2024/05/31/TX4NJMtrb5vcVdI.png">
+<meta property="article:published_time" content="2024-05-30T16:12:05.000Z">
+<meta property="article:modified_time" content="2024-05-30T16:39:30.363Z">
+<meta property="article:author" content="litmus">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2024/05/31/27Da1GAzPwBxt59.png">
+  
+    <link rel="alternate" href="/atom.xml" title="欢迎来到蕊之殿堂" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/images/favicon.ico">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="https://npm.webcache.cn/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+
+  
+  
+  
+  
+  
+<script src="https://npm.webcache.cn/pace-js@1.2.4/pace.min.js"></script>
+
+  
+    
+<link rel="stylesheet" href="https://npm.webcache.cn/wowjs@1.1.3/css/libs/animate.css">
+
+    
+<script src="https://npm.webcache.cn/wowjs@1.1.3/dist/wow.min.js"></script>
+
+    <script>
+      new WOW({
+        offset: 0,
+        mobile: true,
+        live: false
+      }).init();
+    </script>
+  
+  
+    <script src="/sw.js"></script>
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+  <body>
+    
+  <div id='loader'>
+    <div class="loading-left-bg"></div>
+    <div class="loading-right-bg"></div>
+    <div class="spinner-box">
+      <div class="loading-taichi">
+        <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+          <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="#ff6e6b" />
+          <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z" fill="#fd0d00" />
+          <path d="M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95" fill="#fd0d00" />
+        </svg>
+      </div>
+      <div class="loading-word">少女祈祷中...</div>
+    </div>
+  </div>
+  </div>
+  <script>
+    var time = null;
+    const startLoading = () => {
+      time = Date.now();
+      document.getElementById('loader').classList.remove("loading");
+    }
+    const endLoading = () => {
+      if (!time) {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+      } else {
+        if (Date.now() - time > 500) {
+          time = null;
+          document.body.style.overflow = 'auto';
+          document.getElementById('loader').classList.add("loading");
+        } else {
+          setTimeout(endLoading, 500 - (Date.now() - time));
+          time = null;
+        }
+      }
+    }
+    window.addEventListener('load', endLoading);
+    document.getElementById('loader').addEventListener('click', endLoading);
+  </script>
+
+
+    <div id="container">
+      <div id="wrap">
+        <div id="header-nav">
+  <nav id="main-nav">
+    
+      <span class="main-nav-link-wrap">
+        <span class="main-nav-icon"></span>
+        <a class="main-nav-link" href="/">首页</a>
+      </span>
+    
+      <span class="main-nav-link-wrap">
+        <span class="main-nav-icon"></span>
+        <a class="main-nav-link" href="/archives">归档</a>
+      </span>
+    
+      <span class="main-nav-link-wrap">
+        <span class="main-nav-icon"></span>
+        <a class="main-nav-link" href="/about">关于</a>
+      </span>
+    
+      <span class="main-nav-link-wrap">
+        <span class="main-nav-icon"></span>
+        <a class="main-nav-link" href="/friend">友链</a>
+      </span>
+    
+    <a id="main-nav-toggle" class="nav-icon"></a>
+  </nav>
+  <nav id="sub-nav">
+    
+      <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+    
+    
+    
+  </nav>
+</div>
+<header id="header">
+  
+    <img fetchpriority="high" src="/images/banner.jpg" alt="stm32_Stu05">
+  
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <div id="logo-wrap">
+        
+          
+          
+            <a href="/" id="logo">
+              <h1>stm32_Stu05</h1>
+            </a>
+          
+        
+      </div>
+      
+        
+        <h2 id="subtitle-wrap">
+          
+        </h2>
+      
+    </div>
+  </div>
+</header>
+
+        <div id="content" class="outer">
+          
+          <section id="main"><article id="post-stm32-Stu05" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner">
+    <div class="article-meta">
+      <div class="article-date wow slideInLeft">
+  <a href="/2024/05/31/stm32-Stu05/" class="article-date-link">
+    <time datetime="2024-05-30T16:12:05.000Z" itemprop="datePublished">2024-05-31</time>
+  </a>
+</div>
+
+      
+
+    </div>
+    <div class="hr-line"></div>
+    
+
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="PWM"><a href="#PWM" class="headerlink" title="PWM"></a>PWM</h1><h2 id="OC-Output-Compare-输出比较"><a href="#OC-Output-Compare-输出比较" class="headerlink" title="OC(Output Compare)输出比较"></a>OC(Output Compare)输出比较</h2><p>​	输出比较可以通过比较CNT与CCR寄存器值的关系，来对输出电平进行置1、置0或翻转的操作，用于输出一定频率和占空比的PWM波形每个高级定时器和通用定时器都拥有4个输出比较通道高级定时器的前3个通道额外拥有死区生成和互补输出的功能。</p>
+<h2 id="PWM-Pulse-Width-Modulation-脉冲宽度调制"><a href="#PWM-Pulse-Width-Modulation-脉冲宽度调制" class="headerlink" title="PWM(Pulse Width Modulation)脉冲宽度调制"></a>PWM(Pulse Width Modulation)脉冲宽度调制</h2><p>​	在具有惯性的系统中，可以通过对一系列脉冲的宽度进行调制，来等效地获得所需要的模拟参量，常应用于电机控速等领域。</p>
+<p><strong>PWM参数：</strong></p>
+<p>频率 &#x3D; 1 &#x2F; TS          占空比 &#x3D; TON &#x2F; TS         分辨率 &#x3D; 占空比</p>
+<h2 id="高级输出比较通道"><a href="#高级输出比较通道" class="headerlink" title="高级输出比较通道"></a>高级输出比较通道</h2><p><img src="https://s2.loli.net/2024/05/31/27Da1GAzPwBxt59.png" alt="image.png"></p>
+<h2 id="通用输出比较通道"><a href="#通用输出比较通道" class="headerlink" title="通用输出比较通道"></a>通用输出比较通道</h2><p><img src="https://s2.loli.net/2024/05/31/1YQK9senmgyzGBv.png" alt="image.png"></p>
+<h2 id="输出比较模式"><a href="#输出比较模式" class="headerlink" title="输出比较模式"></a>输出比较模式</h2><p><img src="https://s2.loli.net/2024/05/31/l7pZYieEqzvnDV8.png" alt="image.png"></p>
+<h2 id="PWM基本结构"><a href="#PWM基本结构" class="headerlink" title="PWM基本结构"></a>PWM基本结构</h2><p><img src="https://s2.loli.net/2024/05/31/TX4NJMtrb5vcVdI.png" alt="image.png"></p>
+<p>蓝色：CNT    红色：CCR    黄色：ARR</p>
+<p>PSC一般为78MHz</p>
+<h2 id="参数计算"><a href="#参数计算" class="headerlink" title="参数计算"></a>参数计算</h2><p>PWM频率：	Freq &#x3D; CK_PSC &#x2F; (PSC + 1) &#x2F; (ARR + 1)</p>
+<p>PWM占空比：	Duty &#x3D; CCR &#x2F; (ARR + 1)</p>
+<p>PWM分辨率：	Reso &#x3D; 1 &#x2F; (ARR + 1)</p>
+<h2 id="有关输出比较的函数"><a href="#有关输出比较的函数" class="headerlink" title="有关输出比较的函数"></a>有关输出比较的函数</h2><h3 id="（1）结构体初始化输出比较单元"><a href="#（1）结构体初始化输出比较单元" class="headerlink" title="（1）结构体初始化输出比较单元"></a>（1）结构体初始化输出比较单元</h3><p>用来配置输出比较模块，位于tim.h第1056~1059</p>
+<p>在PWM结构图中可知它有四个输出比较单元，对应四个函数</p>
+<p>（选择定时器，输出比较参数）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">TIM_OC1Init</span><span class="params">(TIM_TypeDef* TIMx, TIM_OCInitTypeDef* TIM_OCInitStruct)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">TIM_OC2Init</span><span class="params">(TIM_TypeDef* TIMx, TIM_OCInitTypeDef* TIM_OCInitStruct)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">TIM_OC3Init</span><span class="params">(TIM_TypeDef* TIMx, TIM_OCInitTypeDef* TIM_OCInitStruct)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">TIM_OC4Init</span><span class="params">(TIM_TypeDef* TIMx, TIM_OCInitTypeDef* TIM_OCInitStruct)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="（2）使用高级定时器输出PWM使能主输出"><a href="#（2）使用高级定时器输出PWM使能主输出" class="headerlink" title="（2）使用高级定时器输出PWM使能主输出"></a>（2）使用高级定时器输出PWM使能主输出</h3><p>位于tim.h第1068</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">TIM_CtrlPWMOutputs</span><span class="params">(TIM_TypeDef* TIMx, FunctionalState NewState)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>*（3）配置强制输出模式，暂停输入波频强制输出高低电平 </p>
+<p>位于tim.h第1088~1091</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">TIM_ForcedOC1Config</span><span class="params">(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> TIM_ForcedAction)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">TIM_ForcedOC2Config</span><span class="params">(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> TIM_ForcedAction)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">TIM_ForcedOC3Config</span><span class="params">(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> TIM_ForcedAction)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">TIM_ForcedOC4Config</span><span class="params">(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> TIM_ForcedAction)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p> *（4）配置CCR寄存器预装功能（影子寄存器）</p>
+<p>写入的值不会生效，在更新事件后才会</p>
+<p>位于tim.h第1096~1099</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">TIM_OC1PreloadConfig</span><span class="params">(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> TIM_OCPreload)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">TIM_OC2PreloadConfig</span><span class="params">(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> TIM_OCPreload)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">TIM_OC3PreloadConfig</span><span class="params">(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> TIM_OCPreload)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">TIM_OC4PreloadConfig</span><span class="params">(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> TIM_OCPreload)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p> *（5）配置快速使能</p>
+<p>位于tim.h第1101~1104</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">TIM_OC1FastConfig</span><span class="params">(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> TIM_OCFast)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">TIM_OC2FastConfig</span><span class="params">(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> TIM_OCFast)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">TIM_OC3FastConfig</span><span class="params">(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> TIM_OCFast)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">TIM_OC4FastConfig</span><span class="params">(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> TIM_OCFast)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>*（6）外部事件时清除REF信号</p>
+<p>位于tim.h第1104~1107</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">TIM_ClearOC1Ref</span><span class="params">(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> TIM_OCClear)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">TIM_ClearOC2Ref</span><span class="params">(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> TIM_OCClear)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">TIM_ClearOC3Ref</span><span class="params">(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> TIM_OCClear)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">TIM_ClearOC4Ref</span><span class="params">(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> TIM_OCClear)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="（7）单独设置输出比较极性"><a href="#（7）单独设置输出比较极性" class="headerlink" title="（7）单独设置输出比较极性"></a>（7）单独设置输出比较极性</h3><p>位于tim.h第1108~1114</p>
+<p>NPolarityConfig是高级定时器里互补通道的配置</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">TIM_OC1PolarityConfig</span><span class="params">(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> TIM_OCPolarity)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">TIM_OC1NPolarityConfig</span><span class="params">(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> TIM_OCNPolarity)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">TIM_OC2PolarityConfig</span><span class="params">(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> TIM_OCPolarity)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">TIM_OC2NPolarityConfig</span><span class="params">(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> TIM_OCNPolarity)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">TIM_OC3PolarityConfig</span><span class="params">(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> TIM_OCPolarity)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">TIM_OC3NPolarityConfig</span><span class="params">(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> TIM_OCNPolarity)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">TIM_OC4PolarityConfig</span><span class="params">(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> TIM_OCPolarity)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="（8）单独修改输出使能参数"><a href="#（8）单独修改输出使能参数" class="headerlink" title="（8）单独修改输出使能参数"></a>（8）单独修改输出使能参数</h3><p>位于tim.h第1115~1116</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">TIM_CCxCmd</span><span class="params">(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> TIM_Channel, <span class="type">uint16_t</span> TIM_CCx)</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">TIM_CCxNCmd</span><span class="params">(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> TIM_Channel, <span class="type">uint16_t</span> TIM_CCxN)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="（9）单独更改输出比较模式"><a href="#（9）单独更改输出比较模式" class="headerlink" title="（9）单独更改输出比较模式"></a>（9）单独更改输出比较模式</h3><p>位于tim.h第1117</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">TIM_SelectOCxM</span><span class="params">(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> TIM_Channel, <span class="type">uint16_t</span> TIM_OCMode)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="（10）单独更改CCR寄存器【重点】"><a href="#（10）单独更改CCR寄存器【重点】" class="headerlink" title="（10）单独更改CCR寄存器【重点】"></a>（10）单独更改CCR寄存器【重点】</h3><p>位于tim.h第1127~1130</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">TIM_SetCompare1</span>(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> Compare1);</span><br><span class="line"><span class="built_in">TIM_SetCompare2</span>(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> Compare2);</span><br><span class="line"><span class="built_in">TIM_SetCompare3</span>(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> Compare3);</span><br><span class="line"><span class="built_in">TIM_SetCompare4</span>(TIM_TypeDef* TIMx, <span class="type">uint16_t</span> Compare4);</span><br></pre></td></tr></table></figure>
+
+<h3 id="（11）给结构体赋初始值"><a href="#（11）给结构体赋初始值" class="headerlink" title="（11）给结构体赋初始值"></a>（11）给结构体赋初始值</h3> <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">TIM_OCStructInit</span>(TIM_OCInitTypeDef* TIM_OCInitStruct);</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-结构体初始化输出比较单元"><a href="#2-结构体初始化输出比较单元" class="headerlink" title="(2)结构体初始化输出比较单元"></a>(2)结构体初始化输出比较单元</h2><p>TIM_OCInitTypeDef…?</p>
+<p><strong>TIM_OCMode</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//冻结模式</span></span><br><span class="line"><span class="built_in">TIM_OCMode_Timing</span>                  ((<span class="type">uint16_t</span>)<span class="number">0x0000</span>)</span><br><span class="line"><span class="comment">//相等时置有效电平</span></span><br><span class="line"><span class="built_in">TIM_OCMode_Active</span>                  ((<span class="type">uint16_t</span>)<span class="number">0x0010</span>)</span><br><span class="line"><span class="comment">//相等时置无效电平</span></span><br><span class="line"><span class="built_in">TIM_OCMode_Inactive</span>                ((<span class="type">uint16_t</span>)<span class="number">0x0020</span>)</span><br><span class="line"><span class="comment">//相等时电平翻转</span></span><br><span class="line"><span class="built_in">TIM_OCMode_Toggle</span>                  ((<span class="type">uint16_t</span>)<span class="number">0x0030</span>)</span><br><span class="line"><span class="comment">//PWM输出比较模式</span></span><br><span class="line"><span class="built_in">TIM_OCMode_PWM1</span>                    ((<span class="type">uint16_t</span>)<span class="number">0x0060</span>)</span><br><span class="line">TIM_OCMode_PWM2   </span><br></pre></td></tr></table></figure>
+
+<p>TIM_OCPolarity</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//极性不翻转，REF波形直接输出，有效电平为高电平</span></span><br><span class="line"><span class="built_in">TIM_OCPolarity_High</span>                ((<span class="type">uint16_t</span>)<span class="number">0x0000</span>)</span><br><span class="line"><span class="comment">//极性翻转，REF电平取反，有效电平为低电平</span></span><br><span class="line"><span class="built_in">TIM_OCPolarity_Low</span>                 ((<span class="type">uint16_t</span>)<span class="number">0x0002</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/05/31/stm32-Stu05/" data-id="clwthdvnj000gykhkf3mx3t89" data-title="stm32_Stu05" class="article-share-link">分享</a>
+      
+      
+      
+      
+      
+      
+
+    </footer>
+  </div>
+  
+    
+  <nav id="article-nav" class="wow fadeInUp">
+    
+    
+    <div class="article-nav-link-wrap article-nav-link-right">
+      
+        
+        
+          <img data-src="/images/banner.jpg" data-sizes="auto" alt="stm32_Stu04" class="lazyload">
+        
+      
+      <a href="/2024/05/30/stm32-Stu04/"></a>
+      <div class="article-nav-caption">后一篇</div>
+      <h3 class="article-nav-title">
+        
+          stm32_Stu04
+        
+      </h3>
+    </div>
+    
+  </nav>
+
+
+  
+</article>
+
+
+
+
+
+
+</section>
+          
+            <aside id="sidebar">
+  <div class="sidebar-wrap wow fadeInRight wrap-sticky">
+    
+      <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">文章目录</h3>
+  <div class="sidebar-toc-wrapper"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#PWM"><span class="toc-number">1.</span> <span class="toc-text">PWM</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#OC-Output-Compare-%E8%BE%93%E5%87%BA%E6%AF%94%E8%BE%83"><span class="toc-number">1.1.</span> <span class="toc-text">OC(Output Compare)输出比较</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PWM-Pulse-Width-Modulation-%E8%84%89%E5%86%B2%E5%AE%BD%E5%BA%A6%E8%B0%83%E5%88%B6"><span class="toc-number">1.2.</span> <span class="toc-text">PWM(Pulse Width Modulation)脉冲宽度调制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%AB%98%E7%BA%A7%E8%BE%93%E5%87%BA%E6%AF%94%E8%BE%83%E9%80%9A%E9%81%93"><span class="toc-number">1.3.</span> <span class="toc-text">高级输出比较通道</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E7%94%A8%E8%BE%93%E5%87%BA%E6%AF%94%E8%BE%83%E9%80%9A%E9%81%93"><span class="toc-number">1.4.</span> <span class="toc-text">通用输出比较通道</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%AF%94%E8%BE%83%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.5.</span> <span class="toc-text">输出比较模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PWM%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84"><span class="toc-number">1.6.</span> <span class="toc-text">PWM基本结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E6%95%B0%E8%AE%A1%E7%AE%97"><span class="toc-number">1.7.</span> <span class="toc-text">参数计算</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%89%E5%85%B3%E8%BE%93%E5%87%BA%E6%AF%94%E8%BE%83%E7%9A%84%E5%87%BD%E6%95%B0"><span class="toc-number">1.8.</span> <span class="toc-text">有关输出比较的函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E7%BB%93%E6%9E%84%E4%BD%93%E5%88%9D%E5%A7%8B%E5%8C%96%E8%BE%93%E5%87%BA%E6%AF%94%E8%BE%83%E5%8D%95%E5%85%83"><span class="toc-number">1.8.1.</span> <span class="toc-text">（1）结构体初始化输出比较单元</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E4%BD%BF%E7%94%A8%E9%AB%98%E7%BA%A7%E5%AE%9A%E6%97%B6%E5%99%A8%E8%BE%93%E5%87%BAPWM%E4%BD%BF%E8%83%BD%E4%B8%BB%E8%BE%93%E5%87%BA"><span class="toc-number">1.8.2.</span> <span class="toc-text">（2）使用高级定时器输出PWM使能主输出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%887%EF%BC%89%E5%8D%95%E7%8B%AC%E8%AE%BE%E7%BD%AE%E8%BE%93%E5%87%BA%E6%AF%94%E8%BE%83%E6%9E%81%E6%80%A7"><span class="toc-number">1.8.3.</span> <span class="toc-text">（7）单独设置输出比较极性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%888%EF%BC%89%E5%8D%95%E7%8B%AC%E4%BF%AE%E6%94%B9%E8%BE%93%E5%87%BA%E4%BD%BF%E8%83%BD%E5%8F%82%E6%95%B0"><span class="toc-number">1.8.4.</span> <span class="toc-text">（8）单独修改输出使能参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%889%EF%BC%89%E5%8D%95%E7%8B%AC%E6%9B%B4%E6%94%B9%E8%BE%93%E5%87%BA%E6%AF%94%E8%BE%83%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.8.5.</span> <span class="toc-text">（9）单独更改输出比较模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%8810%EF%BC%89%E5%8D%95%E7%8B%AC%E6%9B%B4%E6%94%B9CCR%E5%AF%84%E5%AD%98%E5%99%A8%E3%80%90%E9%87%8D%E7%82%B9%E3%80%91"><span class="toc-number">1.8.6.</span> <span class="toc-text">（10）单独更改CCR寄存器【重点】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%8811%EF%BC%89%E7%BB%99%E7%BB%93%E6%9E%84%E4%BD%93%E8%B5%8B%E5%88%9D%E5%A7%8B%E5%80%BC"><span class="toc-number">1.8.7.</span> <span class="toc-text">（11）给结构体赋初始值</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E7%BB%93%E6%9E%84%E4%BD%93%E5%88%9D%E5%A7%8B%E5%8C%96%E8%BE%93%E5%87%BA%E6%AF%94%E8%BE%83%E5%8D%95%E5%85%83"><span class="toc-number">1.9.</span> <span class="toc-text">(2)结构体初始化输出比较单元</span></a></li></ol></li></ol></div>
+</div>
+</div>
+      <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/../images/avatar.jpg" data-sizes="auto" alt="litmus" class="lazyload">
+  <div class="sidebar-author-name">litmus</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>文章</div>
+    <div class="sidebar-state-number">16</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>分类</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>标签</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+</div>
+<div class="sidebar-menu">
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/" aria-label="首页"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">首页</div>
+    </div>
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/archives" aria-label="归档"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">归档</div>
+    </div>
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/about" aria-label="关于"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">关于</div>
+    </div>
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/friend" aria-label="友链"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">友链</div>
+    </div>
+  
+</div>
+</div>
+    
+    
+      <div class="sidebar-btn-wrapper" style="position:static">
+        <div class="sidebar-toc-btn current"></div>
+        <div class="sidebar-common-btn"></div>
+      </div>
+    
+  </div>
+
+  
+</aside>
+
+          
+        </div>
+        <footer id="footer" class="wow fadeInUp">
+  <div style="width: 100%; overflow: hidden">
+    <div class="footer-line"></div>
+  </div>
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      <div>
+        <span class="icon-copyright"></span>
+        2020-2024
+        <span class="footer-info-sep"></span>
+        litmus
+      </div>
+      
+        <div>
+          基于&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>&nbsp;
+          Theme.<a href="https://github.com/D-Sketon/hexo-theme-reimu" target="_blank">Reimu</a>
+        </div>
+      
+      
+        <div>
+          <span class="icon-brush"></span>
+          10.3k
+          &nbsp;|&nbsp;
+          <span class="icon-coffee"></span>
+          00:42
+        </div>
+      
+      
+        <div>
+          <span class="icon-eye"></span>
+          <span id="busuanzi_container_site_pv">总访问量&nbsp;<span id="busuanzi_value_site_pv"></span></span>
+          &nbsp;|&nbsp;
+          <span class="icon-user"></span>
+          <span id="busuanzi_container_site_uv">总访客量&nbsp;<span id="busuanzi_value_site_uv"></span></span>
+        </div>
+      
+    </div>
+  </div>
+</footer>
+
+        <div class="sidebar-top">
+          <img src="/images/taichi.png" height="50" width="50" />
+          <div class="arrow-up"></div>
+        </div>
+        <div id="mask"></div>
+      </div>
+      <nav id="mobile-nav">
+  <div class="sidebar-wrap">
+    
+      <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">文章目录</h3>
+  <div class="sidebar-toc-wrapper"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#PWM"><span class="toc-number">1.</span> <span class="toc-text">PWM</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#OC-Output-Compare-%E8%BE%93%E5%87%BA%E6%AF%94%E8%BE%83"><span class="toc-number">1.1.</span> <span class="toc-text">OC(Output Compare)输出比较</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PWM-Pulse-Width-Modulation-%E8%84%89%E5%86%B2%E5%AE%BD%E5%BA%A6%E8%B0%83%E5%88%B6"><span class="toc-number">1.2.</span> <span class="toc-text">PWM(Pulse Width Modulation)脉冲宽度调制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%AB%98%E7%BA%A7%E8%BE%93%E5%87%BA%E6%AF%94%E8%BE%83%E9%80%9A%E9%81%93"><span class="toc-number">1.3.</span> <span class="toc-text">高级输出比较通道</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E7%94%A8%E8%BE%93%E5%87%BA%E6%AF%94%E8%BE%83%E9%80%9A%E9%81%93"><span class="toc-number">1.4.</span> <span class="toc-text">通用输出比较通道</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%87%BA%E6%AF%94%E8%BE%83%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.5.</span> <span class="toc-text">输出比较模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PWM%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84"><span class="toc-number">1.6.</span> <span class="toc-text">PWM基本结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E6%95%B0%E8%AE%A1%E7%AE%97"><span class="toc-number">1.7.</span> <span class="toc-text">参数计算</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%89%E5%85%B3%E8%BE%93%E5%87%BA%E6%AF%94%E8%BE%83%E7%9A%84%E5%87%BD%E6%95%B0"><span class="toc-number">1.8.</span> <span class="toc-text">有关输出比较的函数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E7%BB%93%E6%9E%84%E4%BD%93%E5%88%9D%E5%A7%8B%E5%8C%96%E8%BE%93%E5%87%BA%E6%AF%94%E8%BE%83%E5%8D%95%E5%85%83"><span class="toc-number">1.8.1.</span> <span class="toc-text">（1）结构体初始化输出比较单元</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E4%BD%BF%E7%94%A8%E9%AB%98%E7%BA%A7%E5%AE%9A%E6%97%B6%E5%99%A8%E8%BE%93%E5%87%BAPWM%E4%BD%BF%E8%83%BD%E4%B8%BB%E8%BE%93%E5%87%BA"><span class="toc-number">1.8.2.</span> <span class="toc-text">（2）使用高级定时器输出PWM使能主输出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%887%EF%BC%89%E5%8D%95%E7%8B%AC%E8%AE%BE%E7%BD%AE%E8%BE%93%E5%87%BA%E6%AF%94%E8%BE%83%E6%9E%81%E6%80%A7"><span class="toc-number">1.8.3.</span> <span class="toc-text">（7）单独设置输出比较极性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%888%EF%BC%89%E5%8D%95%E7%8B%AC%E4%BF%AE%E6%94%B9%E8%BE%93%E5%87%BA%E4%BD%BF%E8%83%BD%E5%8F%82%E6%95%B0"><span class="toc-number">1.8.4.</span> <span class="toc-text">（8）单独修改输出使能参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%889%EF%BC%89%E5%8D%95%E7%8B%AC%E6%9B%B4%E6%94%B9%E8%BE%93%E5%87%BA%E6%AF%94%E8%BE%83%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.8.5.</span> <span class="toc-text">（9）单独更改输出比较模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%8810%EF%BC%89%E5%8D%95%E7%8B%AC%E6%9B%B4%E6%94%B9CCR%E5%AF%84%E5%AD%98%E5%99%A8%E3%80%90%E9%87%8D%E7%82%B9%E3%80%91"><span class="toc-number">1.8.6.</span> <span class="toc-text">（10）单独更改CCR寄存器【重点】</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%8811%EF%BC%89%E7%BB%99%E7%BB%93%E6%9E%84%E4%BD%93%E8%B5%8B%E5%88%9D%E5%A7%8B%E5%80%BC"><span class="toc-number">1.8.7.</span> <span class="toc-text">（11）给结构体赋初始值</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E7%BB%93%E6%9E%84%E4%BD%93%E5%88%9D%E5%A7%8B%E5%8C%96%E8%BE%93%E5%87%BA%E6%AF%94%E8%BE%83%E5%8D%95%E5%85%83"><span class="toc-number">1.9.</span> <span class="toc-text">(2)结构体初始化输出比较单元</span></a></li></ol></li></ol></div>
+</div>
+</div>
+      <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/../images/avatar.jpg" data-sizes="auto" alt="litmus" class="lazyload">
+  <div class="sidebar-author-name">litmus</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>文章</div>
+    <div class="sidebar-state-number">16</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>分类</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>标签</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+</div>
+<div class="sidebar-menu">
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/" aria-label="首页"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">首页</div>
+    </div>
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/archives" aria-label="归档"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">归档</div>
+    </div>
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/about" aria-label="关于"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">关于</div>
+    </div>
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/friend" aria-label="友链"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">友链</div>
+    </div>
+  
+</div>
+</div>
+    
+  </div>
+  
+    <div class="sidebar-btn-wrapper">
+      <div class="sidebar-toc-btn current"></div>
+      <div class="sidebar-common-btn"></div>
+    </div>
+  
+</nav>
+
+    </div>
+    <div class="site-search">
+      <div class="reimu-popup popup">
+        <div class="reimu-search">
+          <span class="reimu-search-input-icon"></span>
+          <div class="reimu-search-input" id="reimu-search-input"></div>
+        </div>
+        <div class="reimu-results">
+          <div id="reimu-stats"></div>
+          <div id="reimu-hits"></div>
+          <div id="reimu-pagination" class="reimu-pagination"></div>
+        </div>
+        <span class="popup-btn-close"></span>
+      </div>
+    </div>
+    
+<script src="https://npm.webcache.cn/jquery@3.7.1/dist/jquery.min.js"></script>
+
+
+<script src="https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js"></script>
+
+
+<script src="https://npm.webcache.cn/clipboard@2.0.11/dist/clipboard.min.js"></script>
+
+
+
+  
+<script src="https://npm.webcache.cn/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" defer></script>
+
+
+
+  
+<script src="https://npm.webcache.cn/busuanzi@2.3.0/bsz.pure.mini.js" async></script>
+
+
+
+
+
+
+<script src="/js/pjax_script.js" data-pjax></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<script src="https://npm.webcache.cn/mouse-firework@0.0.4/dist/index.umd.js"></script>
+
+  <script>
+    firework(JSON.parse('{"excludeElements":["a"],"particles":[{"shape":"circle","move":["emit"],"easing":"easeOutExpo","colors":["#ff5252","#ff7c7c","#ffafaf","#ffd0d0"],"number":20,"duration":[1200,1800],"shapeOptions":{"radius":[16,32],"alpha":[0.3,0.5]}},{"shape":"circle","move":["diffuse"],"easing":"easeOutExpo","colors":["#ff0000"],"number":1,"duration":[1200,1800],"shapeOptions":{"radius":20,"alpha":[0.2,0.5],"lineWidth":6}}]}'))
+  </script>
+
+
+
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+  <script>
+    console.log(String.raw`%c 
+ ______     ______     __     __    __     __  __    
+/\  == \   /\  ___\   /\ \   /\ "-./  \   /\ \/\ \   
+\ \  __<   \ \  __\   \ \ \  \ \ \-./\ \  \ \ \_\ \  
+ \ \_\ \_\  \ \_____\  \ \_\  \ \_\ \ \_\  \ \_____\ 
+  \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
+                                                  
+`,'color: #ff5252;')
+    console.log('%c Theme.Reimu v' + '0.1.1' + ' %c https://github.com/D-Sketon/hexo-theme-reimu ', 'color: white; background: #ff5252; padding:5px 0;', 'padding:4px;border:1px solid #ff5252;')
+  </script>
+  
+
+  <!-- hexo injector body_end start -->
+<script src="/js/insert_highlight.js" data-pjax></script>
+<!-- hexo injector body_end end --></body>
+  </html>
+
