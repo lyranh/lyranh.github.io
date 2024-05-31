@@ -1,0 +1,666 @@
+
+  <!DOCTYPE html>
+  <html lang="zh-CN"  >
+  <head>
+  <meta charset="utf-8">
+  
+
+  
+
+  
+
+  
+  <title>
+    stm32_Stu06 |
+    
+    欢迎来到蕊之殿堂
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="preload" href="https://fonts.googleapis.com/css?family=Mulish:400,400italic,700,700italic%7CNoto%20Serif%20SC:400,400italic,700,700italic%7CUbuntu%20Mono:400,400italic,700,700italic&display=swap&subset=latin,latin-ext" as="style" onload="this.onload&#x3D;null;this.rel&#x3D;&#39;stylesheet&#39;">
+  
+<link rel="stylesheet" href="https://npm.webcache.cn/@fortawesome/fontawesome-free@6.5.1/css/regular.min.css">
+<link rel="stylesheet" href="https://npm.webcache.cn/@fortawesome/fontawesome-free@6.5.1/css/solid.min.css">
+
+  <link rel="preload" href="https://npm.webcache.cn/@fortawesome/fontawesome-free@6.5.1/css/brands.min.css" as="style" onload="this.onload&#x3D;null;this.rel&#x3D;&#39;stylesheet&#39;"><link rel="preload" href="https://npm.webcache.cn/@fortawesome/fontawesome-free@6.5.1/css/v5-font-face.min.css" as="style" onload="this.onload&#x3D;null;this.rel&#x3D;&#39;stylesheet&#39;"><link rel="preload" href="https://npm.webcache.cn/@fortawesome/fontawesome-free@6.5.1/css/v4-font-face.min.css" as="style" onload="this.onload&#x3D;null;this.rel&#x3D;&#39;stylesheet&#39;">
+  
+<link rel="stylesheet" href="/css/loader.css">
+
+  <meta name="description" content="几种通信协议UART通信通用异步收发协议（Universal Asynchronous Receiver Transmitter，UART） （1）分层思想物理信号层，规定了硬件电路的设计规则、用户使用的接线方式、线路上传输信号与电平格式对应关系、波特率比特率、数据同步异步传输、收发模式等内容。 链路传输层，规定了地址（ID）、冲突检测与避免（仲裁）、误码校验、滤波器与掩码、该层的帧格式。 应用数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="stm32_Stu06">
+<meta property="og:url" content="http://example.com/2024/05/31/stm32-Stu06/index.html">
+<meta property="og:site_name" content="欢迎来到蕊之殿堂">
+<meta property="og:description" content="几种通信协议UART通信通用异步收发协议（Universal Asynchronous Receiver Transmitter，UART） （1）分层思想物理信号层，规定了硬件电路的设计规则、用户使用的接线方式、线路上传输信号与电平格式对应关系、波特率比特率、数据同步异步传输、收发模式等内容。 链路传输层，规定了地址（ID）、冲突检测与避免（仲裁）、误码校验、滤波器与掩码、该层的帧格式。 应用数">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2024/05/31/P7RKxQwNzoqrOkS.png">
+<meta property="og:image" content="https://s2.loli.net/2024/05/31/GNzH4ftI56RmLFw.png">
+<meta property="article:published_time" content="2024-05-31T01:45:39.000Z">
+<meta property="article:modified_time" content="2024-05-31T02:18:34.151Z">
+<meta property="article:author" content="litmus">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2024/05/31/P7RKxQwNzoqrOkS.png">
+  
+    <link rel="alternate" href="/atom.xml" title="欢迎来到蕊之殿堂" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/images/favicon.ico">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="https://npm.webcache.cn/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+
+  
+  
+  
+  
+  
+<script src="https://npm.webcache.cn/pace-js@1.2.4/pace.min.js"></script>
+
+  
+    
+<link rel="stylesheet" href="https://npm.webcache.cn/wowjs@1.1.3/css/libs/animate.css">
+
+    
+<script src="https://npm.webcache.cn/wowjs@1.1.3/dist/wow.min.js"></script>
+
+    <script>
+      new WOW({
+        offset: 0,
+        mobile: true,
+        live: false
+      }).init();
+    </script>
+  
+  
+    <script src="/sw.js"></script>
+  
+<meta name="generator" content="Hexo 7.1.1"></head>
+
+  <body>
+    
+  <div id='loader'>
+    <div class="loading-left-bg"></div>
+    <div class="loading-right-bg"></div>
+    <div class="spinner-box">
+      <div class="loading-taichi">
+        <svg width="150" height="150" viewBox="0 0 1024 1024" class="icon" version="1.1" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+          <path d="M303.5 432A80 80 0 0 1 291.5 592A80 80 0 0 1 303.5 432z" fill="#ff6e6b" />
+          <path d="M512 65A447 447 0 0 1 512 959L512 929A417 417 0 0 0 512 95A417 417 0 0 0 512 929L512 959A447 447 0 0 1 512 65z" fill="#fd0d00" />
+          <path d="M512 95A417 417 0 0 1 929 512A208.5 208.5 0 0 1 720.5 720.5L720.5 592A80 80 0 0 0 720.5 432A80 80 0 0 0 720.5 592L720.5 720.5A208.5 208.5 0 0 1 512 512A208.5 208.5 0 0 0 303.5 303.5A208.5 208.5 0 0 0 95 512A417 417 0 0 1 512 95" fill="#fd0d00" />
+        </svg>
+      </div>
+      <div class="loading-word">少女祈祷中...</div>
+    </div>
+  </div>
+  </div>
+  <script>
+    var time = null;
+    const startLoading = () => {
+      time = Date.now();
+      document.getElementById('loader').classList.remove("loading");
+    }
+    const endLoading = () => {
+      if (!time) {
+        document.body.style.overflow = 'auto';
+        document.getElementById('loader').classList.add("loading");
+      } else {
+        if (Date.now() - time > 500) {
+          time = null;
+          document.body.style.overflow = 'auto';
+          document.getElementById('loader').classList.add("loading");
+        } else {
+          setTimeout(endLoading, 500 - (Date.now() - time));
+          time = null;
+        }
+      }
+    }
+    window.addEventListener('load', endLoading);
+    document.getElementById('loader').addEventListener('click', endLoading);
+  </script>
+
+
+    <div id="container">
+      <div id="wrap">
+        <div id="header-nav">
+  <nav id="main-nav">
+    
+      <span class="main-nav-link-wrap">
+        <span class="main-nav-icon"></span>
+        <a class="main-nav-link" href="/">首页</a>
+      </span>
+    
+      <span class="main-nav-link-wrap">
+        <span class="main-nav-icon"></span>
+        <a class="main-nav-link" href="/archives">归档</a>
+      </span>
+    
+      <span class="main-nav-link-wrap">
+        <span class="main-nav-icon"></span>
+        <a class="main-nav-link" href="/about">关于</a>
+      </span>
+    
+      <span class="main-nav-link-wrap">
+        <span class="main-nav-icon"></span>
+        <a class="main-nav-link" href="/friend">友链</a>
+      </span>
+    
+    <a id="main-nav-toggle" class="nav-icon"></a>
+  </nav>
+  <nav id="sub-nav">
+    
+      <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+    
+    
+    
+  </nav>
+</div>
+<header id="header">
+  
+    <img fetchpriority="high" src="/images/banner.jpg" alt="stm32_Stu06">
+  
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <div id="logo-wrap">
+        
+          
+          
+            <a href="/" id="logo">
+              <h1>stm32_Stu06</h1>
+            </a>
+          
+        
+      </div>
+      
+        
+        <h2 id="subtitle-wrap">
+          
+        </h2>
+      
+    </div>
+  </div>
+</header>
+
+        <div id="content" class="outer">
+          
+          <section id="main"><article id="post-stm32-Stu06" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-inner">
+    <div class="article-meta">
+      <div class="article-date wow slideInLeft">
+  <a href="/2024/05/31/stm32-Stu06/" class="article-date-link">
+    <time datetime="2024-05-31T01:45:39.000Z" itemprop="datePublished">2024-05-31</time>
+  </a>
+</div>
+
+      
+
+    </div>
+    <div class="hr-line"></div>
+    
+
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="几种通信协议"><a href="#几种通信协议" class="headerlink" title="几种通信协议"></a>几种通信协议</h1><h2 id="UART通信"><a href="#UART通信" class="headerlink" title="UART通信"></a>UART通信</h2><p>通用异步收发协议（Universal Asynchronous Receiver Transmitter，UART）</p>
+<h3 id="（1）分层思想"><a href="#（1）分层思想" class="headerlink" title="（1）分层思想"></a>（1）分层思想</h3><p><strong>物理信号层</strong>，规定了硬件电路的设计规则、用户使用的接线方式、线路上传输信号与电平格式对应关系、波特率比特率、数据同步异步传输、收发模式等内容。</p>
+<p><strong>链路传输层</strong>，规定了地址（ID）、冲突检测与避免（仲裁）、误码校验、滤波器与掩码、该层的帧格式。</p>
+<p><strong>应用数据层</strong>是被传输的数据主体；链路层把应用层的数据拿来，加上相关的地址、校验等信息封装；物理层把链路层的数据拿来，编码成物理信号传输出去。</p>
+<h3 id="（2）硬件电路引脚"><a href="#（2）硬件电路引脚" class="headerlink" title="（2）硬件电路引脚"></a>（2）硬件电路引脚</h3><p>两个模块点对点通信</p>
+<p>在两模块已供电的情况下，总共需要三根线即可Rx，Receiver，接收端</p>
+<p>Tx，Transmitter，发送端</p>
+<p>GND，两模块需要共地，这样才可以区分出Rx和Tx两根线上电平的高低</p>
+<h3 id="（3）信号与电平格式"><a href="#（3）信号与电平格式" class="headerlink" title="（3）信号与电平格式"></a>（3）信号与电平格式</h3><p>很直观的信号传输格式，传输0&#x2F;1码元</p>
+<p>高电平代表1，低电平代表0</p>
+<p>单片机中高电平是3.3V，低电平是0V</p>
+<p><img src="https://s2.loli.net/2024/05/31/P7RKxQwNzoqrOkS.png" alt="image.png"></p>
+<p>在通信和数据存储领域，二进制码元和有效信息码元是两个重要的概念。它们在确保数据传输的准确性和效率方面发挥着关键作用。</p>
+<h3 id="（4）知识补充"><a href="#（4）知识补充" class="headerlink" title="（4）知识补充"></a>（4）知识补充</h3><p>二进制码元是指在二进制系统中使用的符号，通常包括0和1两个数字。在计算机和其他数字系统中，所有的数据和指令都是通过这两个基本的二进制数字来表示的。二进制系统是信息处理的基础，因为它简化了数据的表示和处理过程。</p>
+<p>有效信息码元是指在数据传输或存储过程中，实际携带有用信息的码元。这些码元不仅仅是用于表示数据，还包括了用于确保数据完整性和准确性的校验码、同步码等。有效信息码元是通信系统设计中的一个重要方面，因为它们直接影响到数据传输的效率和可靠性。</p>
+<p>有效信息码元是基于二进制码元构建的。在设计通信系统时，工程师会使用二进制码元来构建能够传输有效信息的码元。这些有效信息码元可能包括数据码元、控制码元和特殊码元等，它们共同确保了数据的正确传输和接收。</p>
+<p>比特率，bit&#x2F;s，bps</p>
+<p>每秒钟传输的二进制码元的数量，越高意味着数据传输的越快</p>
+<p>波特率，symbol&#x2F;s</p>
+<p>每秒钟传输的有效信息码元的数量，描述信号的变化频率</p>
+<p>UART通信中，比特率等于波特率，因为有效信息码元直接对应二进制的0&#x2F;1码元十。</p>
+<p>六进制字符编码中，如果一秒传输1000个字符，每个字符对应一种唯一的电平信号，那么波特率就是1000symbol&#x2F;s；由于一个十六进制字符要用四位二进制编码表示，那么它的比特率就是4000bit&#x2F;s。</p>
+<h3 id="（5）异步通信"><a href="#（5）异步通信" class="headerlink" title="（5）异步通信"></a>（5）异步通信</h3><p>收发两端中，发送端啥时候想发啥时候发，不需要等某一方的时钟信号来进行同步接受次序后再发。</p>
+<p>实现简单，但较长的通信内容可能会由于双方的时钟不统一而出现错位。</p>
+<p>因此，通过对一个二进制码元进行多次采样可以一定程度上发现甚至解决错位问题。常见采样次数为8和16。</p>
+<h3 id="（6）同步通信"><a href="#（6）同步通信" class="headerlink" title="（6）同步通信"></a>（6）同步通信</h3><p>另外，对于一些单片机，是有USART的外设的。</p>
+<p>USART是UART＆SART的缩写，其中S代表Synchronous，同步。</p>
+<p>这种SART是有时钟线的同步策略。</p>
+<h3 id="（7）收发模式"><a href="#（7）收发模式" class="headerlink" title="（7）收发模式"></a>（7）收发模式</h3><p>仅接收：MCU仅可接收外来消息，但不能发送。</p>
+<p>仅发送：MCU仅可发送自身消息，但不能接收。</p>
+<p>收发双向：（一般配置）MCU可发送也可接收消息。</p>
+<h3 id="（8）链路传输"><a href="#（8）链路传输" class="headerlink" title="（8）链路传输"></a>（8）链路传输</h3><p>冲突检测与避免是计算机网络中用于解决多个设备在同一通信介质上发送数据时可能出现的冲突问题的重要技术。在计算机网络中，特别是在使用共享介质的局域网（LAN）中，冲突是不可避免的，因为多个设备可能会尝试在同一时间通过同一通信介质发送数据。</p>
+<h3 id="（9）仲裁"><a href="#（9）仲裁" class="headerlink" title="（9）仲裁"></a>（9）仲裁</h3><p>仲裁是计算机网络和分布式系统中用于解决资源竞争问题的一种机制。当多个设备或进程同时请求访问同一资源时，仲裁确保了对资源的访问是有序的，避免了冲突和死锁，保证了系统的稳定性和效率。</p>
+<h3 id="（10）误码校验"><a href="#（10）误码校验" class="headerlink" title="（10）误码校验"></a>（10）误码校验</h3><p>误码校验（Error Detection and Correction）是数据通信和存储领域中的一项关键技术，旨在确保数据在传输或存储过程中的准确性和完整性。由于各种原因（如信号干扰、硬件故障等），数据在传输或存储过程中可能会发生错误。误码校验技术通过在数据中添加额外的校验信息，使得接收方能够检测并纠正这些错误。</p>
+<p>在发送数据之前，通过特定的算法（如奇偶校验、校验和等）为数据生成一个校验码，并将其附加到数据包中。接收方在接收数据后，使用相同的算法重新计算校验码，并与接收到的校验码进行比较，以判断数据是否在传输过程中发生了错误。</p>
+<p>在某些情况下，除了检测错误之外，还可以通过特定的编码技术（如海明码、里德-所罗门码等）来纠正一定数量的错误。这些编码技术可以在数据中添加额外的冗余信息，使得即使在发生错误的情况下，也能够恢复原始数据。</p>
+<p>奇偶校验：为数据添加一个额外的比特（奇偶校验位），使得数据中“1”的总数是奇数（奇校验）或偶数（偶校验）。这是一种简单的错误检测方法，但只能检测单比特错误。</p>
+<p><strong>奇偶校验的工作原理：</strong></p>
+<p>对已发送的一段比特流进行计算，统计1的个数决定1bit的校验位偶数个1为0，奇数个1为1，则是偶校验奇数个1为0，偶数个1为1，则是奇校验等效于异或操作，对前面的比特流进行异或异或结果直接作为校验位，是偶校验异或结果取反作为校验位，是奇校验举例：1010101，偶校验位为0，奇校验位为1</p>
+<h3 id="（11）阻塞-中断-DMA中断"><a href="#（11）阻塞-中断-DMA中断" class="headerlink" title="（11）阻塞&#x2F;中断&#x2F;DMA中断"></a>（11）阻塞&#x2F;中断&#x2F;DMA中断</h3><p><strong>阻塞式通信</strong></p>
+<p>发送：MCU一个字节一个字节送给外设，让外设一个一个发过去，MCU与此同时不能干别的，比较迟钝。</p>
+<p>接收：傻等着，和EXTI那节一开始讲的那个只会吃饭睡觉打豆豆的大冤种一样，等东西来了之后我再一个字节一个字节接收中断式通信。</p>
+<p>需要在cubemx中配置这个：</p>
+<p><img src="https://s2.loli.net/2024/05/31/GNzH4ftI56RmLFw.png" alt="image.png"></p>
+<p>MCU送一个字节给外设，外设发完一个之后告诉MCU，MCU这时候让它发下一个。</p>
+<p>接收：学聪明了，对方给我发消息，我产生一个中断事件，然后MCU看到中断事件了再一个字节一个字节接收。</p>
+<p><strong>DMA中断通信</strong></p>
+<p>直接内存访问（Direct Memory Access，DMA），不产生数据，只是数据的搬运工。</p>
+<p>发送：MCU把指定要发送的数据的起始地址与长度告诉DMA，DMA帮忙搬运给外设，发完了告诉MCU。</p>
+<p>接收：MCU告诉DMA去把外设发给单片机的消息搬到指定位置。当然要告诉DMA接收方式，比如是等MCU通知（代码主动调用）搬运还是一直搬运（直接配置不让DMA停下来）等等。搬运完成会触发相应的中断事件。</p>
+<h3 id="UART总结（HAL）"><a href="#UART总结（HAL）" class="headerlink" title="UART总结（HAL）"></a>UART总结（HAL）</h3><p>阻塞式</p>
+<p>（串口，收&#x2F;发，字节长度，时间）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">HAL_UART_Transmit</span>(&amp;huart1, TxData, <span class="number">5</span>, <span class="number">1000</span>);<span class="comment">//发HAL_UART_Receive(&amp;huart1, RxData, 5, 1000);//收</span></span><br></pre></td></tr></table></figure>
+
+<p>中断式（使能中断）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">HAL_UART_RxCpltCallback</span><span class="params">(UART_HandleTypeDef *huart)</span></span>&#123;&#125;;</span><br><span class="line"><span class="built_in">HAL_UART_Transmit_IT</span>(&amp;huart1, TxData, <span class="number">5</span>);</span><br><span class="line"><span class="built_in">HAL_UART_Receive_IT</span>(&amp;huart1, RxData, <span class="number">5</span>);</span><br></pre></td></tr></table></figure>
+
+<p>空闲中断（使能中断）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">HAL_UARTEx_RxEventCallback</span><span class="params">(UART_HandleTypeDef *huart, <span class="type">uint16_t</span> Size)</span></span>&#123;&#125;;</span><br><span class="line"><span class="built_in">HAL_UART_Transmit_IT</span>(&amp;huart1, TxData, <span class="number">5</span>);</span><br><span class="line"><span class="built_in">HAL_UARTEx_ReceiveToIdle_IT</span>(&amp;huart1, RxData, <span class="number">5</span>);</span><br></pre></td></tr></table></figure>
+
+<p>DMA中断（配置DMA且使能中断）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">HAL_UART_RxCpltCallback</span><span class="params">(UART_HandleTypeDef *huart)</span></span>&#123;&#125;;</span><br><span class="line"><span class="built_in">HAL_UART_Transmit_DMA</span>(&amp;huart1, TxData, <span class="number">5</span>);</span><br><span class="line"><span class="built_in">HAL_UART_Receive_DMA</span>(&amp;huart1, RxData, <span class="number">5</span>);</span><br></pre></td></tr></table></figure>
+
+<p>DMA空闲中断（配置DMA且使能中断）</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">HAL_UARTEx_RxEventCallback</span><span class="params">(UART_HandleTypeDef *huart, <span class="type">uint16_t</span> Size)</span></span>&#123;&#125;;</span><br><span class="line"><span class="built_in">HAL_UART_Transmit_DMA</span>(&amp;huart1, TxData, <span class="number">5</span>);</span><br><span class="line"><span class="built_in">HAL_UARTEx_ReceiveToIdle_DMA</span>(&amp;huart1, RxData, <span class="number">5</span>);</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="CAN通信"><a href="#CAN通信" class="headerlink" title="CAN通信"></a>CAN通信</h2><h2 id="I2C通信"><a href="#I2C通信" class="headerlink" title="I2C通信"></a>I2C通信</h2><p>让两个模块实现通信，单片机读写外部寄存器</p>
+<p>HEX数据包</p>
+<p>第一个字节代表读写</p>
+<p>0<del>写数据包，1</del>读数据包</p>
+<p>第二个字节代表读写的地址</p>
+<p>第三个字节代表写入的数据</p>
+<p>异步时序</p>
+<p>同步时序</p>
+<p>SCL和SDA</p>
+<p>硬件电路链接，输入输出端口配置</p>
+<p>软件定义时序</p>
+<h3 id="（1）I2C"><a href="#（1）I2C" class="headerlink" title="（1）I2C"></a>（1）I2C</h3><p>I2C（Inter IC Bus）是由Philips公司开发的一种通用数据总线</p>
+<p>两根通信线：SCL（Serial Clock）、SDA（Serial Data）</p>
+<p>同步，半双工</p>
+<p>带数据应答</p>
+<p>支持总线挂载多设备（一主多从、多主多从）</p>
+<h3 id="（2）硬件规定"><a href="#（2）硬件规定" class="headerlink" title="（2）硬件规定"></a>（2）硬件规定</h3><p>所有I2C设备的SCL连在一起，SDA连在一起</p>
+<p>设备的SCL和SDA均要配置成开漏输出模式</p>
+<p>SCL和SDA各添加一个上拉电阻，阻值一般为4.7KΩ左右</p>
+<h3 id="（3）I2C时序基本单元"><a href="#（3）I2C时序基本单元" class="headerlink" title="（3）I2C时序基本单元"></a>（3）I2C时序基本单元</h3><p>起始条件：SCL高电平期间，SDA从高电平切换到低电平</p>
+<p>终止条件：SCL高电平期间，SDA从低电平切换到高电平</p>
+<p><strong>发送一个字节：</strong>SCL低电平期间，主机将数据位依次放到SDA线上（高位先行），然后释放SCL，从机将在SCL高电平期间读取数据位，所以SCL高电平期间SDA不允许有数据变化，依次循环上述过程8次，即可发送一个字节</p>
+<p><strong>接收一个字节：</strong>SCL低电平期间，从机将数据位依次放到SDA线上（高位先行），然后释放SCL，主机将在SCL高电平期间读取数据位，所以SCL高电平期间SDA不允许有数据变化，依次循环上述过程8次，即可接收一个字节（主机在接收之前，需要释放SDA）</p>
+<p><strong>发送应答：</strong>主机在接收完一个字节之后，在下一个时钟发送一位数据，数据0表示应答，数据1表示非应答</p>
+<p><strong>接收应答：</strong>主机在发送完一个字节之后，在下一个时钟接收一位数据，判断从机是否应答，数据0表示应答，数据1表示非应答（主机在接收之前，需要释放SDA）</p>
+<h3 id="（4）MPU6050"><a href="#（4）MPU6050" class="headerlink" title="（4）MPU6050"></a>（4）MPU6050</h3><p>是一个6轴姿态传感器，可以测量芯片自身X、Y、Z轴的加速度、角速度参数，通过数据融合，可进一步得到姿态角，常应用于平衡车、飞行器等需要检测自身姿态的场景</p>
+<p>3轴加速度计（Accelerometer）：测量X、Y、Z轴的加速度</p>
+<p>3轴陀螺仪传感器（Gyroscope）：测量X、Y、Z轴的角速度</p>
+<h3 id="代码逻辑"><a href="#代码逻辑" class="headerlink" title="代码逻辑"></a>代码逻辑</h3><p><strong>（1）起始条件</strong></p>
+<p>先将SCL和SDA都输出1</p>
+<p>先拉低SDA，再拉低SCL；</p>
+<p>先释放SDA，再释放SCL</p>
+<p>循环上述</p>
+<p><strong>（2）终止条件</strong></p>
+<p>拉低SDA</p>
+<p>释放SCL，释放SDA，同时回到高电平</p>
+<p><strong>（3）发送一个字节</strong></p>
+<p>低电平——变换数据</p>
+<p>高电平——保持数据稳定</p>
+<p>且高位先行</p>
+<p>每放一位执行：释放SCL，拉低SCL</p>
+<p>相与运算</p>
+<p>全1为1，有0则0</p>
+<p>SDA低电平变换数据，高电平读取数据。</p>
+<p><strong>（4）接受一个字节</strong></p>
+<p>主机释放SDA，从机释放SCL，把数据放上去</p>
+<p><strong>（5）发送应答和接受应答</strong></p>
+<p>发送&#x2F;接收一个字节的简化版（1位）</p>
+<p><strong>（6）加速度和陀螺仪</strong></p>
+<p>分别读取6个轴数据寄存器的高位和低位，拼接成16位数据，再通过指针变量返回。</p>
+<p><strong>代码main.c里的</strong></p>
+<p><strong>&amp;AX,&amp;AY,&amp;AZ代表三个轴的加速度</strong></p>
+<p><strong>&amp;GX,&amp;GY,&amp;GZ代表三个轴的角速度</strong></p>
+<p>MyI2C.c</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;stm32f10x.h&quot;</span>                  <span class="comment">// Device header</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;Delay.h&quot;</span></span></span><br><span class="line"><span class="comment">//写SCL引脚电平</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">MyI2C_W_SCL</span><span class="params">(<span class="type">uint8_t</span> BitValue)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">GPIO_WriteBit</span>(GPIOB, GPIO_Pin_10, (BitAction)BitValue);</span><br><span class="line">	<span class="built_in">Delay_us</span>(<span class="number">10</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//写SDA引脚电平</span></span><br><span class="line"><span class="type">void</span> <span class="built_in">MyI2C_W_SDA</span>(<span class="type">uint8_t</span> BitValue)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">GPIO_WriteBit</span>(GPIOB, GPIO_Pin_11, (BitAction)BitValue);</span><br><span class="line">	<span class="built_in">Delay_us</span>(<span class="number">10</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//读SDA引脚电平</span></span><br><span class="line"><span class="type">uint8_t</span> <span class="built_in">MyI2C_R_SDA</span>(<span class="type">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">uint8_t</span> BitValue;</span><br><span class="line">	BitValue = <span class="built_in">GPIO_ReadInputDataBit</span>(GPIOB, GPIO_Pin_11);</span><br><span class="line">	<span class="built_in">Delay_us</span>(<span class="number">10</span>);</span><br><span class="line">	<span class="keyword">return</span> BitValue;<span class="comment">//返回SDA电平</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//I2C初始化</span></span><br><span class="line"><span class="type">void</span> <span class="built_in">MyI2C_Init</span>(<span class="type">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">/*开启时钟*/</span></span><br><span class="line">	<span class="built_in">RCC_APB2PeriphClockCmd</span>(RCC_APB2Periph_GPIOB, ENABLE);</span><br><span class="line">	<span class="comment">/*GPIO初始化*/</span></span><br><span class="line">	GPIO_InitTypeDef GPIO_InitStructure;</span><br><span class="line">	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_OD;</span><br><span class="line">	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10 | GPIO_Pin_11;</span><br><span class="line">	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;</span><br><span class="line">	<span class="built_in">GPIO_Init</span>(GPIOB, &amp;GPIO_InitStructure);	</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">GPIO_SetBits</span>(GPIOB, GPIO_Pin_10 | GPIO_Pin_11);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//I2C起始</span></span><br><span class="line"><span class="type">void</span> <span class="built_in">MyI2C_Start</span>(<span class="type">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">MyI2C_W_SDA</span>(<span class="number">1</span>);	<span class="comment">//释放SDA，确保SDA为高电平</span></span><br><span class="line">	<span class="built_in">MyI2C_W_SCL</span>(<span class="number">1</span>);	<span class="comment">//释放SCL，确保SCL为高电平</span></span><br><span class="line">	<span class="built_in">MyI2C_W_SDA</span>(<span class="number">0</span>);	<span class="comment">//在SCL高电平期间，拉低SDA，产生起始信号</span></span><br><span class="line">	<span class="built_in">MyI2C_W_SCL</span>(<span class="number">0</span>);	<span class="comment">//起始后把SCL也拉低，即为了占用总线，也为了方便总线时序的拼接</span></span><br><span class="line">&#125;</span><br><span class="line">             </span><br><span class="line"><span class="comment">//I2C终止</span></span><br><span class="line"><span class="type">void</span> <span class="built_in">MyI2C_Stop</span>(<span class="type">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">MyI2C_W_SDA</span>(<span class="number">0</span>);<span class="comment">//拉低SDA，确保SDA为低电平</span></span><br><span class="line">	<span class="built_in">MyI2C_W_SCL</span>(<span class="number">1</span>);<span class="comment">//释放SCL，使SCL呈现高电平</span></span><br><span class="line">	<span class="built_in">MyI2C_W_SDA</span>(<span class="number">1</span>);<span class="comment">//在SCL高电平期间，释放SDA，产生终止信号</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//I2C发送一个字节</span></span><br><span class="line"><span class="type">void</span> <span class="built_in">MyI2C_SendByte</span>(<span class="type">uint8_t</span> Byte)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">uint8_t</span> i;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">8</span>; i ++)<span class="comment">//循环8次，主机依次发送数据的每一位</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">MyI2C_W_SDA</span>(Byte &amp; (<span class="number">0x80</span> &gt;&gt; i));<span class="comment">//使用掩码的方式取出Byte的指定一位数据并写入到SDA线</span></span><br><span class="line">		<span class="built_in">MyI2C_W_SCL</span>(<span class="number">1</span>);	<span class="comment">//释放SCL，从机在SCL高电平期间读取SDA</span></span><br><span class="line">		<span class="built_in">MyI2C_W_SCL</span>(<span class="number">0</span>);	<span class="comment">//拉低SCL，主机开始发送下一位数据</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//I2C接收一个字节</span></span><br><span class="line"><span class="type">uint8_t</span> <span class="built_in">MyI2C_ReceiveByte</span>(<span class="type">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">uint8_t</span> i, Byte = <span class="number">0x00</span>;	<span class="comment">//定义接收的数据，并赋初值0x00，此处必须赋初值0x00，后面会用到</span></span><br><span class="line">	<span class="built_in">MyI2C_W_SDA</span>(<span class="number">1</span>);<span class="comment">//接收前，主机先确保释放SDA，避免干扰从机的数据发送</span></span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; <span class="number">8</span>; i ++)<span class="comment">//循环8次，主机依次接收数据的每一位</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">MyI2C_W_SCL</span>(<span class="number">1</span>);	<span class="comment">//释放SCL，主机机在SCL高电平期间读取SDA</span></span><br><span class="line">		<span class="keyword">if</span> (<span class="built_in">MyI2C_R_SDA</span>() == <span class="number">1</span>)&#123;Byte |= (<span class="number">0x80</span> &gt;&gt; i);&#125;	</span><br><span class="line">        <span class="comment">//读取SDA数据，并存储到Byte变量</span></span><br><span class="line">		<span class="comment">//当SDA为1时，置变量指定位为1，当SDA为0时，不做处理，指定位为默认的初值0</span></span><br><span class="line">		<span class="built_in">MyI2C_W_SCL</span>(<span class="number">0</span>);	<span class="comment">//拉低SCL，从机在SCL低电平期间写入SDA</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> Byte;	</span><br><span class="line">    <span class="comment">//返回接收到的一个字节数据</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//I2C发送应答位</span></span><br><span class="line"><span class="type">void</span> <span class="built_in">MyI2C_SendAck</span>(<span class="type">uint8_t</span> AckBit)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="built_in">MyI2C_W_SDA</span>(AckBit);<span class="comment">//主机把应答位数据放到SDA线</span></span><br><span class="line">	<span class="built_in">MyI2C_W_SCL</span>(<span class="number">1</span>);	<span class="comment">//释放SCL，从机在SCL高电平期间，读取应答位</span></span><br><span class="line">	<span class="built_in">MyI2C_W_SCL</span>(<span class="number">0</span>);	<span class="comment">//拉低SCL，开始下一个时序模块</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//I2C接收应答位</span></span><br><span class="line"><span class="type">uint8_t</span> <span class="built_in">MyI2C_ReceiveAck</span>(<span class="type">void</span>)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">uint8_t</span> AckBit;	<span class="comment">//定义应答位变量</span></span><br><span class="line">	<span class="built_in">MyI2C_W_SDA</span>(<span class="number">1</span>);	<span class="comment">//接收前，主机先确保释放SDA，避免干扰从机的数据发送</span></span><br><span class="line">	<span class="built_in">MyI2C_W_SCL</span>(<span class="number">1</span>);	<span class="comment">//释放SCL，主机机在SCL高电平期间读取SDA</span></span><br><span class="line">	AckBit = <span class="built_in">MyI2C_R_SDA</span>();	<span class="comment">//将应答位存储到变量里</span></span><br><span class="line">	<span class="built_in">MyI2C_W_SCL</span>(<span class="number">0</span>);	<span class="comment">//拉低SCL，开始下一个时序模块</span></span><br><span class="line">	<span class="keyword">return</span> AckBit;	<span class="comment">//返回定义应答位变量</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>MPU6050.c</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;stm32f10x.h&quot;</span>                  <span class="comment">// Device header</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;MyI2C.h&quot;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;MPU6050_Reg.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> MPU6050_ADDRESS		0xD0		<span class="comment">//MPU6050的I2C从机地址</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * 函    数：MPU6050写寄存器</span></span><br><span class="line"><span class="comment">  * 参    数：RegAddress 寄存器地址，范围：参考MPU6050手册的寄存器描述</span></span><br><span class="line"><span class="comment">  * 参    数：Data 要写入寄存器的数据，范围：0x00~0xFF</span></span><br><span class="line"><span class="comment">  * 返 回 值：无</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">MPU6050_WriteReg</span><span class="params">(<span class="type">uint8_t</span> RegAddress, <span class="type">uint8_t</span> Data)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">MyI2C_Start</span>();						<span class="comment">//I2C起始</span></span><br><span class="line">	<span class="built_in">MyI2C_SendByte</span>(MPU6050_ADDRESS);	<span class="comment">//发送从机地址，读写位为0，表示即将写入</span></span><br><span class="line">	<span class="built_in">MyI2C_ReceiveAck</span>();					<span class="comment">//接收应答</span></span><br><span class="line">	<span class="built_in">MyI2C_SendByte</span>(RegAddress);			<span class="comment">//发送寄存器地址</span></span><br><span class="line">	<span class="built_in">MyI2C_ReceiveAck</span>();					<span class="comment">//接收应答</span></span><br><span class="line">	<span class="built_in">MyI2C_SendByte</span>(Data);				<span class="comment">//发送要写入寄存器的数据</span></span><br><span class="line">	<span class="built_in">MyI2C_ReceiveAck</span>();					<span class="comment">//接收应答</span></span><br><span class="line">	<span class="built_in">MyI2C_Stop</span>();						<span class="comment">//I2C终止</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * 函    数：MPU6050读寄存器</span></span><br><span class="line"><span class="comment">  * 参    数：RegAddress 寄存器地址，范围：参考MPU6050手册的寄存器描述</span></span><br><span class="line"><span class="comment">  * 返 回 值：读取寄存器的数据，范围：0x00~0xFF</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="function"><span class="type">uint8_t</span> <span class="title">MPU6050_ReadReg</span><span class="params">(<span class="type">uint8_t</span> RegAddress)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">uint8_t</span> Data;</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">MyI2C_Start</span>();						<span class="comment">//I2C起始</span></span><br><span class="line">	<span class="built_in">MyI2C_SendByte</span>(MPU6050_ADDRESS);	<span class="comment">//发送从机地址，读写位为0，表示即将写入</span></span><br><span class="line">	<span class="built_in">MyI2C_ReceiveAck</span>();					<span class="comment">//接收应答</span></span><br><span class="line">	<span class="built_in">MyI2C_SendByte</span>(RegAddress);			<span class="comment">//发送寄存器地址</span></span><br><span class="line">	<span class="built_in">MyI2C_ReceiveAck</span>();					<span class="comment">//接收应答</span></span><br><span class="line">	</span><br><span class="line">	<span class="built_in">MyI2C_Start</span>();						<span class="comment">//I2C重复起始</span></span><br><span class="line">	<span class="built_in">MyI2C_SendByte</span>(MPU6050_ADDRESS | <span class="number">0x01</span>);	<span class="comment">//发送从机地址，读写位为1，表示即将读取</span></span><br><span class="line">	<span class="built_in">MyI2C_ReceiveAck</span>();					<span class="comment">//接收应答</span></span><br><span class="line">	Data = <span class="built_in">MyI2C_ReceiveByte</span>();			<span class="comment">//接收指定寄存器的数据</span></span><br><span class="line">	<span class="built_in">MyI2C_SendAck</span>(<span class="number">1</span>);					<span class="comment">//发送应答，给从机非应答，终止从机的数据输出</span></span><br><span class="line">	<span class="built_in">MyI2C_Stop</span>();						<span class="comment">//I2C终止</span></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">return</span> Data;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * 函    数：MPU6050初始化</span></span><br><span class="line"><span class="comment">  * 参    数：无</span></span><br><span class="line"><span class="comment">  * 返 回 值：无</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">MPU6050_Init</span><span class="params">(<span class="type">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="built_in">MyI2C_Init</span>();									<span class="comment">//先初始化底层的I2C</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">/*MPU6050寄存器初始化，需要对照MPU6050手册的寄存器描述配置，此处仅配置了部分重要的寄存器*/</span></span><br><span class="line">	<span class="built_in">MPU6050_WriteReg</span>(MPU6050_PWR_MGMT_1, <span class="number">0x01</span>);		<span class="comment">//电源管理寄存器1，取消睡眠模式，选择时钟源为X轴陀螺仪</span></span><br><span class="line">	<span class="built_in">MPU6050_WriteReg</span>(MPU6050_PWR_MGMT_2, <span class="number">0x00</span>);		<span class="comment">//电源管理寄存器2，保持默认值0，所有轴均不待机</span></span><br><span class="line">	<span class="built_in">MPU6050_WriteReg</span>(MPU6050_SMPLRT_DIV, <span class="number">0x09</span>);		<span class="comment">//采样率分频寄存器，配置采样率</span></span><br><span class="line">	<span class="built_in">MPU6050_WriteReg</span>(MPU6050_CONFIG, <span class="number">0x06</span>);			<span class="comment">//配置寄存器，配置DLPF</span></span><br><span class="line">	<span class="built_in">MPU6050_WriteReg</span>(MPU6050_GYRO_CONFIG, <span class="number">0x18</span>);	<span class="comment">//陀螺仪配置寄存器，选择满量程为±2000°/s</span></span><br><span class="line">	<span class="built_in">MPU6050_WriteReg</span>(MPU6050_ACCEL_CONFIG, <span class="number">0x18</span>);	<span class="comment">//加速度计配置寄存器，选择满量程为±16g</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">  * 函    数：MPU6050获取ID号</span></span><br><span class="line"><span class="comment">  * 参    数：无</span></span><br><span class="line"><span class="comment">  * 返 回 值：MPU6050的ID号</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line"><span class="function"><span class="type">uint8_t</span> <span class="title">MPU6050_GetID</span><span class="params">(<span class="type">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">MPU6050_ReadReg</span>(MPU6050_WHO_AM_I);		<span class="comment">//返回WHO_AM_I寄存器的值</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//MPU6050获取数据</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">MPU6050_GetData</span><span class="params">(<span class="type">int16_t</span> *AccX, <span class="type">int16_t</span> *AccY, <span class="type">int16_t</span> *AccZ, </span></span></span><br><span class="line"><span class="params"><span class="function">						<span class="type">int16_t</span> *GyroX, <span class="type">int16_t</span> *GyroY, <span class="type">int16_t</span> *GyroZ)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="type">uint8_t</span> DataH, DataL;								<span class="comment">//定义数据高8位和低8位的变量</span></span><br><span class="line">	</span><br><span class="line">	DataH = <span class="built_in">MPU6050_ReadReg</span>(MPU6050_ACCEL_XOUT_H);		<span class="comment">//读取加速度计X轴的高8位数据</span></span><br><span class="line">	DataL = <span class="built_in">MPU6050_ReadReg</span>(MPU6050_ACCEL_XOUT_L);		<span class="comment">//读取加速度计X轴的低8位数据</span></span><br><span class="line">	*AccX = (DataH &lt;&lt; <span class="number">8</span>) | DataL;						<span class="comment">//数据拼接，通过输出参数返回</span></span><br><span class="line">	</span><br><span class="line">	DataH = <span class="built_in">MPU6050_ReadReg</span>(MPU6050_ACCEL_YOUT_H);		<span class="comment">//读取加速度计Y轴的高8位数据</span></span><br><span class="line">	DataL = <span class="built_in">MPU6050_ReadReg</span>(MPU6050_ACCEL_YOUT_L);		<span class="comment">//读取加速度计Y轴的低8位数据</span></span><br><span class="line">	*AccY = (DataH &lt;&lt; <span class="number">8</span>) | DataL;						<span class="comment">//数据拼接，通过输出参数返回</span></span><br><span class="line">	</span><br><span class="line">	DataH = <span class="built_in">MPU6050_ReadReg</span>(MPU6050_ACCEL_ZOUT_H);		<span class="comment">//读取加速度计Z轴的高8位数据</span></span><br><span class="line">	DataL = <span class="built_in">MPU6050_ReadReg</span>(MPU6050_ACCEL_ZOUT_L);		<span class="comment">//读取加速度计Z轴的低8位数据</span></span><br><span class="line">	*AccZ = (DataH &lt;&lt; <span class="number">8</span>) | DataL;						<span class="comment">//数据拼接，通过输出参数返回</span></span><br><span class="line">	</span><br><span class="line">	DataH = <span class="built_in">MPU6050_ReadReg</span>(MPU6050_GYRO_XOUT_H);		<span class="comment">//读取陀螺仪X轴的高8位数据</span></span><br><span class="line">	DataL = <span class="built_in">MPU6050_ReadReg</span>(MPU6050_GYRO_XOUT_L);		<span class="comment">//读取陀螺仪X轴的低8位数据</span></span><br><span class="line">	*GyroX = (DataH &lt;&lt; <span class="number">8</span>) | DataL;						<span class="comment">//数据拼接，通过输出参数返回</span></span><br><span class="line">	</span><br><span class="line">	DataH = <span class="built_in">MPU6050_ReadReg</span>(MPU6050_GYRO_YOUT_H);		<span class="comment">//读取陀螺仪Y轴的高8位数据</span></span><br><span class="line">	DataL = <span class="built_in">MPU6050_ReadReg</span>(MPU6050_GYRO_YOUT_L);		<span class="comment">//读取陀螺仪Y轴的低8位数据</span></span><br><span class="line">	*GyroY = (DataH &lt;&lt; <span class="number">8</span>) | DataL;						<span class="comment">//数据拼接，通过输出参数返回</span></span><br><span class="line">	</span><br><span class="line">	DataH = <span class="built_in">MPU6050_ReadReg</span>(MPU6050_GYRO_ZOUT_H);		<span class="comment">//读取陀螺仪Z轴的高8位数据</span></span><br><span class="line">	DataL = <span class="built_in">MPU6050_ReadReg</span>(MPU6050_GYRO_ZOUT_L);		<span class="comment">//读取陀螺仪Z轴的低8位数据</span></span><br><span class="line">	*GyroZ = (DataH &lt;&lt; <span class="number">8</span>) | DataL;						<span class="comment">//数据拼接，通过输出参数返回</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>main.c</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&quot;MPU6050.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">uint8_t</span> ID;								<span class="comment">//定义用于存放ID号的变量</span></span><br><span class="line"><span class="type">int16_t</span> AX, AY, AZ, GX, GY, GZ;			<span class="comment">//定义用于存放各个数据的变量</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">void</span>)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="comment">/*模块初始化*/</span></span><br><span class="line">	<span class="built_in">MPU6050_Init</span>();		<span class="comment">//MPU6050初始化</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">/*显示ID号*/</span></span><br><span class="line">	<span class="built_in">OLED_ShowString</span>(<span class="number">1</span>, <span class="number">1</span>, <span class="string">&quot;ID:&quot;</span>);		<span class="comment">//显示静态字符串</span></span><br><span class="line">	ID = <span class="built_in">MPU6050_GetID</span>();				<span class="comment">//获取MPU6050的ID号</span></span><br><span class="line">	<span class="built_in">OLED_ShowHexNum</span>(<span class="number">1</span>, <span class="number">4</span>, ID, <span class="number">2</span>);		<span class="comment">//OLED显示ID号</span></span><br><span class="line">	</span><br><span class="line">	<span class="keyword">while</span> (<span class="number">1</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">MPU6050_GetData</span>(&amp;AX, &amp;AY, &amp;AZ, &amp;GX, &amp;GY, &amp;GZ);<span class="comment">//获取MPU6050的数据</span></span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://example.com/2024/05/31/stm32-Stu06/" data-id="clwu23rlz000h9whke5e5699t" data-title="stm32_Stu06" class="article-share-link">分享</a>
+      
+      
+      
+      
+      
+      
+
+    </footer>
+  </div>
+  
+    
+  <nav id="article-nav" class="wow fadeInUp">
+    
+    
+    <div class="article-nav-link-wrap article-nav-link-right">
+      
+        
+        
+          <img data-src="/images/banner.jpg" data-sizes="auto" alt="stm32_Stu05" class="lazyload">
+        
+      
+      <a href="/2024/05/31/stm32-Stu05/"></a>
+      <div class="article-nav-caption">后一篇</div>
+      <h3 class="article-nav-title">
+        
+          stm32_Stu05
+        
+      </h3>
+    </div>
+    
+  </nav>
+
+
+  
+</article>
+
+
+
+
+
+
+</section>
+          
+            <aside id="sidebar">
+  <div class="sidebar-wrap wow fadeInRight wrap-sticky">
+    
+      <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">文章目录</h3>
+  <div class="sidebar-toc-wrapper"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%87%A0%E7%A7%8D%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.</span> <span class="toc-text">几种通信协议</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#UART%E9%80%9A%E4%BF%A1"><span class="toc-number">1.1.</span> <span class="toc-text">UART通信</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E5%88%86%E5%B1%82%E6%80%9D%E6%83%B3"><span class="toc-number">1.1.1.</span> <span class="toc-text">（1）分层思想</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E7%A1%AC%E4%BB%B6%E7%94%B5%E8%B7%AF%E5%BC%95%E8%84%9A"><span class="toc-number">1.1.2.</span> <span class="toc-text">（2）硬件电路引脚</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%883%EF%BC%89%E4%BF%A1%E5%8F%B7%E4%B8%8E%E7%94%B5%E5%B9%B3%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.1.3.</span> <span class="toc-text">（3）信号与电平格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%884%EF%BC%89%E7%9F%A5%E8%AF%86%E8%A1%A5%E5%85%85"><span class="toc-number">1.1.4.</span> <span class="toc-text">（4）知识补充</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%885%EF%BC%89%E5%BC%82%E6%AD%A5%E9%80%9A%E4%BF%A1"><span class="toc-number">1.1.5.</span> <span class="toc-text">（5）异步通信</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%886%EF%BC%89%E5%90%8C%E6%AD%A5%E9%80%9A%E4%BF%A1"><span class="toc-number">1.1.6.</span> <span class="toc-text">（6）同步通信</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%887%EF%BC%89%E6%94%B6%E5%8F%91%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.1.7.</span> <span class="toc-text">（7）收发模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%888%EF%BC%89%E9%93%BE%E8%B7%AF%E4%BC%A0%E8%BE%93"><span class="toc-number">1.1.8.</span> <span class="toc-text">（8）链路传输</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%889%EF%BC%89%E4%BB%B2%E8%A3%81"><span class="toc-number">1.1.9.</span> <span class="toc-text">（9）仲裁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%8810%EF%BC%89%E8%AF%AF%E7%A0%81%E6%A0%A1%E9%AA%8C"><span class="toc-number">1.1.10.</span> <span class="toc-text">（10）误码校验</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%8811%EF%BC%89%E9%98%BB%E5%A1%9E-%E4%B8%AD%E6%96%AD-DMA%E4%B8%AD%E6%96%AD"><span class="toc-number">1.1.11.</span> <span class="toc-text">（11）阻塞&#x2F;中断&#x2F;DMA中断</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UART%E6%80%BB%E7%BB%93%EF%BC%88HAL%EF%BC%89"><span class="toc-number">1.1.12.</span> <span class="toc-text">UART总结（HAL）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CAN%E9%80%9A%E4%BF%A1"><span class="toc-number">1.2.</span> <span class="toc-text">CAN通信</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#I2C%E9%80%9A%E4%BF%A1"><span class="toc-number">1.3.</span> <span class="toc-text">I2C通信</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%881%EF%BC%89I2C"><span class="toc-number">1.3.1.</span> <span class="toc-text">（1）I2C</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E7%A1%AC%E4%BB%B6%E8%A7%84%E5%AE%9A"><span class="toc-number">1.3.2.</span> <span class="toc-text">（2）硬件规定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%883%EF%BC%89I2C%E6%97%B6%E5%BA%8F%E5%9F%BA%E6%9C%AC%E5%8D%95%E5%85%83"><span class="toc-number">1.3.3.</span> <span class="toc-text">（3）I2C时序基本单元</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%884%EF%BC%89MPU6050"><span class="toc-number">1.3.4.</span> <span class="toc-text">（4）MPU6050</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91"><span class="toc-number">1.3.5.</span> <span class="toc-text">代码逻辑</span></a></li></ol></li></ol></li></ol></div>
+</div>
+</div>
+      <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/../images/avatar.jpg" data-sizes="auto" alt="litmus" class="lazyload">
+  <div class="sidebar-author-name">litmus</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>文章</div>
+    <div class="sidebar-state-number">17</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>分类</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>标签</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+</div>
+<div class="sidebar-menu">
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/" aria-label="首页"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">首页</div>
+    </div>
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/archives" aria-label="归档"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">归档</div>
+    </div>
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/about" aria-label="关于"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">关于</div>
+    </div>
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/friend" aria-label="友链"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">友链</div>
+    </div>
+  
+</div>
+</div>
+    
+    
+      <div class="sidebar-btn-wrapper" style="position:static">
+        <div class="sidebar-toc-btn current"></div>
+        <div class="sidebar-common-btn"></div>
+      </div>
+    
+  </div>
+
+  
+</aside>
+
+          
+        </div>
+        <footer id="footer" class="wow fadeInUp">
+  <div style="width: 100%; overflow: hidden">
+    <div class="footer-line"></div>
+  </div>
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      <div>
+        <span class="icon-copyright"></span>
+        2020-2024
+        <span class="footer-info-sep"></span>
+        litmus
+      </div>
+      
+        <div>
+          基于&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>&nbsp;
+          Theme.<a href="https://github.com/D-Sketon/hexo-theme-reimu" target="_blank">Reimu</a>
+        </div>
+      
+      
+        <div>
+          <span class="icon-brush"></span>
+          15.8k
+          &nbsp;|&nbsp;
+          <span class="icon-coffee"></span>
+          01:03
+        </div>
+      
+      
+        <div>
+          <span class="icon-eye"></span>
+          <span id="busuanzi_container_site_pv">总访问量&nbsp;<span id="busuanzi_value_site_pv"></span></span>
+          &nbsp;|&nbsp;
+          <span class="icon-user"></span>
+          <span id="busuanzi_container_site_uv">总访客量&nbsp;<span id="busuanzi_value_site_uv"></span></span>
+        </div>
+      
+    </div>
+  </div>
+</footer>
+
+        <div class="sidebar-top">
+          <img src="/images/taichi.png" height="50" width="50" />
+          <div class="arrow-up"></div>
+        </div>
+        <div id="mask"></div>
+      </div>
+      <nav id="mobile-nav">
+  <div class="sidebar-wrap">
+    
+      <div class="sidebar-toc-sidebar"><div class="sidebar-toc">
+  <h3 class="toc-title">文章目录</h3>
+  <div class="sidebar-toc-wrapper"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%87%A0%E7%A7%8D%E9%80%9A%E4%BF%A1%E5%8D%8F%E8%AE%AE"><span class="toc-number">1.</span> <span class="toc-text">几种通信协议</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#UART%E9%80%9A%E4%BF%A1"><span class="toc-number">1.1.</span> <span class="toc-text">UART通信</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%881%EF%BC%89%E5%88%86%E5%B1%82%E6%80%9D%E6%83%B3"><span class="toc-number">1.1.1.</span> <span class="toc-text">（1）分层思想</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E7%A1%AC%E4%BB%B6%E7%94%B5%E8%B7%AF%E5%BC%95%E8%84%9A"><span class="toc-number">1.1.2.</span> <span class="toc-text">（2）硬件电路引脚</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%883%EF%BC%89%E4%BF%A1%E5%8F%B7%E4%B8%8E%E7%94%B5%E5%B9%B3%E6%A0%BC%E5%BC%8F"><span class="toc-number">1.1.3.</span> <span class="toc-text">（3）信号与电平格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%884%EF%BC%89%E7%9F%A5%E8%AF%86%E8%A1%A5%E5%85%85"><span class="toc-number">1.1.4.</span> <span class="toc-text">（4）知识补充</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%885%EF%BC%89%E5%BC%82%E6%AD%A5%E9%80%9A%E4%BF%A1"><span class="toc-number">1.1.5.</span> <span class="toc-text">（5）异步通信</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%886%EF%BC%89%E5%90%8C%E6%AD%A5%E9%80%9A%E4%BF%A1"><span class="toc-number">1.1.6.</span> <span class="toc-text">（6）同步通信</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%887%EF%BC%89%E6%94%B6%E5%8F%91%E6%A8%A1%E5%BC%8F"><span class="toc-number">1.1.7.</span> <span class="toc-text">（7）收发模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%888%EF%BC%89%E9%93%BE%E8%B7%AF%E4%BC%A0%E8%BE%93"><span class="toc-number">1.1.8.</span> <span class="toc-text">（8）链路传输</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%889%EF%BC%89%E4%BB%B2%E8%A3%81"><span class="toc-number">1.1.9.</span> <span class="toc-text">（9）仲裁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%8810%EF%BC%89%E8%AF%AF%E7%A0%81%E6%A0%A1%E9%AA%8C"><span class="toc-number">1.1.10.</span> <span class="toc-text">（10）误码校验</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%8811%EF%BC%89%E9%98%BB%E5%A1%9E-%E4%B8%AD%E6%96%AD-DMA%E4%B8%AD%E6%96%AD"><span class="toc-number">1.1.11.</span> <span class="toc-text">（11）阻塞&#x2F;中断&#x2F;DMA中断</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#UART%E6%80%BB%E7%BB%93%EF%BC%88HAL%EF%BC%89"><span class="toc-number">1.1.12.</span> <span class="toc-text">UART总结（HAL）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CAN%E9%80%9A%E4%BF%A1"><span class="toc-number">1.2.</span> <span class="toc-text">CAN通信</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#I2C%E9%80%9A%E4%BF%A1"><span class="toc-number">1.3.</span> <span class="toc-text">I2C通信</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%881%EF%BC%89I2C"><span class="toc-number">1.3.1.</span> <span class="toc-text">（1）I2C</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%882%EF%BC%89%E7%A1%AC%E4%BB%B6%E8%A7%84%E5%AE%9A"><span class="toc-number">1.3.2.</span> <span class="toc-text">（2）硬件规定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%883%EF%BC%89I2C%E6%97%B6%E5%BA%8F%E5%9F%BA%E6%9C%AC%E5%8D%95%E5%85%83"><span class="toc-number">1.3.3.</span> <span class="toc-text">（3）I2C时序基本单元</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%EF%BC%884%EF%BC%89MPU6050"><span class="toc-number">1.3.4.</span> <span class="toc-text">（4）MPU6050</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91"><span class="toc-number">1.3.5.</span> <span class="toc-text">代码逻辑</span></a></li></ol></li></ol></li></ol></div>
+</div>
+</div>
+      <div class="sidebar-common-sidebar hidden"><div class="sidebar-author">
+  <img data-src="/avatar/../images/avatar.jpg" data-sizes="auto" alt="litmus" class="lazyload">
+  <div class="sidebar-author-name">litmus</div>
+  <div class="sidebar-description"></div>
+</div>
+<div class="sidebar-state">
+  <div class="sidebar-state-article">
+    <div>文章</div>
+    <div class="sidebar-state-number">17</div>
+  </div>
+  <div class="sidebar-state-category">
+    <div>分类</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+  <div class="sidebar-state-tag">
+    <div>标签</div>
+    <div class="sidebar-state-number">0</div>
+  </div>
+</div>
+<div class="sidebar-social">
+  
+</div>
+<div class="sidebar-menu">
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/" aria-label="首页"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">首页</div>
+    </div>
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/archives" aria-label="归档"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">归档</div>
+    </div>
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/about" aria-label="关于"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">关于</div>
+    </div>
+  
+    <div class="sidebar-menu-link-wrap">
+      <a class="sidebar-menu-link-dummy" href="/friend" aria-label="友链"></a>
+      <span class="sidebar-menu-icon"></span>
+      <div class="sidebar-menu-link">友链</div>
+    </div>
+  
+</div>
+</div>
+    
+  </div>
+  
+    <div class="sidebar-btn-wrapper">
+      <div class="sidebar-toc-btn current"></div>
+      <div class="sidebar-common-btn"></div>
+    </div>
+  
+</nav>
+
+    </div>
+    <div class="site-search">
+      <div class="reimu-popup popup">
+        <div class="reimu-search">
+          <span class="reimu-search-input-icon"></span>
+          <div class="reimu-search-input" id="reimu-search-input"></div>
+        </div>
+        <div class="reimu-results">
+          <div id="reimu-stats"></div>
+          <div id="reimu-hits"></div>
+          <div id="reimu-pagination" class="reimu-pagination"></div>
+        </div>
+        <span class="popup-btn-close"></span>
+      </div>
+    </div>
+    
+<script src="https://npm.webcache.cn/jquery@3.7.1/dist/jquery.min.js"></script>
+
+
+<script src="https://npm.webcache.cn/lazysizes@5.3.2/lazysizes.min.js"></script>
+
+
+<script src="https://npm.webcache.cn/clipboard@2.0.11/dist/clipboard.min.js"></script>
+
+
+
+  
+<script src="https://npm.webcache.cn/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" defer></script>
+
+
+
+  
+<script src="https://npm.webcache.cn/busuanzi@2.3.0/bsz.pure.mini.js" async></script>
+
+
+
+
+
+
+<script src="/js/pjax_script.js" data-pjax></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+<script src="https://npm.webcache.cn/mouse-firework@0.0.4/dist/index.umd.js"></script>
+
+  <script>
+    firework(JSON.parse('{"excludeElements":["a"],"particles":[{"shape":"circle","move":["emit"],"easing":"easeOutExpo","colors":["#ff5252","#ff7c7c","#ffafaf","#ffd0d0"],"number":20,"duration":[1200,1800],"shapeOptions":{"radius":[16,32],"alpha":[0.3,0.5]}},{"shape":"circle","move":["diffuse"],"easing":"easeOutExpo","colors":["#ff0000"],"number":1,"duration":[1200,1800],"shapeOptions":{"radius":20,"alpha":[0.2,0.5],"lineWidth":6}}]}'))
+  </script>
+
+
+
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+  <script>
+    console.log(String.raw`%c 
+ ______     ______     __     __    __     __  __    
+/\  == \   /\  ___\   /\ \   /\ "-./  \   /\ \/\ \   
+\ \  __<   \ \  __\   \ \ \  \ \ \-./\ \  \ \ \_\ \  
+ \ \_\ \_\  \ \_____\  \ \_\  \ \_\ \ \_\  \ \_____\ 
+  \/_/ /_/   \/_____/   \/_/   \/_/  \/_/   \/_____/ 
+                                                  
+`,'color: #ff5252;')
+    console.log('%c Theme.Reimu v' + '0.1.1' + ' %c https://github.com/D-Sketon/hexo-theme-reimu ', 'color: white; background: #ff5252; padding:5px 0;', 'padding:4px;border:1px solid #ff5252;')
+  </script>
+  
+
+  <!-- hexo injector body_end start -->
+<script src="/js/insert_highlight.js" data-pjax></script>
+<!-- hexo injector body_end end --></body>
+  </html>
+
